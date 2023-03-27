@@ -39,10 +39,10 @@ When training language models, we aim to build a universal model that can be use
 - **Field universality**: We hope that the model can not only help with everyday problems but also assist in professional fields such as science and law.
 ## **Requirements**
 - Python 3.7 or higher
-- PyTorch 1.11 or higher
-- [Transformers library](https://huggingface.co/docs/transformers/index)
+- PyTorch 1.13
+- Customized [Transformers library](https://github.com/Bayes-Song/transformers)
 - [Accelerate library](https://huggingface.co/docs/accelerate/index)
-- CUDA 11.1 or higher version (for GPU acceleration, tested based on CUDA 11.7)
+- CUDA 11.6 or higher version (for GPU acceleration, tested based on CUDA 11.7)
 ## **Getting Started**
 ### Installation
 Use the following command to install the required dependencies:

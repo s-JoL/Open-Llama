@@ -43,10 +43,10 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 ## **要求**
 
 - Python 3.7 或更高版本
-- PyTorch 1.11 或更高版本
-- [Transformers库](https://huggingface.co/docs/transformers/index)
+- PyTorch 1.13
+- 特殊版本的[Transformers库](https://github.com/Bayes-Song/transformers)
 - [Accelerate库](https://huggingface.co/docs/accelerate/index)
-- CUDA 11.1 或更高版本（用于 GPU 加速，基于CUDA11.7进行测试）
+- CUDA 11.6 或更高版本（用于 GPU 加速，基于CUDA11.7进行测试）
 
 ## **入门指南**
 ### 安装
