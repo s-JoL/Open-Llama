@@ -31,7 +31,7 @@ Since training large language models is costly, high performance is also crucial
 For 7B mode, the training speed of the Llama model using the PyTorch native version in the Transformers library is 1378 tokens/s/GPU. With our code, the training speed reaches 3290 tokens/s/GPU, which is close to the reported 3370 tokens/s/GPU in the [Llama paper](https://arxiv.org/pdf/2302.13971.pdf).
 If we pretrain with 500 billion tokens, it will take 43,000 GPU hours. Assuming the price of A100-80G Spot on Google Cloud is $12.6 per hour for 8 GPUs, the total cost will be $67,725.
 Without acceleration, the cost would be $158,744. Our method reduces the training cost by $90,019 in total.
-
+More comparison can be found in [Comparison of Performance with Other Open-Source Models](https://github.com/Bayes-Song/Open-Llama/blob/main/README_en.md#performance-comparison-with-other-open-source-models).
 ### Universality
 When training language models, we aim to build a universal model that can be used for different languages and fields. To achieve this, we adopt the following strategies:
 
