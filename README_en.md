@@ -99,6 +99,14 @@ We use the Accelerate library for multi-GPU parallel training. Launch training w
 ```bash
 accelerate launch --config_file configs/default_config.yaml pretrain_llama.py
 ```
+In some cases, it may be necessary to specify the following parameters.
+```
+--main_process_ip
+--main_process_port
+--num_processes
+--num_machines
+--machine_rank
+```
 We use [Wandb](https://wandb.ai/) for training visualization and you need to modify the environment variable WANDB_API_KEY.
 
 We use DeepSpeed stage 1 to reduce GPU memory usage. Accelerate-related configurations can be found in configs/default_config.yaml.
@@ -174,7 +182,7 @@ The following table summarizes the performance of current open-source models, al
 | Token               |            | 1T       | 1T      | 1.4T      | 180B    | 366B               | 400B  | 402B     | 200B    | 13.9B     |
 | GPU Hour            |            | 82,432   | 135,168 | 1,022,362 | 809,472 | 1,082,990          | 43776 | 175680   | 47040   | 3072      |
 | speed token/s/gpu   | 3290       | 3370     | 2055    | 380       | 61.8    | 93.9               | 105.7 | 635.6    | 1181    | 1257      |
-| 相关依赖            | xformers   | xformers |         |           | measeq  | Megatron-DeepSpeed |       |          | BMtrain | MindSpore |
+| Dependencies        | xformers   | xformers |         |           | measeq  | Megatron-DeepSpeed |       |          | BMtrain | MindSpore |
 | speed token/s/gpu/B | 22701      | 22579    | 26715   | 24700     | 10815   | 16432              | 13741 | 12712    | 11810   | 16341     |
 
 ## Future Plans

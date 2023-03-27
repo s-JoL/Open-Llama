@@ -109,6 +109,14 @@ Self Attention的计算，这对于性能有明显的提升，提升大约30%。
 ```bash
 accelerate launch --config_file configs/default_config.yaml pretrain_llama.py
 ```
+某些情况下可能需要指定下列参数
+```
+--main_process_ip
+--main_process_port
+--num_processes
+--num_machines
+--machine_rank
+```
 我们使用[Wandb](https://wandb.ai/)进行训练的可视化，需要自行修改环境变量 WANDB_API_KEY 。
 
 其中我们使用了DeepSpeed stage1以减少显存占用。accelerate相关配置可见configs/default_config.yaml。
