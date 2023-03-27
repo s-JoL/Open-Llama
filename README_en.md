@@ -165,6 +165,18 @@ The paper mentions that they trained the 6.7B model with 1T tokens, and the GPU 
 | Return Padding Mask | yes          | no                    |
 | Speed token/s/gpu   | 1378         | 3290                  |
 
+### Performance Comparison with Other Open-source Models
+The following table summarizes the performance of current open-source models, all tested on A100 GPUs. Due to differences in model sizes and structures, it is difficult to make accurate performance comparisons. As a rough estimate, it can be assumed that speed and model parameter count are inversely proportional, as evidenced by Llama models of different sizes. Based on this rough estimate, it can be seen that the performance using our project is significantly better than other projects.
+
+| Model               | Open-Llama | LLAMA    | LLAMA   | LLAMA     | OPT     | Bloom              | GLM   | GPT-NEOX | CPM-ANT | CodeGeeX  |
+|---------------------|------------|----------|---------|-----------|---------|--------------------|-------|----------|---------|-----------|
+| Model size          | 6.9B       | 6.7B     | 13B     | 65B       | 175B    | 175B               | 130B  | 20B      | 10B     | 13B       |
+| Token               |            | 1T       | 1T      | 1.4T      | 180B    | 366B               | 400B  | 402B     | 200B    | 13.9B     |
+| GPU Hour            |            | 82,432   | 135,168 | 1,022,362 | 809,472 | 1,082,990          | 43776 | 175680   | 47040   | 3072      |
+| speed token/s/gpu   | 3290       | 3370     | 2055    | 380       | 61.8    | 93.9               | 105.7 | 635.6    | 1181    | 1257      |
+| 相关依赖            | xformers   | xformers |         |           | measeq  | Megatron-DeepSpeed |       |          | BMtrain | MindSpore |
+| speed token/s/gpu/B | 22701      | 22579    | 26715   | 24700     | 10815   | 16432              | 13741 | 12712    | 11810   | 16341     |
+
 ## Future Plans
 1. Add more training monitoring, such as the distribution of training data categories, and add code for continuing training.
 2. Realease the pre-trained checkpoint for the multi-lingual Llama 6.9B model.
