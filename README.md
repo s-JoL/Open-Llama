@@ -17,6 +17,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 ## 进展
 
 经过30K step的预训练，已经展现出了一定的胡说八道的能力，如下分别是编写代码、续写论文和续写中文，虽然正确性存在问题但是已经像是一句话了。
+
 <img src="assets/code.JPG" width="33%"><img src="assets/paper.JPG" width="33%"><img src="assets/chinese.JPG" width="33%">
 
 ## **特性**
