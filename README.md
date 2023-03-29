@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-03-27 02:40:54
+ * @LastEditTime: 2023-03-29 21:44:01
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -13,6 +13,15 @@
 [English](https://github.com/Bayes-Song/Open-Llama/blob/main/README_en.md)
 
 Open-Llama是一个开源项目，提供了一整套用于构建大型语言模型的训练流程，从数据集准备到分词、预训练、指令调优，以及强化学习技术 RLHF。
+
+## 进展
+
+经过30K step的预训练，已经展现出了一定的胡说八道的能力，如下分别是编写代码、续写论文和续写中文，虽然正确性存在问题但是已经像是一句话了。
+<div style="display:flex;">
+  <div style="flex:1"><img src="assets/code.JPG" width="100%"></div>
+  <div style="flex:1"><img src="assets/paper.JPG" width="100%"></div>
+  <div style="flex:1"><img src="assets/chinese.JPG" width="100%"></div>
+</div>
 
 ## **特性**
 
