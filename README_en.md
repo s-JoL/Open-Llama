@@ -17,7 +17,7 @@ Open-Llama is an open source project that provides a complete set of training pr
 ## Progress
 After 30K steps of pre-training, the model has demonstrated some language capabilities, as shown below in coding and paper continuation tasks. Although there are still issues with correctness, the generated outputs resemble sentences.
 
-<img src="assets/code.JPG" width="33%"><img src="assets/paper.JPG" width="50%"><img src="assets/paper.JPG" width="50%">
+<img src="assets/code.JPG" width="50%"><img src="assets/paper.JPG" width="50%">
 
 ## **Features**
 ### Ease of Use
