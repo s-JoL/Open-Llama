@@ -1,11 +1,11 @@
 """
 Author: LiangSong(sl12160010@gmail.com)
-Date: 2023-03-17 14:27:28
+Date: 2023-03-30 21:35:01
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-03-27 01:07:25
-FilePath: /Open-Llama/pretrain_llama.py
+LastEditTime: 2023-03-30 21:40:03
+FilePath: /Open-Llama/inctruction_tuning.py
 Description: 
-pretrain GPT
+
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
 import os
@@ -25,16 +25,16 @@ from dataset.validation import val_set
 from dataset.tokenizer import Tokenizer
 from dataset.data_iter import create_shard_kwargs, create_data_iter
 from dataset.data_loader import pretrain_collate_fn_gen
-from dataset.pretrain_dataset import (
-    preprocess_the_pile_gen,
-    preprocess_wudao_gen,
+from dataset.instruction_dataset import (
+    preprocess_belle_gen,
+    preprocess_self_instruction_gen,
 )
-from configs.pretrain_config import *
+from configs.instruction_tuning_config import *
 
 accelerator = Accelerator()
 
 if accelerator.is_main_process:
-    wandb.init(project="LLAMA Pretrain")
+    wandb.init(project="LLAMA Instruction")
 
 log_interval *= accelerator.gradient_accumulation_steps
 eval_interval *= accelerator.gradient_accumulation_steps
@@ -43,11 +43,12 @@ save_interval *= accelerator.gradient_accumulation_steps
 sp_model = spm.SentencePieceProcessor(model_file=tokenizer_model_path)
 tokenizer = Tokenizer(sp_model)
 
-paths = create_shard_kwargs(patterns)
+paths = create_shard_kwargs(patterns, repeat=3)
 random.shuffle(paths)
 transform_dict = {
-    "wudao": preprocess_wudao_gen(tokenizer, max_length),
-    "pile": preprocess_the_pile_gen(tokenizer, max_length),
+    "belle_1M": preprocess_belle_gen(tokenizer, max_length),
+    "belle_0.5M": preprocess_belle_gen(tokenizer, max_length),
+    "self_instruct": preprocess_self_instruction_gen(tokenizer, max_length),
 }
 data_set = IterableDataset.from_generator(
     create_data_iter,
@@ -80,6 +81,8 @@ raw_model = LlamaForCausalLM(
         shared_input_output_embedding=True,
     )
 )
+ckpt = torch.load(ckpt_path, map_location="cpu")
+raw_model.load_state_dict(ckpt)
 raw_model.eval()
 with torch.no_grad():
     summary(raw_model.cuda(), input_data=torch.ones(1, 64, dtype=torch.int64).cuda())
