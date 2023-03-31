@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-03-31 14:57:55
+ * @LastEditTime: 2023-03-31 15:11:01
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -27,6 +27,7 @@ The results of our model are shown in the following figure, and more results are
 
 We roughly estimate the cost to achieve the above results. The 40K-step pre-training used 150 million pre-training data, which is about 110B tokens. The total training time is 76 hours, and the cost is about $19,152 according to Google Cloud's A100 quotation. The Instruction-tuning training was carried out for 12k steps, using 1.6 million data, and the total training time was 3.4 hours, costing about $342. Therefore, the total cost of training such a model from scratch is less than $20,000.
 
+Currently, the model's performance in both mathematical and code-related tasks is noticeably poor. This is partially due to the training data used, but I also believe it is due to the size of the model. However, the ability to perform logical reasoning is essential for any usable model. Therefore, future updates will focus on improving this aspect of the model's capabilities.
 ## **Features**
 ### Ease of Use
 We believe that ease of use is one of the most important features when building large-scale language models. To make Open-Llama more accessible, we focus on the following:

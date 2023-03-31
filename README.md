@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-03-31 14:54:20
+ * @LastEditTime: 2023-03-31 15:10:29
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -26,6 +26,8 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 ![image1](assets/image1.png)![image2](assets/image2.png)![image3](assets/image3.png)
 
 我们简单预估一下达到上面效果的一个花费，训练40K step使用了1.5亿条预训练数据，大约为110B token，总共训练时间76h，按Google Cloud的A100报价花费大约为19152美元。后续的Instruction-tuning训练了12k Step，使用1.6M条数据，总共训练时间3.4h，大约花费342美元。因此从0开始训练一个这样的模型总花费不到20000美元。
+
+目前模型在数学方面和代码方面表现明显较差，这一方面和训练数据有关，另一方面我认为也是模型大小所造成的，然而这方面的逻辑推理能力是一个可用的模型所必备，因此后续更新会关注提升相关能力。
 ## **特性**
 
 ### 易用性
