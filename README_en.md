@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-03-31 15:11:01
+ * @LastEditTime: 2023-03-31 19:13:54
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -19,7 +19,7 @@ Although the complete pre-training is not finished yet, we used the 40K-step pre
 
 [Demo](https://ffdd75ef89db6f1c97.gradio.live/)
 
-We tested our model by referring to some tests for Wenxin Yiyuan. Original report can be found at Baidu []"Wenxin Yiyan" Test: What is the level of domestic generative AI?](https://www.8btc.com/article/6809666)
+We tested our model by referring to some tests for Wenxin Yiyuan. Original report can be found at Baidu ["Wenxin Yiyan" Test: What is the level of domestic generative AI?](https://www.8btc.com/article/6809666)
 
 The results of our model are shown in the following figure, and more results are yet to be further tested. Due to domestic network problems, the use of the above Demo may result in a request loss situation. If there is no response for a long time, please refresh and try again.
 
