@@ -8,6 +8,7 @@ Description:
 
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
+import math
 
 
 def preprocess_self_instruction_gen(tokenizer, segment_max_length=1024):
@@ -23,7 +24,10 @@ def preprocess_self_instruction_gen(tokenizer, segment_max_length=1024):
         total = "user:{}<s>system:{}".format(prompt.strip(), line["completion"].strip())
         out = tokenizer(total)
         input_ids = out["input_ids"]
-        return [input_ids]
+        return [
+            input_ids[i * segment_max_length : (i + 1) * segment_max_length]
+            for i in range(math.ceil(len(input_ids) / segment_max_length))
+        ]
 
     return preprocess_self_instruction
 
@@ -43,7 +47,10 @@ def preprocess_belle_gen(tokenizer, segment_max_length=1024):
         total = "user:{}<s>system:{}".format(prompt, completion)
         out = tokenizer(total)
         input_ids = out["input_ids"]
-        return [input_ids]
+        return [
+            input_ids[i * segment_max_length : (i + 1) * segment_max_length]
+            for i in range(math.ceil(len(input_ids) / segment_max_length))
+        ]
 
     return preprocess_belle
 

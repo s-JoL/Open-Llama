@@ -22,4 +22,4 @@ log_interval = 50
 eval_interval = 500
 save_interval = 1000
 work_dir = "data/saved_ckpt/"
-ckpt_path = "data/saved_ckpt/30000.pt"
+ckpt_path = "data/saved_ckpt/40000.pt"

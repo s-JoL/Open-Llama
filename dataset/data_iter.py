@@ -21,11 +21,11 @@ def create_data_iter(paths, transform_dict=None, process_index=0, num_processes=
     past = None
     for i, path in paths:
         dataset_name = path.split("-")[-2]
+        if num_processes > 1 and i % num_processes != process_index:
+            continue
         if past != dataset_name:
             print("Loading data from {}".format(path))
             past = path
-        if num_processes > 1 and i % num_processes != process_index:
-            continue
         if path.endswith("jsonl.zst"):
             with zstd.open(path, "r", encoding="utf-8") as fp:
                 for line in fp:
