@@ -16,4 +16,5 @@ sentencepiece
 triton
 functorch==1.13.1
 xformers
+gradio
 git+https://github.com/Bayes-Song/transformers.git

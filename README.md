@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-03-29 21:50:37
+ * @LastEditTime: 2023-03-31 14:54:20
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -16,10 +16,16 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 ## 进展
 
-经过30K step的预训练，已经展现出了一定的胡说八道的能力，如下分别是编写代码、续写论文和续写中文，虽然正确性存在问题但是已经像是一句话了。
+虽然还没有完整的预训练完，但是我们先使用40K step预训练的模型进行了Instruction-tuning，模型可以服从简单的命令
 
-<img src="assets/code.JPG" width="33%"><img src="assets/paper.JPG" width="33%"><img src="assets/chinese.JPG" width="33%">
+[Demo](https://ffdd75ef89db6f1c97.gradio.live/)
 
+我们参考一些对文心一言的测试也简单测试一下我们的模型，原始报道 [百度“文心一言”测试：国内生成式 AI 什么水平？](https://www.8btc.com/article/6809666)
+
+本模型的效果如下图，更多结果还待进一步测试。由于国内网络问题，使用上面的Demo可能出现请求丢失的情况，如长时间无响应可刷新重试
+![image1](assets/image1.png)![image2](assets/image2.png)![image3](assets/image3.png)
+
+我们简单预估一下达到上面效果的一个花费，训练40K step使用了1.5亿条预训练数据，大约为110B token，总共训练时间76h，按Google Cloud的A100报价花费大约为19152美元。后续的Instruction-tuning训练了12k Step，使用1.6M条数据，总共训练时间3.4h，大约花费342美元。因此从0开始训练一个这样的模型总花费不到20000美元。
 ## **特性**
 
 ### 易用性
@@ -152,10 +158,40 @@ Total mult-adds (G): 6.89
 ```
 
 目前的进展
-![](assets/loss.png)
+![](assets/pretrain_loss.png)
 
 ### Instruction-Tuning
 
+我们使用目前开源的三个数据集进行Instruction-tuning，后续会加入更多的任务以及自己构建的数据集。
+- [yizhongw/self_instruct](https://huggingface.co/datasets/yizhongw/self_instruct)
+- [BelleGroup/generated_train_0.5M_CN](https://huggingface.co/datasets/BelleGroup/generated_train_0.5M_CN)
+- [BelleGroup/generated_train_1M_CN](https://huggingface.co/datasets/BelleGroup/generated_train_1M_CN)
+
+我们对原始数据进行了一些预处理，格式如下
+```
+user: {prompt}<s>system: {completion}</s>
+```
+
+具体训练代码和预训练基本一样，代码可见
+```
+instruction_tuning.py
+```
+
+启动命令也基本一致
+```bash
+accelerate launch --config_file configs/default_config.yaml instruction_tuning.py
+```
+某些情况下可能需要指定下列参数
+```
+--main_process_ip
+--main_process_port
+--num_processes
+--num_machines
+--machine_rank
+```
+
+过程中Loss如下，基本在波动不怎么下降
+![loss](assets/instruct_loss.png)
 ### RLHF
 
 ## 性能对比

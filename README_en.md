@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-03-29 21:51:28
+ * @LastEditTime: 2023-03-31 14:57:55
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -15,9 +15,17 @@ Translated by ChatGPT.
 Open-Llama is an open source project that provides a complete set of training processes for building large-scale language models, from data preparation to tokenization, pre-training, instruction tuning, and reinforcement learning techniques such as RLHF.
 
 ## Progress
-After 30K steps of pre-training, the model has demonstrated some language capabilities, as shown below in coding and paper continuation tasks. Although there are still issues with correctness, the generated outputs resemble sentences.
+Although the complete pre-training is not finished yet, we used the 40K-step pre-trained model for instruction tuning, which can follow simple commands.
 
-<img src="assets/code.JPG" width="50%"><img src="assets/paper.JPG" width="50%">
+[Demo](https://ffdd75ef89db6f1c97.gradio.live/)
+
+We tested our model by referring to some tests for Wenxin Yiyuan. Original report can be found at Baidu []"Wenxin Yiyan" Test: What is the level of domestic generative AI?](https://www.8btc.com/article/6809666)
+
+The results of our model are shown in the following figure, and more results are yet to be further tested. Due to domestic network problems, the use of the above Demo may result in a request loss situation. If there is no response for a long time, please refresh and try again.
+
+![image1](assets/image1.png)![image2](assets/image2.png)![image3](assets/image3.png)
+
+We roughly estimate the cost to achieve the above results. The 40K-step pre-training used 150 million pre-training data, which is about 110B tokens. The total training time is 76 hours, and the cost is about $19,152 according to Google Cloud's A100 quotation. The Instruction-tuning training was carried out for 12k steps, using 1.6 million data, and the total training time was 3.4 hours, costing about $342. Therefore, the total cost of training such a model from scratch is less than $20,000.
 
 ## **Features**
 ### Ease of Use
@@ -143,6 +151,35 @@ Current Progress
 ![](assets/loss.png)
 ### Instruction-Tuning
 
+We performed instruction-tuning on three currently available open-source datasets, and we plan to add more tasks and our own constructed datasets in the future.
+- [yizhongw/self_instruct](https://huggingface.co/datasets/yizhongw/self_instruct)
+- [BelleGroup/generated_train_0.5M_CN](https://huggingface.co/datasets/BelleGroup/generated_train_0.5M_CN)
+- [BelleGroup/generated_train_1M_CN](https://huggingface.co/datasets/BelleGroup/generated_train_1M_CN)
+
+We did some preprocessing on the raw data, the format is as follows:
+```
+user: {prompt}<s>system: {completion}</s>
+```
+The training code is similar to pre-training and can be seen in
+```
+instruction_tuning.py
+```
+
+The launch command is also similar to pre-training:
+```bash
+accelerate launch --config_file configs/default_config.yaml instruction_tuning.py
+```
+In some cases, the following parameters may need to be specified:
+```
+--main_process_ip
+--main_process_port
+--num_processes
+--num_machines
+--machine_rank
+```
+
+The loss during the process is as follows, basically fluctuating and not decreasing much:
+![loss](assets/instruct_loss.png)
 ### RLHF
 
 ## Performance Comparison
