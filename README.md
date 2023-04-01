@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-03-31 15:10:29
+ * @LastEditTime: 2023-04-01 10:36:30
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -18,7 +18,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 虽然还没有完整的预训练完，但是我们先使用40K step预训练的模型进行了Instruction-tuning，模型可以服从简单的命令
 
-[Demo](https://ffdd75ef89db6f1c97.gradio.live/)
+[Demo](https://d2e3b784307e131fff.gradio.live/)
 
 我们参考一些对文心一言的测试也简单测试一下我们的模型，原始报道 [百度“文心一言”测试：国内生成式 AI 什么水平？](https://www.8btc.com/article/6809666)
 
