@@ -2,8 +2,8 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-02 20:28:54
- * @FilePath: /undefined/Users/songliang/workspace/Open-Llama/README.md
+ * @LastEditTime: 2023-04-02 21:32:26
+ * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
  * Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
@@ -18,7 +18,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 虽然还没有完整的预训练完，但是我们先使用40K step预训练的模型进行了Instruction-tuning，模型可以服从简单的命令。目前没有多轮对话能力
 
-[Demo](https://cfefb37a989faecdab.gradio.live/)
+[Demo](http://home.ustc.edu.cn/~sl9292/)
 
 我们参考一些对文心一言的测试也简单测试一下我们的模型，原始报道 [百度“文心一言”测试：国内生成式 AI 什么水平？](https://www.8btc.com/article/6809666)
 

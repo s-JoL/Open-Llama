@@ -2,8 +2,8 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-02 20:29:24
- * @FilePath: /undefined/Users/songliang/workspace/Open-Llama/README_en.md
+ * @LastEditTime: 2023-04-02 21:32:32
+ * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
  * Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
@@ -17,7 +17,7 @@ Open-Llama is an open source project that provides a complete set of training pr
 ## Progress
 Although the complete pre-training is not finished yet, we used the 40K-step pre-trained model for instruction tuning, which can follow simple commands. Currently, there is no ability for multi-turn dialogue.
 
-[Demo](https://cfefb37a989faecdab.gradio.live/)
+[Demo](http://home.ustc.edu.cn/~sl9292/)
 
 We tested our model by referring to some tests for Wenxin Yiyuan. Original report can be found at Baidu ["Wenxin Yiyan" Test: What is the level of domestic generative AI?](https://www.8btc.com/article/6809666)
 
