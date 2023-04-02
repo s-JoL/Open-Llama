@@ -32,7 +32,10 @@ raw_model = LlamaForCausalLM(
         shared_input_output_embedding=True,
     )
 )
-ckpt = torch.load("data/saved_ckpt/instruction_tuning/12001.pt", map_location="cpu")
+ckpt = torch.load(
+    "data/saved_ckpt/instruction_tuning/14001.pt",
+    map_location="cpu",
+)
 raw_model.load_state_dict(ckpt)
 raw_model.eval()
 model = raw_model.cuda()
@@ -53,7 +56,22 @@ def question_answer(prompt):
     return pred
 
 
-demo = gr.Interface(fn=question_answer, inputs="text", outputs="text").queue(
-    concurrency_count=1
+demo = gr.Interface(
+    fn=question_answer,
+    inputs="text",
+    outputs="text",
+    examples=[
+        "帮我写一封邮件，内容是感谢jack的帮助，希望有机会能和他线下见面，请他吃饭",
+        "情人节送女朋友什么礼物，预算500",
+        "我今天肚子有点不舒服，晚饭有什么建议么",
+        "可以总结一下小说三体的核心内容么？",
+        "Can you explain to me what quantum mechanics is and how it relates to quantum computing?",
+        "I'm feeling a bit unwell in my stomach today. Do you have any suggestions for dinner?",
+    ],
+).queue(
+    concurrency_count=1,
+    title="Open-Llama",
+    description="不基于其他预训练模型，完全使用Open-Llama项目从0开始训练的Instruct-GPT模型，总共训练花费在2w美元以内，训练时间80h。",
+    article="[关于作者](http://home.ustc.edu.cn/~sl9292/resume.html)",
 )
 demo.launch(share=True)
