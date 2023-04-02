@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-01 10:36:30
+ * @LastEditTime: 2023-04-02 11:43:20
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -18,7 +18,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 虽然还没有完整的预训练完，但是我们先使用40K step预训练的模型进行了Instruction-tuning，模型可以服从简单的命令
 
-[Demo](https://d2e3b784307e131fff.gradio.live/)
+[Demo](https://cfefb37a989faecdab.gradio.live/)
 
 我们参考一些对文心一言的测试也简单测试一下我们的模型，原始报道 [百度“文心一言”测试：国内生成式 AI 什么水平？](https://www.8btc.com/article/6809666)
 
@@ -260,3 +260,63 @@ accelerate launch --config_file configs/default_config.yaml instruction_tuning.p
   howpublished={\url{https://github.com/Bayes-Song/Open-Llama}},
 }
 ```
+
+<!-- 一些之前没注意到的部分
+
+1. [GPT3](https://arxiv.org/pdf/2005.14165.pdf), Details of Model Training
+
+During training we always train on sequences of the full nctx = 2048 token context window, packing multiple documents into a single sequence when documents are shorter than 2048, in order to increase computational efficiency. Sequences with multiple documents are not masked in any special way but instead documents within a sequence are delimited with a special end of text token, giving the language model the information necessary to infer that context separated by the end of text token is unrelated. This allows for efficient training without need for any special sequence-specific masking.
+
+在[PALM](https://arxiv.org/pdf/2204.02311.pdf)中也有类似的说法
+Sequence length – A sequence length of 2048 was used for all models. Input examples are concatenated together and then split into sequences of exactly 2048 tokens, so that there are no padding tokens, but examples may be split in the middle. Input examples are differentiated from one another with a special [eod] token.
+
+2. GPT3,  Common Crawl Filtering
+
+使用高质量文本作为正例，其他所有样本作为负例。根据判为正例的概率作为筛选np.random.pareto(α) > 1 − document_score。
+思想是尽量使用和高质量样本相似的数据。
+The classifier is trained using logistic regression classifier with features from Spark’s standard tokenizer and HashingTF.
+
+3. GPT3, fuzzy deduplication
+
+使用MinHashLSH进行去重，同时把CC中的WebText部分数据去掉。这些特征和分类器使用的一致。
+we fuzzily deduplicated documents (i.e. removed documents with high overlap with other documents) within each dataset using Spark’s MinHashLSH implementation with 10 hashes
+
+4. GPT3, Test Set Contamination
+
+5. [The pile](https://arxiv.org/pdf/2101.00027.pdf), BPB(bits per UTF-8 encoded byte)/bits per character/perplexity
+
+$
+BPB = = (L_T /L_B)l/ ln(2) \\
+perplexity = P(w1, w2, w3, w4, ...)^{-\frac{1}{N}} \\
+bpc=-\frac{1}{T}\sum_i log_2 P(w_i|w1, w2, ..., w_{i-1}) \\
+2^{bpc}=(\prod_i P(w_i|w1, w2, ..., w_{i-1}))^{-\frac{1}{T}}=perplexity
+$
+bpc是字符粒度，和分词算法相关。而bpb为byte粒度，与分词算法无关。
+
+可以使用bpb的差异衡量不同数据的难度。
+
+6. The pile, diversity of the collected data
+
+数据多样性
+
+We hypothesize that this is due to the perplexity based filtering used in CC-100, where a language model is trained on Wikipedia and all data with a perplexity too high or too low is discarded. This effectively discards any data too similar to or too different from Wikipedia, which severely limits the diversity of the collected data. 
+
+7. The pile, bytes per token
+
+Since the GPT-2 BPE tokenizer is trained on WebText, the mean bytes per token is also a very rough indicator of how syntactically different each Pile component is from WebText.
+
+8. The pile, Deduplication
+
+We used 10 hash functions for each Minhash and an approximate Jaccard similarity of 0.5.
+
+9. GLM, Embedding Layer Gradient Shrink 
+
+和stable embedding类似
+$
+word-embedding = word-embedding*\alpha+word-embedding.detach() ∗ (1−\alpha)
+$
+
+10. PALM, Training Instability
+
+训练中的loss尖峰是由特定的数据和特定的参数共同造成，使用模型回滚+跳过部分数据解决。
+Instead, we found that a simple strategy to effectively mitigate the issue: We re-started training from a checkpoint roughly 100 steps before the spike started, and skipped roughly 200–500 data batches, which cover the batches that were seen before and during the spike. With this mitigation, the loss did not spike again at the same point. We do not believe that the spikes were caused by “bad data” per se, because we ran several ablation experiments where we took the batches of data that were surrounding the spike, and then trained on those same data batches starting from a different, earlier checkpoint. In these cases, we did not see a spike. This implies that spikes only occur due to the combination of specific data batches with a particular model parameter state -->
