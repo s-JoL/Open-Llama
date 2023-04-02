@@ -2,8 +2,8 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-02 11:43:25
- * @FilePath: /Open-Llama/README_en.md
+ * @LastEditTime: 2023-04-02 20:29:24
+ * @FilePath: /undefined/Users/songliang/workspace/Open-Llama/README_en.md
  * @Description: 
  * 
  * Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
@@ -15,7 +15,7 @@ Translated by ChatGPT.
 Open-Llama is an open source project that provides a complete set of training processes for building large-scale language models, from data preparation to tokenization, pre-training, instruction tuning, and reinforcement learning techniques such as RLHF.
 
 ## Progress
-Although the complete pre-training is not finished yet, we used the 40K-step pre-trained model for instruction tuning, which can follow simple commands.
+Although the complete pre-training is not finished yet, we used the 40K-step pre-trained model for instruction tuning, which can follow simple commands. Currently, there is no ability for multi-turn dialogue.
 
 [Demo](https://cfefb37a989faecdab.gradio.live/)
 

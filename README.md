@@ -2,8 +2,8 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-02 11:43:20
- * @FilePath: /Open-Llama/README.md
+ * @LastEditTime: 2023-04-02 20:28:54
+ * @FilePath: /undefined/Users/songliang/workspace/Open-Llama/README.md
  * @Description: 
  * 
  * Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
@@ -16,7 +16,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 ## 进展
 
-虽然还没有完整的预训练完，但是我们先使用40K step预训练的模型进行了Instruction-tuning，模型可以服从简单的命令
+虽然还没有完整的预训练完，但是我们先使用40K step预训练的模型进行了Instruction-tuning，模型可以服从简单的命令。目前没有多轮对话能力
 
 [Demo](https://cfefb37a989faecdab.gradio.live/)
 
@@ -319,4 +319,31 @@ $
 10. PALM, Training Instability
 
 训练中的loss尖峰是由特定的数据和特定的参数共同造成，使用模型回滚+跳过部分数据解决。
-Instead, we found that a simple strategy to effectively mitigate the issue: We re-started training from a checkpoint roughly 100 steps before the spike started, and skipped roughly 200–500 data batches, which cover the batches that were seen before and during the spike. With this mitigation, the loss did not spike again at the same point. We do not believe that the spikes were caused by “bad data” per se, because we ran several ablation experiments where we took the batches of data that were surrounding the spike, and then trained on those same data batches starting from a different, earlier checkpoint. In these cases, we did not see a spike. This implies that spikes only occur due to the combination of specific data batches with a particular model parameter state -->
+Instead, we found that a simple strategy to effectively mitigate the issue: We re-started training from a checkpoint roughly 100 steps before the spike started, and skipped roughly 200–500 data batches, which cover the batches that were seen before and during the spike. With this mitigation, the loss did not spike again at the same point. We do not believe that the spikes were caused by “bad data” per se, because we ran several ablation experiments where we took the batches of data that were surrounding the spike, and then trained on those same data batches starting from a different, earlier checkpoint. In these cases, we did not see a spike. This implies that spikes only occur due to the combination of specific data batches with a particular model parameter state
+
+
+11. [Chinchilla](https://arxiv.org/pdf/2203.15556.pdf), Optimal model scaling
+
+20 tokens per parameter, for example 10B model should use 200B tokens to pretrain
+
+12. [Gopher](https://arxiv.org/pdf/2112.11446.pdf), Quality Filtering
+
+Quality Filtering (MassiveWeb only) The vast majority of text found on the web is of insufficient
+quality to be useful for language model training. For example, many web pages contain primarily
+automatically generated content, or text that is not intended for human consumption (such as keywords
+for search-engine optimisation). Much of the web also comprises social media content, which can
+variously lack context, coherence, or substance. To remove low-quality data while minimising potential
+for bias, we apply a number of simple, easily understood heuristic filters: we remove any document
+that does not contain between 50 and 100,000 words, or whose mean word length is outside the
+range of 3 to 10 characters; we remove any document with a symbol-to-word ratio greater than 0.1
+for either the hash symbol or the ellipsis; and we remove any document with more than 90% of lines
+starting with a bullet point, or more than 30% ending with an ellipsis. We also require that 80%
+of words in a document contain at least one alphabetic character, and apply a "stop word" filter, to
+remove documents that do not contain at least two of the following English words: the, be, to, of, and,
+that, have, with; this adequately deals with ostensibly English documents that contain no coherent
+English text.
+
+13. Gopher, Constructing Token Sequences
+
+和GPT3中的避免mask的方法类似
+ -->
