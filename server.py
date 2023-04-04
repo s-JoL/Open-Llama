@@ -32,7 +32,7 @@ raw_model = LlamaForCausalLM(
         shared_input_output_embedding=True,
     )
 )
-ckpt = torch.load("data/saved_ckpt/instruction_tuning/14001.pt", map_location="cpu")
+ckpt = torch.load("data/saved_ckpt/instruction_tuning_3_epochs/23001.pt", map_location="cpu")
 raw_model.load_state_dict(ckpt)
 raw_model.eval()
 model = raw_model.cuda()
@@ -63,7 +63,8 @@ demo = gr.Interface(
         "我今天肚子有点不舒服，晚饭有什么建议么",
         "可以总结一下小说三体的核心内容么？",
         "Can you explain to me what quantum mechanics is and how it relates to quantum computing?",
-        "I'm feeling a bit unwell in my stomach today. Do you have any suggestions for dinner?",
+        "请帮我写一个AI驱动的幼儿教育APP的商业计划书",
+        "用python实现一个快速排序",
     ],
     title="Open-Llama",
     description="不基于其他预训练模型，完全使用[Open-Llama](https://github.com/Bayes-Song/Open-Llama)项目从0开始训练的Instruct-GPT模型，总训练成本不超过2w美元。由于请求需要经Gradio进行转发，可能出现请求丢失的现象，当长时间无响应（如20s以上）可刷新重试。当前体验服务生成的所有内容都是由人工智能模型生成，我们对其生成内容的准确性、完整性和功能性不做任何保证，并且其生成的内容不代表我们的态度或观点。",
