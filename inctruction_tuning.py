@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-30 21:35:01
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-05 22:47:25
+LastEditTime: 2023-04-06 03:35:31
 FilePath: /Open-Llama/inctruction_tuning.py
 Description: 
 
@@ -27,6 +27,9 @@ from dataset.collate_fn import collate_fn_gen
 from dataset.instruction_dataset import (
     preprocess_belle_gen,
     preprocess_self_instruction_gen,
+    preprocess_belle_multiturn_chat_gen,
+    preprocess_instruct_code_gen,
+    preprocess_sharegpt_gen,
 )
 from configs.instruction_tuning_config import *
 
@@ -45,9 +48,13 @@ tokenizer = Tokenizer(sp_model)
 paths = create_shard_kwargs(patterns, repeat=3)
 random.shuffle(paths)
 transform_dict = {
-    "belle_1M": preprocess_belle_gen(tokenizer, max_length),
-    "belle_0.5M": preprocess_belle_gen(tokenizer, max_length),
-    "self_instruct": preprocess_self_instruction_gen(tokenizer, max_length),
+    "self_instruct": preprocess_self_instruction_gen(tokenizer),
+    "belle_1M": preprocess_belle_gen(tokenizer),
+    "belle_0.5M": preprocess_belle_gen(tokenizer),
+    "belle_school_math_0.25M": preprocess_belle_gen(tokenizer),
+    "belle_multiturn_chat_0.8M": preprocess_belle_multiturn_chat_gen(tokenizer),
+    "instruct_to_code": preprocess_instruct_code_gen(tokenizer),
+    "sharegpt_90K": preprocess_sharegpt_gen(tokenizer),
 }
 data_set = DataIter(
     paths,

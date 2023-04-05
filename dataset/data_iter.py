@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-17 19:32:20
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-05 22:36:45
+LastEditTime: 2023-04-06 03:37:55
 FilePath: /Open-Llama/dataset/data_iter.py
 Description: 
 
@@ -68,7 +68,10 @@ class DataIter(IterableDataset):
                     # Transformation, including sample, tokenize, etc.
                     if self.transform_dict:
                         line = self.transform_dict[dataset_name](line)
-                        if isinstance(line, str):
+                        # skip bad doc
+                        if line is None:
+                            continue
+                        elif isinstance(line, str):
                             yield line
                         # must be list of list
                         elif isinstance(line, list) and isinstance(line[0], list):
