@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-30 21:02:00
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-03-30 21:02:06
+LastEditTime: 2023-04-05 22:35:24
 FilePath: /Open-Llama/dataset/instruction_dataset.py
 Description: 
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     from datasets import IterableDataset
 
     from dataset.tokenizer import Tokenizer
-    from dataset.data_iter import create_shard_kwargs, create_data_iter
+    from dataset.data_iter import create_shard_kwargs, DataIter
 
     sp_model = spm.SentencePieceProcessor(
         model_file="configs/10w_vocab_wudao5_pile10.model"
@@ -73,8 +73,8 @@ if __name__ == "__main__":
         "belle_0.5M": preprocess_belle_gen(tokenizer),
         "self_instruct": preprocess_self_instruction_gen(tokenizer),
     }
-    data_set = IterableDataset.from_generator(
-        create_data_iter, gen_kwargs={"paths": paths, "transform_dict": transform_dict}
+    data_set = DataIter(
+        paths, transform_dict=transform_dict, concat_docs=True, max_length=1024
     )
     for i, sample in enumerate(data_set):
         print(sample, sp_model.Decode(sample))

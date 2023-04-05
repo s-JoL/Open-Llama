@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-20 21:39:47
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-03-26 23:09:39
+LastEditTime: 2023-04-05 22:35:01
 FilePath: /Open-Llama/dataset/tokenizer.py
 Description: 
 
@@ -183,11 +183,11 @@ if __name__ == "__main__":
     for i, j in zip(tmp, out):
         assert normalize("NFKC", i) == j
 
-    from dataset.data_iter import create_shard_kwargs, create_data_iter
+    from dataset.data_iter import create_shard_kwargs, DataIter
 
     patterns = ["data/pretrain_data/part-wudao*.jsonl.zst"]
     paths = create_shard_kwargs(patterns)
-    data_iter = create_data_iter(paths)
+    data_iter = DataIter(paths)
     for i, data in enumerate(data_iter):
         assert (
             normalize("NFKC", data["content"])

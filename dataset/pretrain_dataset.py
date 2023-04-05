@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-17 20:41:25
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-03-26 23:07:56
+LastEditTime: 2023-04-05 22:32:39
 FilePath: /Open-Llama/dataset/pretrain_dataset.py
 Description: 
 
@@ -49,10 +49,9 @@ def preprocess_the_pile_gen(tokenizer, segment_max_length=1024):
 
 if __name__ == "__main__":
     import sentencepiece as spm
-    from datasets import IterableDataset
 
     from dataset.tokenizer import Tokenizer
-    from dataset.data_iter import create_shard_kwargs, create_data_iter
+    from dataset.data_iter import create_shard_kwargs, DataIter
 
     sp_model = spm.SentencePieceProcessor(
         model_file="configs/10w_vocab_wudao5_pile10.model"
@@ -64,8 +63,8 @@ if __name__ == "__main__":
         "wudao": preprocess_wudao_gen(tokenizer),
         "pile": preprocess_the_pile_gen(tokenizer),
     }
-    data_set = IterableDataset.from_generator(
-        create_data_iter, gen_kwargs={"paths": paths, "transform_dict": transform_dict}
+    data_set = DataIter(
+        paths, transform_dict=transform_dict, concat_docs=True, max_length=1024
     )
     for sample in data_set:
         print(sample)

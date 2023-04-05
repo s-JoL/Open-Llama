@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-31 13:26:15
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-03-31 14:05:35
+LastEditTime: 2023-04-05 21:47:54
 FilePath: /Open-Llama/server.py
 Description: 
 
@@ -32,7 +32,9 @@ raw_model = LlamaForCausalLM(
         shared_input_output_embedding=True,
     )
 )
-ckpt = torch.load("data/saved_ckpt/instruction_tuning_3_epochs/23001.pt", map_location="cpu")
+ckpt = torch.load(
+    "data/saved_ckpt/instruction_tuning_3_epochs/37001.pt", map_location="cpu"
+)
 raw_model.load_state_dict(ckpt)
 raw_model.eval()
 model = raw_model.cuda()
