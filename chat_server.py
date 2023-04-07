@@ -32,12 +32,14 @@ raw_model = LlamaForCausalLM(
     )
 )
 ckpt = torch.load(
-    "data/saved_ckpt/instruction_tuning_math_code_multiturn/36001.pt", map_location="cpu"
+    "data/saved_ckpt/instruction_tuning_math_code_multiturn/36001.pt",
+    map_location="cpu",
 )
 raw_model.load_state_dict(ckpt)
 raw_model.eval()
 model = raw_model.cuda()
 print("ready")
+
 
 def parse_codeblock(text):
     lines = text.split("\n")
@@ -46,11 +48,12 @@ def parse_codeblock(text):
             if line != "```":
                 lines[i] = f'<pre><code class="{lines[i][3:]}">'
             else:
-                lines[i] = '</code></pre>'
+                lines[i] = "</code></pre>"
         else:
             if i > 0:
                 lines[i] = "<br/>" + line.replace("<", "&lt;").replace(">", "&gt;")
     return "".join(lines)
+
 
 with gr.Blocks() as demo:
     gr.Markdown(
@@ -75,15 +78,17 @@ with gr.Blocks() as demo:
         for prompt, completion in history:
             round += 1
             if completion is None:
-                inputs = 'user:{}\nsystem:'.format(prompt)
-                inputs = tokenizer(inputs, return_tensors=True, add_special_tokens=False)
-                context.append(inputs['input_ids'])
+                inputs = "user:{}\nsystem:".format(prompt)
+                inputs = tokenizer(
+                    inputs, return_tensors=True, add_special_tokens=False
+                )
+                context.append(inputs["input_ids"])
             else:
-                inputs = 'user:{}\nsystem:{}'.format(prompt, completion)
+                inputs = "user:{}\nsystem:{}".format(prompt, completion)
                 inputs = tokenizer(inputs, return_tensors=True, add_special_tokens=True)
-                context.append(inputs['input_ids'])
+                context.append(inputs["input_ids"])
         context = torch.cat(context, dim=-1)
-        context = context[:, -1024: ]
+        context = context[:, -1024:]
         inputs_len = context.shape[1]
         context = context.cuda()
         pred = model.generate(input_ids=context, max_new_tokens=512, do_sample=True)
@@ -99,7 +104,7 @@ with gr.Blocks() as demo:
     )
     clear.click(lambda: None, None, chatbot, queue=False)
     gr.Markdown(
-    """
+        """
     当前体验服务生成的所有内容都是由人工智能模型生成，我们对其生成内容的准确性、完整性和功能性不做任何保证，并且其生成的内容不代表我们的态度或观点。
 
     联系方式: sl12160010@gmail.com  对于该项目有任何意见和建议都欢迎联系我.

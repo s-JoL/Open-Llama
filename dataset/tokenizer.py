@@ -169,7 +169,7 @@ class Tokenizer:
                             flag = True
                             break
             if flag:
-                ids = ids[: j]
+                ids = ids[:j]
             else:
                 ids = ids
             out.append(ids)
