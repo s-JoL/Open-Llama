@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-31 13:26:15
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-05 21:47:54
+LastEditTime: 2023-04-06 03:45:44
 FilePath: /Open-Llama/server.py
 Description: 
 
@@ -43,7 +43,7 @@ print("ready")
 
 def question_answer(prompt):
     print(prompt)
-    raw_inputs = "user:{}<s>system:".format(prompt)
+    raw_inputs = "user:{}\nsystem:".format(prompt)
     inputs_len = len(raw_inputs)
     inputs = tokenizer(raw_inputs, return_tensors=True, add_special_tokens=False)
     for k, v in inputs.items():
