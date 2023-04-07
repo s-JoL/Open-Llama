@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-02 21:32:32
+ * @LastEditTime: 2023-04-08 00:03:57
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -15,7 +15,7 @@ Translated by ChatGPT.
 Open-Llama is an open source project that provides a complete set of training processes for building large-scale language models, from data preparation to tokenization, pre-training, instruction tuning, and reinforcement learning techniques such as RLHF.
 
 ## Progress
-Although the complete pre-training is not finished yet, we used the 40K-step pre-trained model for instruction tuning, which can follow simple commands. Currently, there is no ability for multi-turn dialogue.
+We completed pre-training on 300 billion tokens, with a total of 80,000 steps trained, using a global batch size of 4 million, consistent with Llama. We constructed the instruction-tuning dataset using a total of 7 parts of data, which the model has certain programming ability, mathematical ability, and multi-turn dialogue ability. For specific data, please refer to the instruction-tuning section.
 
 [Demo](http://home.ustc.edu.cn/~sl9292/)
 
@@ -23,7 +23,11 @@ We tested our model by referring to some tests for Wenxin Yiyuan. Original repor
 
 The results of our model are shown in the following figure, and more results are yet to be further tested. Due to domestic network problems, the use of the above Demo may result in a request loss situation. If there is no response for a long time, please refresh and try again.
 
-![image1](assets/image1.png)![image2](assets/image2.png)![image3](assets/image3.png)
+![image1](assets/eng1.png)![image2](assets/eng2.png)![image3](assets/eng3.png)
+
+Here is a demonstration of the model's ability in multi-turn dialogue about code.
+
+![image4](assets/multiturn_chat_en.jpeg)
 
 We roughly estimate the cost to achieve the above results. The 40K-step pre-training used 150 million pre-training data, which is about 110B tokens. The total training time is 76 hours, and the cost is about $19,152 according to Google Cloud's A100 quotation. The Instruction-tuning training was carried out for 12k steps, using 1.6 million data, and the total training time was 3.4 hours, costing about $342. Therefore, the total cost of training such a model from scratch is less than $20,000.
 
@@ -156,10 +160,17 @@ We performed instruction-tuning on three currently available open-source dataset
 - [yizhongw/self_instruct](https://huggingface.co/datasets/yizhongw/self_instruct)
 - [BelleGroup/generated_train_0.5M_CN](https://huggingface.co/datasets/BelleGroup/generated_train_0.5M_CN)
 - [BelleGroup/generated_train_1M_CN](https://huggingface.co/datasets/BelleGroup/generated_train_1M_CN)
+- [BelleGroup/train_0.5M_CN](https://huggingface.co/datasets/BelleGroup/train_0.5M_CN)
+- [BelleGroup/train_1M_CN](https://huggingface.co/datasets/BelleGroup/train_1M_CN)
+- [BelleGroup/multiturn_chat_0.8M](https://huggingface.co/datasets/BelleGroup/multiturn_chat_0.8M)
+- [BelleGroup/school_math_0.25M](https://huggingface.co/datasets/BelleGroup/school_math_0.25M)
+- [RyokoAI/ShareGPT52K](https://huggingface.co/datasets/RyokoAI/ShareGPT52K)
+- [Graverman/Instruct-to-Code](https://huggingface.co/datasets/Graverman/Instruct-to-Code)
+There were some issues with the handling of ShareGPT52K dataset in the processing of the datasets. We downloaded the original data again and reprocessed it.
 
 We did some preprocessing on the raw data, the format is as follows:
 ```
-user: {prompt}<s>system: {completion}</s>
+user: {prompt}\nsystem: {completion}</s>
 ```
 The training code is similar to pre-training and can be seen in
 ```
@@ -182,7 +193,13 @@ In some cases, the following parameters may need to be specified:
 The loss during the process is as follows, basically fluctuating and not decreasing much:
 ![loss](assets/instruct_loss.png)
 ### RLHF
+N/A
 
+### Server
+
+Use server.py for single-turn conversation, and chat_server.py for multi-turn conversation.
+
+Developed based on Gradio.
 ## Performance Comparison
 
 ### Training Framework
