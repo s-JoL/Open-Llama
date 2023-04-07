@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-02 21:32:26
+ * @LastEditTime: 2023-04-07 23:19:21
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -16,7 +16,8 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 ## 进展
 
-虽然还没有完整的预训练完，但是我们先使用40K step预训练的模型进行了Instruction-tuning，模型可以服从简单的命令。目前没有多轮对话能力
+我们完成了300B token的预训练，总共训练80 K step，Global Batch Size和Llama中一致为4M。
+使用总共7部分数据构成Instruction-tuning数据，模型具有一定的编程能力、数学能力和多轮对话能力，具体数据见Instruction-Tuning部分。
 
 [Demo](http://home.ustc.edu.cn/~sl9292/)
 
@@ -25,6 +26,9 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 本模型的效果如下图，更多结果还待进一步测试。由于国内网络问题，使用上面的Demo可能出现请求丢失的情况，如长时间无响应可刷新重试
 ![image1](assets/image1.png)![image2](assets/image2.png)![image3](assets/image3.png)
 
+下面是一个关于代码的多轮对话能力的展示
+
+![image4](assets/multiturn_chat.jpeg)
 我们简单预估一下达到上面效果的一个花费，训练40K step使用了1.5亿条预训练数据，大约为110B token，总共训练时间76h，按Google Cloud的A100报价花费大约为19152美元。后续的Instruction-tuning训练了12k Step，使用1.6M条数据，总共训练时间3.4h，大约花费342美元。因此从0开始训练一个这样的模型总花费不到20000美元。
 
 目前模型在数学方面和代码方面表现明显较差，这一方面和训练数据有关，另一方面我认为也是模型大小所造成的，然而这方面的逻辑推理能力是一个可用的模型所必备，因此后续更新会关注提升相关能力。
@@ -166,12 +170,17 @@ Total mult-adds (G): 6.89
 
 我们使用目前开源的三个数据集进行Instruction-tuning，后续会加入更多的任务以及自己构建的数据集。
 - [yizhongw/self_instruct](https://huggingface.co/datasets/yizhongw/self_instruct)
-- [BelleGroup/generated_train_0.5M_CN](https://huggingface.co/datasets/BelleGroup/generated_train_0.5M_CN)
-- [BelleGroup/generated_train_1M_CN](https://huggingface.co/datasets/BelleGroup/generated_train_1M_CN)
+- [BelleGroup/train_0.5M_CN](https://huggingface.co/datasets/BelleGroup/train_0.5M_CN)
+- [BelleGroup/train_1M_CN](https://huggingface.co/datasets/BelleGroup/train_1M_CN)
+- [BelleGroup/multiturn_chat_0.8M](https://huggingface.co/datasets/BelleGroup/multiturn_chat_0.8M)
+- [BelleGroup/school_math_0.25M](https://huggingface.co/datasets/BelleGroup/school_math_0.25M)
+- [RyokoAI/ShareGPT52K](https://huggingface.co/datasets/RyokoAI/ShareGPT52K)
+- [Graverman/Instruct-to-Code](https://huggingface.co/datasets/Graverman/Instruct-to-Code)
 
+其中ShareGPT52K数据在datastes的处理有些问题，我们直接下载原数据重新进行了处理。
 我们对原始数据进行了一些预处理，格式如下
 ```
-user: {prompt}<s>system: {completion}</s>
+user: {prompt}\nsystem: {completion}</s>
 ```
 
 具体训练代码和预训练基本一样，代码可见
@@ -195,7 +204,12 @@ accelerate launch --config_file configs/default_config.yaml instruction_tuning.p
 过程中Loss如下，基本在波动不怎么下降
 ![loss](assets/instruct_loss.png)
 ### RLHF
+暂无
+### Server
 
+单轮对话使用server.py，对于多轮对话使用chat_server.py
+
+基于Gradio开发。 
 ## 性能对比
 
 ### 训练框架
