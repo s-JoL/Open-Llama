@@ -2,14 +2,14 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-24 20:49:03
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-03-26 23:43:59
+LastEditTime: 2023-04-05 22:40:29
 FilePath: /Open-Llama/dataset/train_tokenizer.py
 Description: 
 
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
 import random
-from dataset.data_iter import create_data_iter, create_shard_kwargs
+from dataset.data_iter import DataIter, create_shard_kwargs
 
 wudao_patterns = [
     "data/pretrain_data/part-wudao-*.jsonl.zst",
@@ -24,10 +24,10 @@ pile_paths = create_shard_kwargs(pile_patterns)
 random.shuffle(pile_paths)
 paths = wudao_paths[:5] + pile_paths[:10]
 transform_dict = {
-    "wudao": lambda line: [(line["title"] + "\n" + line["content"])],
-    "pile": lambda line: [line["text"]],
+    "wudao": lambda line: line["title"] + "\n" + line["content"],
+    "pile": lambda line: line["text"],
 }
-data_iter = create_data_iter(paths, transform_dict)
+data_iter = iter(DataIter(paths, transform_dict))
 
 import io
 import sentencepiece as spm

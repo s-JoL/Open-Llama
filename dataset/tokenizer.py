@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-20 21:39:47
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-03-26 23:09:39
+LastEditTime: 2023-04-06 23:01:50
 FilePath: /Open-Llama/dataset/tokenizer.py
 Description: 
 
@@ -145,14 +145,34 @@ class Tokenizer:
                 out["attention_mask"] = attention_mask
         return out
 
-    def decode(self, inputs):
+    def decode(self, inputs, max_rounds=None):
         inputs = inputs.tolist()
         out = []
-        for i in inputs:
-            if self.eos_id in i:
-                eos_idx = i.index(self.eos_id)
-                i = i[:eos_idx]
-            out.append(i)
+        for i, ids in enumerate(inputs):
+            count = 0
+            flag = False
+            for j, token in enumerate(ids):
+                if token == self.eos_id:
+                    if max_rounds is None:
+                        flag = True
+                        break
+                    elif isinstance(max_rounds, int):
+                        if count < max_rounds:
+                            count += 1
+                        else:
+                            flag = True
+                            break
+                    elif isinstance(max_rounds, list):
+                        if count < max_rounds[i]:
+                            count += 1
+                        else:
+                            flag = True
+                            break
+            if flag:
+                ids = ids[:j]
+            else:
+                ids = ids
+            out.append(ids)
         out = self.sp_model.Decode(out)
         return out
 
@@ -183,11 +203,11 @@ if __name__ == "__main__":
     for i, j in zip(tmp, out):
         assert normalize("NFKC", i) == j
 
-    from dataset.data_iter import create_shard_kwargs, create_data_iter
+    from dataset.data_iter import create_shard_kwargs, DataIter
 
     patterns = ["data/pretrain_data/part-wudao*.jsonl.zst"]
     paths = create_shard_kwargs(patterns)
-    data_iter = create_data_iter(paths)
+    data_iter = DataIter(paths)
     for i, data in enumerate(data_iter):
         assert (
             normalize("NFKC", data["content"])

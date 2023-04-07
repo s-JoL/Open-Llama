@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-30 21:35:01
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-03-30 21:40:03
+LastEditTime: 2023-04-06 03:35:31
 FilePath: /Open-Llama/inctruction_tuning.py
 Description: 
 
@@ -16,18 +16,20 @@ import random
 import sentencepiece as spm
 from torchinfo import summary
 from accelerate import Accelerator
-from datasets import IterableDataset
 from torch.utils.data import DataLoader
 from deepspeed.ops.adam import FusedAdam
 from transformers import LlamaForCausalLM, LlamaConfig, get_cosine_schedule_with_warmup
 
 from dataset.validation import val_set
 from dataset.tokenizer import Tokenizer
-from dataset.data_iter import create_shard_kwargs, create_data_iter
-from dataset.data_loader import pretrain_collate_fn_gen
+from dataset.data_iter import create_shard_kwargs, DataIter
+from dataset.collate_fn import collate_fn_gen
 from dataset.instruction_dataset import (
     preprocess_belle_gen,
     preprocess_self_instruction_gen,
+    preprocess_belle_multiturn_chat_gen,
+    preprocess_instruct_code_gen,
+    preprocess_sharegpt_gen,
 )
 from configs.instruction_tuning_config import *
 
@@ -46,25 +48,28 @@ tokenizer = Tokenizer(sp_model)
 paths = create_shard_kwargs(patterns, repeat=3)
 random.shuffle(paths)
 transform_dict = {
-    "belle_1M": preprocess_belle_gen(tokenizer, max_length),
-    "belle_0.5M": preprocess_belle_gen(tokenizer, max_length),
-    "self_instruct": preprocess_self_instruction_gen(tokenizer, max_length),
+    "self_instruct": preprocess_self_instruction_gen(tokenizer),
+    "belle_1M": preprocess_belle_gen(tokenizer),
+    "belle_0.5M": preprocess_belle_gen(tokenizer),
+    "belle_school_math_0.25M": preprocess_belle_gen(tokenizer),
+    "belle_multiturn_chat_0.8M": preprocess_belle_multiturn_chat_gen(tokenizer),
+    "instruct_to_code": preprocess_instruct_code_gen(tokenizer),
+    "sharegpt_90K": preprocess_sharegpt_gen(tokenizer),
 }
-data_set = IterableDataset.from_generator(
-    create_data_iter,
-    gen_kwargs={
-        "paths": paths,
-        "transform_dict": transform_dict,
-        "process_index": accelerator.process_index,
-        "num_processes": accelerator.num_processes,
-    },
+data_set = DataIter(
+    paths,
+    transform_dict=transform_dict,
+    concat_docs=True,
+    max_length=max_length,
+    process_index=accelerator.process_index,
+    num_processes=accelerator.num_processes,
 )
 train_loader = DataLoader(
     data_set,
     batch_size=train_batch_size,
     # If num_workers is greater than 1, duplicate data may occur.
     num_workers=0,
-    collate_fn=pretrain_collate_fn_gen(tokenizer, max_length),
+    collate_fn=collate_fn_gen(tokenizer, max_length),
     drop_last=True,
 )
 # smaller initializer_range make training more stable
