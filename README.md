@@ -113,7 +113,7 @@ python3 dataset/train_tokenizer.py
 ```bash
 python3 dataset/pretrain_dataset.py
 ```
-
+验证数据完整性可见 [issue](https://github.com/s-JoL/Open-Llama/issues/5)
 ### 模型结构
 我们基于Transformers库中的[Llama](https://github.com/facebookresearch/llama)参考论文原文中的2.4 Efficient implementation一节进行了修改，
 同时还参考了一些其他论文引入了一些优化。具体来说，我们引入了由META开源的[xformers库](https://github.com/facebookresearch/xformers)中的memory_efficient_attention操作来进行
