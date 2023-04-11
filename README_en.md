@@ -91,6 +91,9 @@ WuDao
 The Pile
 {'text': 'some text', 'meta': {'pile_set_name': 'Github'}}
 ```
+
+Verification of data intergrity can be foud in this [issue]((https://github.com/s-JoL/Open-Llama/issues/5)
+
 ### Data Loading
 The code for loading data can be found in the dataset directory, which includes training a tokenizer using SentencePiece and constructing a DataLoader based on the tokenizer.
 
@@ -104,7 +107,6 @@ Check the DataLoader output with the following command:
 ```bash
 python3 dataset/pretrain_dataset.py
 ```
-Verification of data intergrity can be foud in this [issue]((https://github.com/s-JoL/Open-Llama/issues/5)
 ### Model Structure
 We modified the [Llama](https://github.com/facebookresearch/llama) model in the Transformers library based on section 2.4 "Efficient Implementation" in the original paper and introduced some optimizations from other papers. Specifically, we introduced the memory_efficient_attention operation from the [xformers library](https://github.com/facebookresearch/xformers) by META for computing self-attention, which significantly improves performance by about 30%. Please refer to modeling_llama.py for details.
 
