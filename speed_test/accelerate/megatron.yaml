@@ -1,0 +1,23 @@
+compute_environment: LOCAL_MACHINE
+deepspeed_config: {}
+distributed_type: MEGATRON_LM
+downcast_bf16: 'no'
+fsdp_config: {}
+machine_rank: 0
+main_process_ip: null
+main_process_port: null
+main_training_function: main
+megatron_lm_config:
+  megatron_lm_gradient_clipping: 1.0
+  megatron_lm_num_micro_batches: 2
+  megatron_lm_pp_degree: 2
+  megatron_lm_recompute_activations: true
+  megatron_lm_sequence_parallelism: true
+  megatron_lm_tp_degree: 2
+  megatron_lm_use_distributed_optimizer: true
+mixed_precision: bf16
+num_machines: 1
+num_processes: 4
+rdzv_backend: static
+same_network: true
+use_cpu: false
