@@ -1,0 +1,24 @@
+data:
+  patterns: ["data/pretrain_data/part-*.jsonl.zst"]
+  tokenizer_model_path: "configs/10w_vocab_wudao5_pile10.model"
+model:
+  initializer_range: 1.0e-2
+  max_length: 1024
+  hidden_dropout_prob: 0.1
+  attention_dropout_prob: 0.1
+  use_stable_embedding: True
+  shared_input_output_embedding: True
+train:
+  train_batch_size: 2
+  num_training_steps: 1000000
+  num_warmup_steps: 2000
+  initializer_range: 1.0e-2
+  lr: 2.0e-4
+  weight_decay: 1.0e-1
+  ckpt: null
+# global step
+log_interval: 5
+eval_interval: 200
+save_interval: 800
+work_dir: "data/saved_ckpt/"
+project_name: "Llama Pretrain"
