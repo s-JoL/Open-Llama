@@ -8,6 +8,7 @@ from transformers import get_cosine_schedule_with_warmup
 
 from dataset.validation import val_set
 
+
 class Trainer:
     def __init__(self, config, raw_model, train_loader, tokenizer, accelerator):
         self.config = config
@@ -15,18 +16,29 @@ class Trainer:
         self.train_loader = train_loader
         self.tokenizer = tokenizer
         self.accelerator = accelerator
-        self.lr_scheduler_factor = accelerator.num_processes / accelerator.gradient_accumulation_steps
-        self.log_interval = self.config['log_interval'] * accelerator.gradient_accumulation_steps
-        self.eval_interval = self.config['eval_interval'] * accelerator.gradient_accumulation_steps
-        self.save_interval = self.config['save_interval'] * accelerator.gradient_accumulation_steps
-        self.work_dir = self.config['work_dir']
+        self.lr_scheduler_factor = (
+            accelerator.num_processes / accelerator.gradient_accumulation_steps
+        )
+        self.log_interval = (
+            self.config["log_interval"] * accelerator.gradient_accumulation_steps
+        )
+        self.eval_interval = (
+            self.config["eval_interval"] * accelerator.gradient_accumulation_steps
+        )
+        self.save_interval = (
+            self.config["save_interval"] * accelerator.gradient_accumulation_steps
+        )
+        self.work_dir = self.config["work_dir"]
         self.get_model_info()
         if accelerator.is_main_process:
-            wandb.init(project=self.config['project_name'])
+            wandb.init(project=self.config["project_name"])
 
     def get_model_info(self):
         with torch.no_grad():
-            summary(self.raw_model.cuda(), input_data=torch.ones(1, 64, dtype=torch.int64).cuda())
+            summary(
+                self.raw_model.cuda(),
+                input_data=torch.ones(1, 64, dtype=torch.int64).cuda(),
+            )
 
     def get_optimizer(self):
         no_decay = ["bias", "LayerNorm.weight", "layernorm.weight"]
@@ -37,7 +49,7 @@ class Trainer:
                     for n, p in self.raw_model.named_parameters()
                     if not any(nd in n for nd in no_decay)
                 ],
-                "weight_decay": self.config['train']['weight_decay'],
+                "weight_decay": self.config["train"]["weight_decay"],
             },
             {
                 "params": [
@@ -48,15 +60,21 @@ class Trainer:
                 "weight_decay": 0.0,
             },
         ]
-        self.optim = FusedAdam(optimizer_grouped_parameters, lr=self.config['train']['lr'], betas=(0.9, 0.95))
+        self.optim = FusedAdam(
+            optimizer_grouped_parameters,
+            lr=self.config["train"]["lr"],
+            betas=(0.9, 0.95),
+        )
 
     def get_lr_scheduler(self):
         self.scheduler = get_cosine_schedule_with_warmup(
             self.optim,
-            num_warmup_steps=self.config['train']['num_warmup_steps'] * self.lr_scheduler_factor,
-            num_training_steps=self.config['train']['num_training_steps'] * self.lr_scheduler_factor,
+            num_warmup_steps=self.config["train"]["num_warmup_steps"]
+            * self.lr_scheduler_factor,
+            num_training_steps=self.config["train"]["num_training_steps"]
+            * self.lr_scheduler_factor,
         )
-        
+
     def prepare(self):
         _, self.model, self.optim, self.scheduler = self.accelerator.prepare(
             self.train_loader, self.raw_model, self.optim, self.scheduler
@@ -74,7 +92,7 @@ class Trainer:
         self.scheduler.step()
         self.optim.zero_grad()
         return losses
-    
+
     def train(self):
         self.get_optimizer()
         self.get_lr_scheduler()
@@ -82,28 +100,45 @@ class Trainer:
         self.global_step = 0
         self.start_time = time.time()
         self.optim.zero_grad()
-        for self.data_step in range(self.config['train']['num_training_steps']):
+        for self.data_step in range(self.config["train"]["num_training_steps"]):
             self.model.train()
             with self.accelerator.accumulate(self.model):
                 batch = next(self.train_loader_iter)
                 losses = self.train_step(batch)
                 if self.accelerator.sync_gradients:
                     self.global_step += 1
-            if self.data_step % self.log_interval == 0 and self.data_step > 0 and self.accelerator.is_main_process:
+            if (
+                self.data_step % self.log_interval == 0
+                and self.data_step > 0
+                and self.accelerator.is_main_process
+            ):
                 self.log(losses)
-            if self.data_step % self.eval_interval == 0 and self.accelerator.is_main_process:
+            if (
+                self.data_step % self.eval_interval == 0
+                and self.accelerator.is_main_process
+            ):
                 self.eval()
-            if self.data_step % self.save_interval == 0 and self.data_step > 0 and self.accelerator.is_main_process:
+            if (
+                self.data_step % self.save_interval == 0
+                and self.data_step > 0
+                and self.accelerator.is_main_process
+            ):
                 if not os.path.isdir(self.work_dir):
                     os.mkdir(self.work_dir)
-                torch.save(self.raw_model.state_dict(), "{}/{}.pt".format(self.work_dir, self.global_step))
+                torch.save(
+                    self.raw_model.state_dict(),
+                    "{}/{}.pt".format(self.work_dir, self.global_step),
+                )
         wandb.finish()
 
     def log(self, losses):
         cost_time = time.time() - self.start_time
         self.start_time = time.time()
-        tokens = self.config['train']['train_batch_size'] * \
-            self.log_interval * self.config['model']['max_length']
+        tokens = (
+            self.config["train"]["train_batch_size"]
+            * self.log_interval
+            * self.config["model"]["max_length"]
+        )
         wandb.log({"Training/Token per second per gpu": tokens / cost_time})
         for k, v in losses.items():
             wandb.log({"Losses/{}".format(k): v})
@@ -115,7 +150,10 @@ class Trainer:
         wandb.log({"Training/Global Step": self.global_step})
         self.accelerator.print(
             "Global Step: {}, Data Step: {}, Loss: {}, Token per second per gpu: {}".format(
-                self.global_step, self.data_step, losses["total_loss"], tokens / cost_time
+                self.global_step,
+                self.data_step,
+                losses["total_loss"],
+                tokens / cost_time,
             )
         )
 
