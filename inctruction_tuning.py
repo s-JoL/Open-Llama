@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-30 21:35:01
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-06 03:35:31
+LastEditTime: 2023-04-15 19:34:59
 FilePath: /Open-Llama/inctruction_tuning.py
 Description: 
 
@@ -59,8 +59,7 @@ transform_dict = {
 data_set = DataIter(
     paths,
     transform_dict=transform_dict,
-    concat_docs=True,
-    max_length=max_length,
+    concat_docs=False,
     process_index=accelerator.process_index,
     num_processes=accelerator.num_processes,
 )
