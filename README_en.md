@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-08 00:03:57
+ * @LastEditTime: 2023-04-16 23:49:28
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -15,6 +15,13 @@ Translated by ChatGPT.
 Open-Llama is an open source project that provides a complete set of training processes for building large-scale language models, from data preparation to tokenization, pre-training, instruction tuning, and reinforcement learning techniques such as RLHF.
 
 ## Progress
+
+The checkpoint after Instruct-tuning has been open-sourced on [HuggingFace](https://huggingface.co/s-JoL/Open-Llama-V1).
+To use the checkpoint, you need to first install the latest version of Transformers using the following command.
+``` base
+pip install git+https://github.com/s-JoL/transformers.git@dev
+```
+
 We completed pre-training on 300 billion tokens, with a total of 80,000 steps trained, using a global batch size of 4 million, consistent with Llama. We constructed the instruction-tuning dataset using a total of 7 parts of data, which the model has certain programming ability, mathematical ability, and multi-turn dialogue ability. For specific data, please refer to the instruction-tuning section.
 
 [Demo](http://home.ustc.edu.cn/~sl9292/)

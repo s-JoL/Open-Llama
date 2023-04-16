@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-09 22:48:28
+ * @LastEditTime: 2023-04-16 23:49:06
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -17,6 +17,12 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 ## 进展
 
 **采用FastChat项目相同方法测评Open-Llama的效果和GPT3.5的效果对比，经过测试在中文问题上可以达到GPT3.5 84%的水平，具体测试结果和CheckPoint将在近期放出**
+
+经过Instruct-tuning的CheckPoint已开源在[HuggingFace](https://huggingface.co/s-JoL/Open-Llama-V1)。使使用ckpt需要先用下面命令安装最新版本Transformers
+``` base
+pip install git+https://github.com/s-JoL/transformers.git@dev
+```
+
 
 我们完成了300B token的预训练，总共训练80 K step，Global Batch Size和Llama中一致为4M。
 使用总共7部分数据构成Instruction-tuning数据，模型具有一定的编程能力、数学能力和多轮对话能力，具体数据见Instruction-Tuning部分。
