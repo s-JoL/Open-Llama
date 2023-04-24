@@ -1,3 +1,13 @@
+"""
+Author: LiangSong(sl12160010@gmail.com)
+Date: 2023-04-24 20:05:21
+LastEditors: LiangSong(sl12160010@gmail.com)
+LastEditTime: 2023-04-24 20:06:07
+FilePath: /Open-Llama/solver/trainer.py
+Description: 
+
+Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+"""
 import os
 import time
 import wandb

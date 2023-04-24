@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-12 19:12:42
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-12 21:01:32
+LastEditTime: 2023-04-24 20:06:19
 FilePath: /Open-Llama/pretrain.py
 Description: 
 
