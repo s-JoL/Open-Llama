@@ -18,7 +18,11 @@ from torchinfo import summary
 from accelerate import Accelerator
 from torch.utils.data import DataLoader
 from deepspeed.ops.adam import FusedAdam
-from transformers import LlamaForCausalLM, LlamaConfig, get_cosine_schedule_with_warmup
+from transformers import (
+    OpenLlamaForCausalLM,
+    OpenLlamaConfig,
+    get_cosine_schedule_with_warmup,
+)
 
 from dataset.validation import val_set
 from dataset.tokenizer import Tokenizer
@@ -74,8 +78,8 @@ train_loader = DataLoader(
 )
 # smaller initializer_range make training more stable
 # add stabel embedding to token embedding
-raw_model = LlamaForCausalLM(
-    LlamaConfig(
+raw_model = OpenLlamaForCausalLM(
+    OpenLlamaConfig(
         vocab_size=tokenizer.vocab_size,
         initializer_range=initializer_range,
         pad_token_id=tokenizer.pad_id,

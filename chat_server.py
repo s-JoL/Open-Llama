@@ -12,15 +12,15 @@ import torch
 import gradio as gr
 import sentencepiece as spm
 from dataset.tokenizer import Tokenizer
-from transformers import LlamaForCausalLM, LlamaConfig
+from transformers import OpenLlamaForCausalLM, OpenLlamaConfig
 
 
 sp_model = spm.SentencePieceProcessor(
     model_file="configs/10w_vocab_wudao5_pile10.model"
 )
 tokenizer = Tokenizer(sp_model)
-raw_model = LlamaForCausalLM(
-    LlamaConfig(
+raw_model = OpenLlamaForCausalLM(
+    OpenLlamaConfig(
         vocab_size=tokenizer.vocab_size,
         initializer_range=0.01,
         pad_token_id=tokenizer.pad_id,

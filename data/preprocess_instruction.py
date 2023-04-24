@@ -18,7 +18,7 @@ root_dir = "data"
 dataset = load_dataset("yizhongw/self_instruct")
 write_path = root_dir + "/instruction_data/part-self_instruct-{}.jsonl.zst"
 total_num = 0
-file_num = 0
+file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
 for line in dataset["train"]:
     line = json.dumps(line)
@@ -39,7 +39,7 @@ print(
 dataset = load_dataset("BelleGroup/train_0.5M_CN")
 write_path = root_dir + "/instruction_data/part-belle_0.5M-{}.jsonl.zst"
 total_num = 0
-file_num = 0
+file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
 for line in dataset["train"]:
     line = json.dumps(line)
@@ -60,7 +60,7 @@ print(
 dataset = load_dataset("BelleGroup/train_1M_CN")
 write_path = root_dir + "/instruction_data/part-belle_1M-{}.jsonl.zst"
 total_num = 0
-file_num = 0
+file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
 for line in dataset["train"]:
     line = json.dumps(line)
@@ -81,7 +81,7 @@ print(
 dataset = load_dataset("BelleGroup/school_math_0.25M")
 write_path = root_dir + "/instruction_data/part-belle_school_math_0.25M-{}.jsonl.zst"
 total_num = 0
-file_num = 0
+file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
 for line in dataset["train"]:
     line = json.dumps(line)
@@ -102,7 +102,7 @@ print(
 dataset = load_dataset("BelleGroup/multiturn_chat_0.8M")
 write_path = root_dir + "/instruction_data/part-belle_multiturn_chat_0.8M-{}.jsonl.zst"
 total_num = 0
-file_num = 0
+file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
 for line in dataset["train"]:
     line = json.dumps(line)
@@ -123,7 +123,7 @@ print(
 dataset = load_dataset("Graverman/Instruct-to-Code")
 write_path = root_dir + "/instruction_data/part-instruct_to_code-{}.jsonl.zst"
 total_num = 0
-file_num = 0
+file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
 for line in dataset["train"]:
     line = json.dumps(line)
@@ -143,7 +143,7 @@ print(
 
 write_path = root_dir + "/instruction_data/part-sharegpt_90K-{}.jsonl.zst"
 total_num = 0
-file_num = 0
+file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
 with open("data/sg_90k_part1.json", "r") as fp:
     data1 = json.load(fp)

@@ -17,7 +17,7 @@ import zstandard as zstd
 paths = glob("data/WuDaoCorpus2.0_base_200G/part*")
 write_path = "data/pretrain_data/part-wudao-{}.jsonl.zst"
 total_num = 0
-file_num = 0
+file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
 for path in tqdm(paths, total=len(paths)):
     with open(path, "r") as fp:

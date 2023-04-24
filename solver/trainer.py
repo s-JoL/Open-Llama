@@ -76,15 +76,17 @@ class Trainer:
         )
 
     def prepare(self):
-        _, self.model, self.optim, self.scheduler = self.accelerator.prepare(
+        (
+            self.train_loader,
+            self.model,
+            self.optim,
+            self.scheduler,
+        ) = self.accelerator.prepare(
             self.train_loader, self.raw_model, self.optim, self.scheduler
         )
-        self.train_loader_iter = iter(self.train_loader)
 
     def train_step(self, batch):
-        for k, v in batch.items():
-            batch[k] = v.to(self.accelerator.device, non_blocking=True)
-        out = self.model(**batch, labels=batch["input_ids"])
+        out = self.model(**batch)
         total_loss = out.loss
         losses = {"total_loss": total_loss}
         self.accelerator.backward(total_loss)
@@ -100,10 +102,11 @@ class Trainer:
         self.global_step = 0
         self.start_time = time.time()
         self.optim.zero_grad()
-        for self.data_step in range(self.config["train"]["num_training_steps"]):
+        for self.data_step, batch in enumerate(self.train_loader):
+            if self.data_step >= self.config["train"]["num_training_steps"]:
+                break
             self.model.train()
             with self.accelerator.accumulate(self.model):
-                batch = next(self.train_loader_iter)
                 losses = self.train_step(batch)
                 if self.accelerator.sync_gradients:
                     self.global_step += 1
@@ -137,7 +140,7 @@ class Trainer:
         tokens = (
             self.config["train"]["train_batch_size"]
             * self.log_interval
-            * self.config["model"]["max_length"]
+            * self.config["data"]["seq_length"]
         )
         wandb.log({"Training/Token per second per gpu": tokens / cost_time})
         for k, v in losses.items():
@@ -163,16 +166,19 @@ class Trainer:
         with torch.no_grad():
             for data in val_set:
                 raw_inputs = data
-                inputs_len = len(raw_inputs)
                 inputs = self.tokenizer(
-                    raw_inputs, return_tensors=True, add_special_tokens=False
+                    raw_inputs,
+                    return_tensors="pt",
+                    add_special_tokens=False,
+                    return_attention_mask=False,
                 )
+                input_length = inputs["input_ids"].shape[1]
                 for k, v in inputs.items():
                     inputs[k] = v.to(self.accelerator.device)
                 pred = self.model.generate(
                     **inputs, max_new_tokens=256, do_sample=True, repetition_penalty=2.0
                 )
-                pred = self.tokenizer.decode(pred.cpu())[0]
-                pred = pred[inputs_len:]
+                pred = pred[0, input_length:]
+                pred = self.tokenizer.decode(pred.cpu())
                 text_table.add_data(raw_inputs, pred)
         wandb.log({"Predictions on {}".format(self.global_step): text_table})
