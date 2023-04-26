@@ -110,8 +110,8 @@ class Trainer:
         self.get_lr_scheduler()
         self.prepare()
         self.global_step = 0
-        self.start_time = time.time()
         self.optim.zero_grad()
+        self.start_time = time.time()
         for self.data_step, batch in enumerate(self.train_loader):
             if self.data_step >= self.config["train"]["num_training_steps"]:
                 break

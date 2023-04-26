@@ -6,14 +6,14 @@ deepspeed_config:
   offload_optimizer_device: none
   offload_param_device: none
   zero3_init_flag: false
-  zero_stage: 2
+  zero_stage: 1
 distributed_type: DEEPSPEED
 fsdp_config: {}
 machine_rank: 0
-main_process_ip: null
-main_process_port: null
 main_training_function: main
 mixed_precision: bf16
 num_machines: 1
 num_processes: 8
+rdzv_backend: static
+same_network: true
 use_cpu: false

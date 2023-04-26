@@ -131,7 +131,7 @@ if __name__ == "__main__":
     import time
     from unicodedata import normalize
     from torch.utils.data import DataLoader
-    from transformers import OpenLlamaTokenizer
+    from transformers import LlamaTokenizer
 
     data_config = {
         "mode": "pretrain",
@@ -140,7 +140,7 @@ if __name__ == "__main__":
         "num_sequences": 10,
         "seq_length": 2048,
     }
-    tokenizer = OpenLlamaTokenizer(
+    tokenizer = LlamaTokenizer(
         "configs/llama_tokenizer_extended.model",
         pad_token="<pad>",
         add_bos_token=False,

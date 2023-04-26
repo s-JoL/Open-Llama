@@ -14,7 +14,7 @@ from absl import app
 from absl import flags
 from accelerate import Accelerator
 from torch.utils.data import DataLoader
-from transformers import OpenLlamaForCausalLM, OpenLlamaConfig, OpenLlamaTokenizer
+from transformers import OpenLlamaForCausalLM, OpenLlamaConfig, LlamaTokenizer
 
 from dataset.dataset import construct_dataset
 from solver.trainer import Trainer
@@ -28,7 +28,7 @@ def main(argv):
 
     with open(FLAGS.config, "r", encoding="utf-8") as fp:
         config = yaml.load(fp, Loader=yaml.FullLoader)
-    tokenizer = OpenLlamaTokenizer(
+    tokenizer = LlamaTokenizer(
         config["data"]["tokenizer_model_path"],
         pad_token="<pad>",
         add_bos_token=False,
