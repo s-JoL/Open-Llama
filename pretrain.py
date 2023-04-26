@@ -2,18 +2,20 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-12 19:12:42
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-24 20:06:19
+LastEditTime: 2023-04-26 23:05:47
 FilePath: /Open-Llama/pretrain.py
 Description: 
 
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
+import os
 import yaml
 import torch
 from absl import app
 from absl import flags
 from accelerate import Accelerator
 from torch.utils.data import DataLoader
+from datasets.distributed import split_dataset_by_node
 from transformers import OpenLlamaForCausalLM, OpenLlamaConfig, LlamaTokenizer
 
 from dataset.dataset import construct_dataset
@@ -36,6 +38,11 @@ def main(argv):
     )
     data_config = config["data"]
     pretrain_dataset = construct_dataset(data_config, tokenizer)
+    pretrain_dataset = split_dataset_by_node(
+        pretrain_dataset,
+        rank=int(os.environ["RANK"]),
+        world_size=int(os.environ["WORLD_SIZE"]),
+    )
     train_loader = DataLoader(
         pretrain_dataset,
         batch_size=config["train"]["train_batch_size"],

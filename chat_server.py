@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-06 22:30:10
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-07 23:03:31
+LastEditTime: 2023-04-26 23:58:23
 FilePath: /Open-Llama/chat_server.py
 Description: 
 
@@ -10,20 +10,21 @@ Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved.
 """
 import torch
 import gradio as gr
-import sentencepiece as spm
-from dataset.tokenizer import Tokenizer
-from transformers import OpenLlamaForCausalLM, OpenLlamaConfig
+from transformers import OpenLlamaForCausalLM, OpenLlamaConfig, LlamaTokenizer
 
 
-sp_model = spm.SentencePieceProcessor(
-    model_file="configs/10w_vocab_wudao5_pile10.model"
+tokenizer = LlamaTokenizer(
+    "configs/10w_vocab_wudao5_pile10.model",
+    pad_token="<pad>",
+    add_bos_token=False,
+    add_eos_token=True,
 )
-tokenizer = Tokenizer(sp_model)
+
 raw_model = OpenLlamaForCausalLM(
     OpenLlamaConfig(
         vocab_size=tokenizer.vocab_size,
         initializer_range=0.01,
-        pad_token_id=tokenizer.pad_id,
+        pad_token_id=tokenizer.pad_token_id,
         rms_norm_eps=1e-5,
         hidden_dropout_prob=0.1,
         attention_dropout_prob=0.1,
@@ -80,12 +81,20 @@ with gr.Blocks() as demo:
             if completion is None:
                 inputs = "user:{}\nsystem:".format(prompt)
                 inputs = tokenizer(
-                    inputs, return_tensors=True, add_special_tokens=False
+                    inputs,
+                    return_tensors="pt",
+                    add_special_tokens=False,
+                    return_attention_mask=False,
                 )
                 context.append(inputs["input_ids"])
             else:
                 inputs = "user:{}\nsystem:{}".format(prompt, completion)
-                inputs = tokenizer(inputs, return_tensors=True, add_special_tokens=True)
+                inputs = tokenizer(
+                    inputs,
+                    return_tensors="pt",
+                    add_special_tokens=True,
+                    return_attention_mask=False,
+                )
                 context.append(inputs["input_ids"])
         context = torch.cat(context, dim=-1)
         context = context[:, -1024:]
@@ -93,7 +102,8 @@ with gr.Blocks() as demo:
         context = context.cuda()
         pred = model.generate(input_ids=context, max_new_tokens=512, do_sample=True)
         pred = pred[:, inputs_len:]
-        pred = tokenizer.decode(pred.cpu())[0]
+        pred = tokenizer.decode(pred.cpu()[0])
+        pred = pred.strip()
         print(pred)
         bot_message = parse_codeblock(pred)
         history[-1][1] = bot_message

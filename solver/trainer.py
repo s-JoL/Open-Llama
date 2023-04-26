@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-24 20:05:21
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-24 20:06:07
+LastEditTime: 2023-04-26 23:06:55
 FilePath: /Open-Llama/solver/trainer.py
 Description: 
 
@@ -87,7 +87,7 @@ class Trainer:
 
     def prepare(self):
         (
-            self.train_loader,
+            _,
             self.model,
             self.optim,
             self.scheduler,
@@ -113,6 +113,8 @@ class Trainer:
         self.optim.zero_grad()
         self.start_time = time.time()
         for self.data_step, batch in enumerate(self.train_loader):
+            for k, v in batch.items():
+                batch[k] = v.to(self.accelerator.device, non_blocking=True)
             if self.data_step >= self.config["train"]["num_training_steps"]:
                 break
             self.model.train()
