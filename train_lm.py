@@ -2,8 +2,8 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-12 19:12:42
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-26 23:05:47
-FilePath: /Open-Llama/pretrain.py
+LastEditTime: 2023-04-27 23:08:47
+FilePath: /Open-Llama/train_lm.py
 Description: 
 
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
@@ -50,6 +50,8 @@ def main(argv):
         train_dataset,
         batch_size=config["train"]["train_batch_size"],
         num_workers=config["train"]["train_num_workers"],
+        prefetch_factor=config["train"].get("prefetch_factor", 2),
+        pin_memory=True,
     )
     # smaller initializer_range make training more stable
     # add stabel embedding to token embedding

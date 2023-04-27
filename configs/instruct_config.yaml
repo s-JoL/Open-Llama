@@ -3,7 +3,7 @@ data:
   data: 
     mixed: "data/instruction_data/part-*.jsonl.zst"
   pad_to_max: False
-  sequence_sample_mode: "sample"
+  sequence_sample_mode: "none"
   concat_multiple_sequence: True
   num_sequences: 50
   seq_length: 2048
@@ -24,6 +24,7 @@ train:
   ckpt: "data/llama_raw_ckpt/7B/extended.pth"
   train_num_workers: 16
   gradient_accumulation_steps: 1
+  prefetch_factor: 100
 # global step
 log_interval: 50
 eval_interval: 500
