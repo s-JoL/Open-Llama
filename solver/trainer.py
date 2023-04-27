@@ -191,6 +191,6 @@ class Trainer:
                     **inputs, max_new_tokens=256, do_sample=True, repetition_penalty=2.0
                 )
                 pred = pred[0, input_length:]
-                pred = self.tokenizer.decode(pred.cpu())
+                pred = self.tokenizer.decode(pred.cpu(), skip_special_tokens=True)
                 text_table.add_data(raw_inputs, pred)
         wandb.log({"Predictions on {}".format(self.global_step): text_table})

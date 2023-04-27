@@ -8,7 +8,6 @@ Description:
 
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
-import os
 import yaml
 import torch
 from absl import app
@@ -26,10 +25,14 @@ flags.DEFINE_string("config", None, "Training config path")
 
 
 def main(argv):
-    accelerator = Accelerator()
-
     with open(FLAGS.config, "r", encoding="utf-8") as fp:
         config = yaml.load(fp, Loader=yaml.FullLoader)
+
+    accelerator = Accelerator(
+        gradient_accumulation_steps=config["train"].get(
+            "gradient_accumulation_steps", 1
+        )
+    )
     tokenizer = LlamaTokenizer(
         config["data"]["tokenizer_model_path"],
         pad_token="<pad>",
@@ -37,14 +40,14 @@ def main(argv):
         add_eos_token=True,
     )
     data_config = config["data"]
-    pretrain_dataset = construct_dataset(data_config, tokenizer)
-    pretrain_dataset = split_dataset_by_node(
-        pretrain_dataset,
-        rank=int(os.environ["RANK"]),
-        world_size=int(os.environ["WORLD_SIZE"]),
+    train_dataset = construct_dataset(data_config, tokenizer)
+    train_dataset = split_dataset_by_node(
+        train_dataset,
+        rank=accelerator.process_index,
+        world_size=accelerator.num_processes,
     )
     train_loader = DataLoader(
-        pretrain_dataset,
+        train_dataset,
         batch_size=config["train"]["train_batch_size"],
         num_workers=config["train"]["train_num_workers"],
     )

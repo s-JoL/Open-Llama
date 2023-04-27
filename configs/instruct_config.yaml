@@ -1,11 +1,11 @@
 data:
-  mode: "pretrain"
+  mode: "instruct"
   data: 
-    mixed: "data/pretrain_data/part-*.jsonl.zst"
+    mixed: "data/instruction_data/part-*.jsonl.zst"
   pad_to_max: False
   sequence_sample_mode: "sample"
   concat_multiple_sequence: True
-  num_sequences: 20
+  num_sequences: 50
   seq_length: 2048
   tokenizer_model_path: "configs/llama_tokenizer_extended.model"
 model:
@@ -23,10 +23,10 @@ train:
   weight_decay: 1.0e-1
   ckpt: "data/llama_raw_ckpt/7B/extended.pth"
   train_num_workers: 16
-  gradient_accumulation_steps: 12
+  gradient_accumulation_steps: 1
 # global step
-log_interval: 5
-eval_interval: 200
-save_interval: 800
+log_interval: 50
+eval_interval: 500
+save_interval: 1000
 work_dir: "data/saved_ckpt/7B"
-project_name: "Llama Pretrain"
+project_name: "Llama Instruction"

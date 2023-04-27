@@ -102,8 +102,7 @@ with gr.Blocks() as demo:
         context = context.cuda()
         pred = model.generate(input_ids=context, max_new_tokens=512, do_sample=True)
         pred = pred[:, inputs_len:]
-        pred = tokenizer.decode(pred.cpu()[0])
-        pred = pred.strip()
+        pred = tokenizer.decode(pred.cpu()[0], skip_special_tokens=True)
         print(pred)
         bot_message = parse_codeblock(pred)
         history[-1][1] = bot_message
