@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-28 19:49:29
+ * @LastEditTime: 2023-04-28 19:52:27
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -37,14 +37,15 @@ pip install git+https://github.com/s-JoL/transformers.git@dev
 ![image4](assets/multiturn_chat.jpeg)
 
 ## **更新**
-[2023.4.28] Release v2.0
 
-本次更新主要包含以下几个方面，相对于v1版本提升有效训练速度50%，其中pad从30%减少至5%，训练速度从3200token/s提升至3600token/s。0.95 * 3600/(0.7 * 3200)=1.527
+**[2023.4.28] Release v2.0**
+
+本次更新主要包含以下几个方面，相对于v1版本提升有效训练速度**50%**，其中pad从**30%**减少至**5%**，训练速度从**3200token/s**提升至**3600token/s**。0.95 * 3600/(0.7 * 3200)=1.527
 1. 使用HuggingFace的datasets库进行数据读取，具体流程如下
    1. 使用transform函数将不同数据集的数据统一格式为{'text': 'xxx'}
    2. 使用Tokenizer进行分词
    3. 对长序列进行采样，目前提供三种模式，分别是：截断/采样（参考[Gopher论文](https://arxiv.org/abs/2112.11446)）/切分
-   4. 可选：对来自不同doc的文本进行拼接。减少了数据中的pad，加速训练；在v1版本中pad占比为30%，使用拼接后pad占比降低为5%。
+   4. 可选：对来自不同doc的文本进行拼接。减少了数据中的pad，加速训练；在v1版本中pad占比为**30%**，使用拼接后pad占比降低为**5%**。
 2. 加入Trainer，对于预训练和指令微调都可以复用，见solver/trainer.py
 3. 统一预训练和指令微调训练入口为train_lm.py
 4. 提供更方便的配置，可见configs/pretrain_config.yaml
