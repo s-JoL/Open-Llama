@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-16 23:49:28
+ * @LastEditTime: 2023-04-28 19:49:24
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -38,6 +38,8 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 
 ## **Updates**
 
+[2023.4.28] Release v2.0
+
 This update mainly includes the following aspects, increasing the effective training speed by 50% compared to the v1 version, reducing padding from 30% to 5%, and improving training speed from 3200 tokens/s to 3600 tokens/s. 0.95 * 3600 / (0.7 * 3200) = 1.527
 
 1. Use HuggingFace's datasets library for data reading, with the process as follows:
@@ -49,6 +51,10 @@ This update mainly includes the following aspects, increasing the effective trai
 3. Unify the pre-training and instruction fine-tuning training entry to train_lm.py
 4. Provide more convenient configuration, see configs/pretrain_config.yaml
 5. Provide functionality to continue pre-training based on other pre-trained models and supplementing vocabulary
+
+[2023.4.16] Release v1.0
+
+Basic pre-training and instruction fine-tuning codes are provided, with a training speed comparable to that of the original Llama. The pre-trained and fine-tuned models are already open-sourced on HuggingFace.
 
 v1 version code can be seen at https://github.com/s-JoL/Open-Llama/tree/v1.0
 

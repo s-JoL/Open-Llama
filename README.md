@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-16 23:49:06
+ * @LastEditTime: 2023-04-28 19:49:29
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -37,6 +37,7 @@ pip install git+https://github.com/s-JoL/transformers.git@dev
 ![image4](assets/multiturn_chat.jpeg)
 
 ## **更新**
+[2023.4.28] Release v2.0
 
 本次更新主要包含以下几个方面，相对于v1版本提升有效训练速度50%，其中pad从30%减少至5%，训练速度从3200token/s提升至3600token/s。0.95 * 3600/(0.7 * 3200)=1.527
 1. 使用HuggingFace的datasets库进行数据读取，具体流程如下
@@ -48,6 +49,10 @@ pip install git+https://github.com/s-JoL/transformers.git@dev
 3. 统一预训练和指令微调训练入口为train_lm.py
 4. 提供更方便的配置，可见configs/pretrain_config.yaml
 5. 提供基于其他预训练模型补充词表，继续预训练功能
+
+[2023.4.16] Release v1.0
+
+提供基础的预训练和指令微调代码，训练速度达到Llama原文速度。预训练和指令微调后的模型已经开源在HuggingFace。
 
 v1版代码可见https://github.com/s-JoL/Open-Llama/tree/v1.0
 
