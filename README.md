@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-28 19:52:27
+ * @LastEditTime: 2023-04-28 22:44:21
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -22,9 +22,21 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 **训练速度达到3620 token/s，快于Llama原文中的3370 token/s，达到目前sota的水平。**
 
-经过Instruct-tuning的CheckPoint已开源在[s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1)。使使用ckpt需要先用下面命令安装最新版本Transformers
-``` base
+经过Instruct-tuning的CheckPoint已开源在[HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1)。使用ckpt需要先用下面命令安装最新版本Transformers
+``` python
 pip install git+https://github.com/s-JoL/transformers.git@dev
+
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("s-JoL/Open-Llama-V1", use_fast=False)
+model = AutoModelForCausalLM.from_pretrained("s-JoL/Open-Llama-V1").cuda()
+
+inputs = tokenizer('user:implement quick sort in python\nsystem:', return_tensors='pt', return_attention_mask=False)
+for k, v in inputs.items():
+   inputs[k] = v.cuda()
+pred = model.generate(**inputs, max_new_tokens=512, do_sample=True)
+print(tokenizer.decode(pred.cpu()[0]).strip())
+
 ```
 只经过预训练的CheckPoint也上传至[s-JoL/Open-Llama-V1-pretrain](https://huggingface.co/s-JoL/Open-Llama-V1-pretrain)。
 模型已提交[PR](https://github.com/huggingface/transformers/pull/22795)合并至Transformers main分支。

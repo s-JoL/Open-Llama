@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-28 19:53:01
+ * @LastEditTime: 2023-04-28 22:44:27
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -22,9 +22,21 @@ Open-Llama is an open-source project that offers a complete training pipeline fo
 
 **The training speed reaches 3620 tokens/s, faster than the 3370 tokens/s reported in the original Llama paper, reaching the current state-of-the-art level.**
 
-The CheckPoint after Instruct-tuning is open-source on [s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1). To use the CheckPoint, first, install the latest version of Transformers with the following command:
-``` base
+The CheckPoint after Instruct-tuning is open-source on [HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1). To use the CheckPoint, first, install the latest version of Transformers with the following command:
+``` python
 pip install git+https://github.com/s-JoL/transformers.git@dev
+
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("s-JoL/Open-Llama-V1", use_fast=False)
+model = AutoModelForCausalLM.from_pretrained("s-JoL/Open-Llama-V1").cuda()
+
+inputs = tokenizer('user:implement quick sort in python\nsystem:', return_tensors='pt', return_attention_mask=False)
+for k, v in inputs.items():
+   inputs[k] = v.cuda()
+pred = model.generate(**inputs, max_new_tokens=512, do_sample=True)
+print(tokenizer.decode(pred.cpu()[0]).strip())
+
 ```
 The CheckPoint after pre-training only is also uploaded to [s-JoL/Open-Llama-V1-pretrain](https://huggingface.co/s-JoL/Open-Llama-V1-pretrain).
 The model [PR](https://github.com/huggingface/transformers/pull/22795) has been submitted for merging into the Transformers main branch.
