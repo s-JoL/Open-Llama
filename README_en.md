@@ -50,6 +50,8 @@ This update mainly includes the following aspects, increasing the effective trai
 4. Provide more convenient configuration, see configs/pretrain_config.yaml
 5. Provide functionality to continue pre-training based on other pre-trained models and supplementing vocabulary
 
+v1 version code can be seen at https://github.com/s-JoL/Open-Llama/tree/v1.0
+
 ## **Features**
 
 ### Easy to use

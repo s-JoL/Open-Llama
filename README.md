@@ -49,6 +49,8 @@ pip install git+https://github.com/s-JoL/transformers.git@dev
 4. 提供更方便的配置，可见configs/pretrain_config.yaml
 5. 提供基于其他预训练模型补充词表，继续预训练功能
 
+v1版代码可见https://github.com/s-JoL/Open-Llama/tree/v1.0
+
 ## **特性**
 
 ### 易用性
