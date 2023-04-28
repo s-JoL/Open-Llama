@@ -153,40 +153,27 @@ def get_labels_gen(pad_token_id):
 
 
 def construct_dataset(dataset_config, tokenizer, return_raw_text=False):
-    datasets = []
-    probabilities = []
-    # 暂时只使用一个，使用多个时无法使用多进程读取导致耗时较长
-    assert len(dataset_config["data"]) == 1
+    all_data_files = []
     for name, pattern in dataset_config["data"].items():
         data_files = glob(pattern)
         assert len(data_files) > 0
-        dataset = load_dataset(
-            "json", data_files=data_files, split="train", streaming=True
-        )
-        # shuffle
-        dataset = dataset.shuffle()
-        # 文本预处理转换为统一格式
-        if dataset_config["mode"] == "pretrain":
-            dataset = dataset.map(pretrain_transform, batched=True, batch_size=1)
-        elif dataset_config["mode"] == "instruct":
-            dataset = dataset.map(instruct_transform, batched=True, batch_size=1)
-            dataset = dataset.select_columns("text")
-            dataset = dataset.map(split_multiturn, batched=True, batch_size=1)
-        else:
-            raise Exception(
-                "Dataset mode: {} not found.".format(dataset_config["mode"])
-            )
-        datasets.append(dataset)
-        probabilities.append(dataset.n_shards)
-    probabilities_sum = sum(probabilities)
-    # 多个数据部分按概率采样
-    probabilities = [p / probabilities_sum for p in probabilities]
-    if len(datasets) > 1:
-        full_dataset = interleave_datasets(
-            datasets, probabilities=probabilities, seed=42
-        )
+        all_data_files.extend(data_files)
+    dataset = load_dataset(
+        "json", data_files=all_data_files, split="train", streaming=True
+    )
+    # shuffle
+    dataset = dataset.shuffle()
+    # 文本预处理转换为统一格式
+    if dataset_config["mode"] == "pretrain":
+        dataset = dataset.map(pretrain_transform, batched=True, batch_size=1)
+    elif dataset_config["mode"] == "instruct":
+        dataset = dataset.map(instruct_transform, batched=True, batch_size=1)
+        dataset = dataset.select_columns("text")
+        dataset = dataset.map(split_multiturn, batched=True, batch_size=1)
     else:
-        full_dataset = datasets[0]
+        raise Exception("Dataset mode: {} not found.".format(dataset_config["mode"]))
+
+    full_dataset = dataset
 
     # to visualize
     if return_raw_text:

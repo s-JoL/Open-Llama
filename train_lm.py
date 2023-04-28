@@ -72,6 +72,7 @@ def main(argv):
     if config["train"]["ckpt"] is not None:
         ckpt = torch.load(config["train"]["ckpt"])
         raw_model.load_state_dict(ckpt)
+        print('Loaded ckpt from: {}'.format(config["train"]["ckpt"]))
     trainer = Trainer(config, raw_model, train_loader, tokenizer, accelerator)
     trainer.train()
 
