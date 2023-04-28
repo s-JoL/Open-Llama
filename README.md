@@ -88,6 +88,7 @@ v1版代码可见https://github.com/s-JoL/Open-Llama/tree/v1.0
 - 特殊版本的[Transformers库](https://github.com/Bayes-Song/transformers)
 - [Accelerate库](https://huggingface.co/docs/accelerate/index)
 - CUDA 11.6 或更高版本（用于 GPU 加速）
+- 硬件配置：目前使用(64 CPU, 1000G Memory, 8xA100-80G) x N，有个比较神奇的现象当使用更多cpu时反而会慢一点，猜测这和dataloader的多进程有一定关系。
 
 ## **入门指南**
 ### 安装

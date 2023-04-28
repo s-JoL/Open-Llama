@@ -90,6 +90,7 @@ When training language models, our goal is to build a versatile model that can h
 - Special version of [Transformers library](https://github.com/Bayes-Song/transformers)
 - [Accelerate library](https://huggingface.co/docs/accelerate/index)
 - CUDA 11.6 or higher (for GPU acceleration)
+- Hardware configuration: currently using (64 CPU, 1000G Memory, 8xA100-80G) x N. There is a rather curious phenomenon that when more CPUs are used, the system runs slightly slower. I speculate this may have something to do with the multi-processing of dataloader.
 
 ## **Getting Started**
 ### Installation
