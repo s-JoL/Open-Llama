@@ -17,7 +17,7 @@ import zstandard as zstd
 paths = glob("data/the_pile/*.jsonl.zst")
 write_path = "data/pretrain_data/part-pile-{}.jsonl.zst"
 total_num = 0
-file_num = 0
+file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
 for path in tqdm(paths, total=len(paths)):
     with zstd.open(path, "r", encoding="utf-8") as fp:

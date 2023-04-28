@@ -22,12 +22,14 @@ vocab_size = 32000
 total_step = 100
 use_activation_ckpt = False
 
+
 class FakeSet(torch.utils.data.Dataset):
     def __getitem__(self, idx):
-        return torch.randint(0, vocab_size, (seq_length, ))
-    
+        return torch.randint(0, vocab_size, (seq_length,))
+
     def __len__(self):
         return 1000000000
+
 
 class SpeedTest(pl.LightningModule):
     def __init__(self):
@@ -45,7 +47,7 @@ class SpeedTest(pl.LightningModule):
         out = self.model(batch, labels=batch)
         loss = out.loss
         if self.start_time is None:
-            print('start')
+            print("start")
             self.start_time = time.time()
         return loss
 
@@ -53,23 +55,26 @@ class SpeedTest(pl.LightningModule):
         optimizer = FusedAdam(self.trainer.model.parameters(), lr=1e-5)
         return optimizer
 
+
 model = SpeedTest()
 train_loader = torch.utils.data.DataLoader(FakeSet(), batch_size=batch_size)
 
-strategy=DeepSpeedStrategy(
+strategy = DeepSpeedStrategy(
     stage=2,
     offload_optimizer=False,
     offload_parameters=False,
-    process_group_backend="nccl"
+    process_group_backend="nccl",
 )
 trainer = pl.Trainer(
-    limit_train_batches=total_step, 
+    limit_train_batches=total_step,
     max_epochs=1,
     devices=8,
     accelerator="gpu",
     strategy=strategy,
-    precision=16, 
-    enable_checkpointing=False)
+    precision=16,
+    enable_checkpointing=False,
+)
+
 
 def train(model, train_loader):
     start_time = time.time()
@@ -77,4 +82,5 @@ def train(model, train_loader):
     end_time = time.time()
     return end_time - model.start_time
 
-print('total time: {}'.format(train(model, train_loader)))
+
+print("total time: {}".format(train(model, train_loader)))

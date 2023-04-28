@@ -20,12 +20,14 @@ vocab_size = 32000
 total_step = 2
 use_activation_ckpt = True
 
+
 class FakeSet(torch.utils.data.Dataset):
     def __getitem__(self, idx):
-        return torch.randint(0, vocab_size, (seq_length, ))
-    
+        return torch.randint(0, vocab_size, (seq_length,))
+
     def __len__(self):
         return 1000000000
+
 
 accelerator = Accelerator()
 raw_model = LlamaForCausalLM(
@@ -39,15 +41,18 @@ optimizer = FusedAdam(raw_model.parameters(), lr=1e-5)
 
 train_loader = torch.utils.data.DataLoader(FakeSet(), batch_size=batch_size)
 if accelerator.distributed_type == DistributedType.FSDP:
-    accelerator.print('FSDP')
+    accelerator.print("FSDP")
     model = accelerator.prepare(raw_model)
     optimizer, train_loader = accelerator.prepare(optimizer, train_loader)
 else:
-    model, optimizer, train_loader = accelerator.prepare(raw_model, optimizer, train_loader)
+    model, optimizer, train_loader = accelerator.prepare(
+        raw_model, optimizer, train_loader
+    )
+
 
 def train(model, optimizer, train_loader):
     start_time = time.time()
-    for i,  batch in enumerate(train_loader):
+    for i, batch in enumerate(train_loader):
         if i == total_step:
             break
         optimizer.zero_grad()
@@ -58,4 +63,5 @@ def train(model, optimizer, train_loader):
     end_time = time.time()
     return end_time - start_time
 
-accelerator.print('total time: {}'.format(train(model, optimizer, train_loader)))
+
+accelerator.print("total time: {}".format(train(model, optimizer, train_loader)))

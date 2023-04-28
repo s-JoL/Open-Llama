@@ -23,7 +23,14 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 import colossalai
 from colossalai.logging import disable_existing_loggers, get_dist_logger
 from colossalai.nn.optimizer import HybridAdam
-from colossalai.tensor import ColoParameter, ComputePattern, ComputeSpec, ProcessGroup, ReplicaSpec, ShardSpec
+from colossalai.tensor import (
+    ColoParameter,
+    ComputePattern,
+    ComputeSpec,
+    ProcessGroup,
+    ReplicaSpec,
+    ShardSpec,
+)
 from colossalai.utils import get_current_device
 from colossalai.zero import ColoInitContext, zero_model_wrapper, zero_optim_wrapper
 
@@ -35,7 +42,7 @@ def parse_args():
     parser.add_argument(
         "--distplan",
         type=str,
-        default='CAI_Gemini',
+        default="CAI_Gemini",
         help="The distributed plan [colossalai, zero1, zero2, torch_ddp, torch_zero].",
     )
     parser.add_argument(
@@ -47,14 +54,13 @@ def parse_args():
     parser.add_argument(
         "--placement",
         type=str,
-        default='cpu',
+        default="cpu",
         help="Placement Policy for Gemini. Valid when using colossalai as dist plan.",
     )
     parser.add_argument(
         "--shardinit",
-        action='store_true',
-        help=
-        "Shard the tensors when init the model to shrink peak memory size on the assigned device. Valid when using colossalai as dist plan.",
+        action="store_true",
+        help="Shard the tensors when init the model to shrink peak memory size on the assigned device. Valid when using colossalai as dist plan.",
     )
     parser.add_argument(
         "--batch_size",
@@ -105,7 +111,6 @@ def split_param_col_tp1d(param: ColoParameter, pg: ProcessGroup):
 
 
 class GPTLMLoss(nn.Module):
-
     def __init__(self):
         super().__init__()
         self.loss_fn = nn.CrossEntropyLoss()
@@ -114,7 +119,9 @@ class GPTLMLoss(nn.Module):
         shift_logits = logits[..., :-1, :].contiguous()
         shift_labels = labels[..., 1:].contiguous()
         # Flatten the tokens
-        return self.loss_fn(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
+        return self.loss_fn(
+            shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1)
+        )
 
 
 def get_cpu_mem():
@@ -125,8 +132,8 @@ def get_gpu_mem():
     return torch.cuda.memory_allocated() / 1024**2
 
 
-def get_mem_info(prefix=''):
-    return f'{prefix}GPU memory usage: {get_gpu_mem():.2f} MB, CPU memory usage: {get_cpu_mem():.2f} MB'
+def get_mem_info(prefix=""):
+    return f"{prefix}GPU memory usage: {get_gpu_mem():.2f} MB, CPU memory usage: {get_cpu_mem():.2f} MB"
 
 
 def get_model_size(model: nn.Module):
@@ -142,11 +149,11 @@ def model_size_formatter(numel: int) -> str:
     MB_SIZE = 10**6
     KB_SIZE = 10**3
     if numel >= GB_SIZE:
-        return f'{numel / GB_SIZE:.1f}B'
+        return f"{numel / GB_SIZE:.1f}B"
     elif numel >= MB_SIZE:
-        return f'{numel / MB_SIZE:.1f}M'
+        return f"{numel / MB_SIZE:.1f}M"
     elif numel >= KB_SIZE:
-        return f'{numel / KB_SIZE:.1f}K'
+        return f"{numel / KB_SIZE:.1f}K"
     else:
         return str(numel)
 
@@ -154,7 +161,7 @@ def model_size_formatter(numel: int) -> str:
 def set_cpu_maximum_parallelism():
     conf_str = torch.__config__.parallel_info()
     inter_str = conf_str.split("hardware_concurrency() : ")[1]
-    max_concurrency = inter_str.split('\n')[0]
+    max_concurrency = inter_str.split("\n")[0]
     os.environ["OMP_NUM_THREADS"] = max_concurrency
     print(f"environmental variable OMP_NUM_THREADS is set to {max_concurrency}.")
 
@@ -170,7 +177,7 @@ def tensor_parallelize(model: torch.nn.Module, pg: ProcessGroup):
     for mn, module in model.named_modules():
         for pn, param in module.named_parameters(recurse=False):
             # NOTE() a param maybe shared by two modules
-            if hasattr(param, 'visited'):
+            if hasattr(param, "visited"):
                 continue
 
             # if shard init, then convert param to replica and use the dp-only ProcessGroup
@@ -179,22 +186,22 @@ def tensor_parallelize(model: torch.nn.Module, pg: ProcessGroup):
             param.set_process_group(pg)
 
             # shard it w.r.t tp pattern
-            if 'mlp.c_fc' in mn:
-                if 'weight' in pn or 'bias' in pn:
-                    split_param_col_tp1d(param, pg)    # colmn slice
+            if "mlp.c_fc" in mn:
+                if "weight" in pn or "bias" in pn:
+                    split_param_col_tp1d(param, pg)  # colmn slice
                     # keep the shape of the output from c_fc
                     param.compute_spec.set_output_replicate(False)
                 else:
                     param.set_dist_spec(ReplicaSpec())
-            elif 'mlp.c_proj' in mn:
-                if 'weight' in pn:
-                    split_param_row_tp1d(param, pg)    # row slice
+            elif "mlp.c_proj" in mn:
+                if "weight" in pn:
+                    split_param_row_tp1d(param, pg)  # row slice
                 else:
                     param.set_dist_spec(ReplicaSpec())
-            elif 'wte' in mn or 'wpe' in mn:
-                split_param_col_tp1d(param, pg)    # colmn slice
-            elif 'c_attn' in mn or 'c_proj' in mn:
-                split_param_col_tp1d(param, pg)    # colmn slice
+            elif "wte" in mn or "wpe" in mn:
+                split_param_col_tp1d(param, pg)  # colmn slice
+            elif "c_attn" in mn or "c_proj" in mn:
+                split_param_col_tp1d(param, pg)  # colmn slice
             else:
                 param.set_dist_spec(ReplicaSpec())
             param.visited = True
@@ -209,7 +216,13 @@ def main():
     args = parse_args()
 
     # if args.distplan not in ["colossalai", "torch_ddp", "torch_zero", "zero1", "zero2"]:
-    if args.distplan not in ["CAI_ZeRO1", "CAI_ZeRO2", "CAI_Gemini", "Pytorch_DDP", "Pytorch_ZeRO"]:
+    if args.distplan not in [
+        "CAI_ZeRO1",
+        "CAI_ZeRO2",
+        "CAI_Gemini",
+        "Pytorch_DDP",
+        "Pytorch_ZeRO",
+    ]:
         raise TypeError(f"{args.distplan} is error")
 
     # batch size per DP degree
@@ -221,14 +234,18 @@ def main():
 
     WARMUP_STEPS = 1
     assert WARMUP_STEPS < NUM_STEPS, "warmup steps should smaller than the total steps"
-    assert (NUM_STEPS - WARMUP_STEPS) % 2 == 1, "the number of valid steps should be odd to take the median"
-    PROF_FLAG = False    # The flag of profiling, False by default
+    assert (
+        NUM_STEPS - WARMUP_STEPS
+    ) % 2 == 1, "the number of valid steps should be odd to take the median"
+    PROF_FLAG = False  # The flag of profiling, False by default
 
     disable_existing_loggers()
     colossalai.launch_from_torch(config={})
 
     logger = get_dist_logger()
-    logger.info(f"{args.model_type}, {args.distplan}, batch size {BATCH_SIZE}", ranks=[0])
+    logger.info(
+        f"{args.model_type}, {args.distplan}, batch size {BATCH_SIZE}", ranks=[0]
+    )
 
     # build criterion
     criterion = GPTLMLoss()
@@ -244,10 +261,12 @@ def main():
             raise RuntimeError("You can only use shardinit with CAI_Gemini")
 
         # build GPT model
-        with ColoInitContext(device=get_current_device(),
-                             dtype=torch.half,
-                             default_dist_spec=default_dist_spec,
-                             default_pg=shard_pg):
+        with ColoInitContext(
+            device=get_current_device(),
+            dtype=torch.half,
+            default_dist_spec=default_dist_spec,
+            default_pg=shard_pg,
+        ):
             model = model_builder(VOCAB_SIZE, checkpoint=True)
 
         tp_pg = ProcessGroup(tp_degree=args.tp_degree)
@@ -259,15 +278,21 @@ def main():
         # asign running configurations
         gemini_config = None
         if args.distplan.startswith("CAI_ZeRO"):
-            optim_config = dict(reduce_bucket_size=12 * 1024 * 1024, overlap_communication=True, verbose=True)
+            optim_config = dict(
+                reduce_bucket_size=12 * 1024 * 1024,
+                overlap_communication=True,
+                verbose=True,
+            )
         elif args.distplan == "CAI_Gemini":
-            gemini_config = dict(strict_ddp_mode=args.tp_degree == 1,
-                                 device=get_current_device(),
-                                 placement_policy=args.placement,
-                                 pin_memory=True,
-                                 hidden_dim=model.model.config.hidden_size,
-                                 search_range_mb=128)
-            optim_config = dict(gpu_margin_mem_ratio=0.)
+            gemini_config = dict(
+                strict_ddp_mode=args.tp_degree == 1,
+                device=get_current_device(),
+                placement_policy=args.placement,
+                pin_memory=True,
+                hidden_dim=model.model.config.hidden_size,
+                search_range_mb=128,
+            )
+            optim_config = dict(gpu_margin_mem_ratio=0.0)
         else:
             raise RuntimeError
 
@@ -287,7 +312,7 @@ def main():
         model = zero_model_wrapper(model, zero_stage, gemini_config)
         optimizer = zero_optim_wrapper(model, optimizer, optim_config=optim_config)
 
-        logger.info(get_mem_info(prefix='After init optim, '), ranks=[0])
+        logger.info(get_mem_info(prefix="After init optim, "), ranks=[0])
     elif args.distplan.startswith("Pytorch"):
         assert args.tp_degree == 1, "The degree of TP should be 1 for DDP examples."
         model = model_builder(VOCAB_SIZE, checkpoint=True).cuda()
@@ -296,14 +321,17 @@ def main():
             optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
         elif args.distplan.endswith("ZeRO"):
             from torch.distributed.optim import ZeroRedundancyOptimizer
-            optimizer = ZeroRedundancyOptimizer(model.parameters(), optimizer_class=torch.optim.Adam, lr=1e-3)
+
+            optimizer = ZeroRedundancyOptimizer(
+                model.parameters(), optimizer_class=torch.optim.Adam, lr=1e-3
+            )
     else:
         raise RuntimeError
 
     # model is shared after TP
     numel = get_model_size(model)
     logger.info(f"the size of testing model size is {model_size_formatter(numel)}.")
-    logger.info(get_mem_info(prefix='After init model, '), ranks=[0])
+    logger.info(get_mem_info(prefix="After init model, "), ranks=[0])
 
     # Tflops_per_GPU = global_batch * global_numel * seq_len * 8 / #gpu
     # = (batch_per_DP_group * dp_degree) * (numel * tp_degree) * seq_len * 8 / (tp_degree * dp_degree)
@@ -325,7 +353,7 @@ def main():
         torch.cuda.synchronize()
         fwd_end = time()
         fwd_time = fwd_end - start
-        logger.info(get_mem_info(prefix=f'[{n + 1}/{NUM_STEPS}] Forward '), ranks=[0])
+        logger.info(get_mem_info(prefix=f"[{n + 1}/{NUM_STEPS}] Forward "), ranks=[0])
 
         if args.distplan.startswith("CAI"):
             optimizer.backward(loss)
@@ -337,13 +365,15 @@ def main():
         torch.cuda.synchronize()
         bwd_end = time()
         bwd_time = bwd_end - fwd_end
-        logger.info(get_mem_info(prefix=f'[{n + 1}/{NUM_STEPS}] Backward '), ranks=[0])
+        logger.info(get_mem_info(prefix=f"[{n + 1}/{NUM_STEPS}] Backward "), ranks=[0])
 
         optimizer.step()
         torch.cuda.synchronize()
         optim_time = time() - bwd_end
         step_time = time() - start
-        logger.info(get_mem_info(prefix=f'[{n + 1}/{NUM_STEPS}] Optimizer step '), ranks=[0])
+        logger.info(
+            get_mem_info(prefix=f"[{n + 1}/{NUM_STEPS}] Optimizer step "), ranks=[0]
+        )
 
         step_tflops = get_tflops_func(step_time)
         logger.info(
@@ -353,10 +383,12 @@ def main():
         if n >= WARMUP_STEPS:
             tflops_list.append(step_tflops)
 
-    demo_profiler = get_profile_context(PROF_FLAG,
-                                        WARMUP_STEPS,
-                                        NUM_STEPS - WARMUP_STEPS,
-                                        save_dir=f"profile/{get_time_stamp()}-demo")
+    demo_profiler = get_profile_context(
+        PROF_FLAG,
+        WARMUP_STEPS,
+        NUM_STEPS - WARMUP_STEPS,
+        save_dir=f"profile/{get_time_stamp()}-demo",
+    )
 
     with demo_profiler as prof:
         start_time = time()
@@ -364,7 +396,7 @@ def main():
             train_step()
             prof.step()
         end_time = time()
-        print('total time: {}'.format(end_time - start_time))
+        print("total time: {}".format(end_time - start_time))
 
     tflops_list.sort()
     median_index = ((NUM_STEPS - WARMUP_STEPS) >> 1) + WARMUP_STEPS
@@ -372,5 +404,5 @@ def main():
     torch.cuda.synchronize()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

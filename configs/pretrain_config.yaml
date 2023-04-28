@@ -1,0 +1,36 @@
+data:
+  mode: "pretrain"
+  data: 
+    wudao: "data/pretrain_data/part-wudao*.jsonl.zst"
+    # 由于加载了Llama模型的ckpt所以只使用少量英文数据
+    the_pile: "data/pretrain_data/part-pile-1*.jsonl.zst"
+  pad_to_max: False
+  sequence_sample_mode: "none"
+  concat_multiple_sequence: True
+  num_sequences: 10
+  seq_length: 2048
+  tokenizer_model_path: "configs/llama_tokenizer_extended.model"
+model:
+  initializer_range: 1.0e-2
+  hidden_dropout_prob: 0.1
+  attention_dropout_prob: 0.1
+  use_stable_embedding: False
+  shared_input_output_embedding: False
+train:
+  train_batch_size: 2
+  num_training_steps: 500000
+  num_warmup_steps: 2000
+  initializer_range: 1.0e-2
+  lr: 2.0e-4
+  weight_decay: 1.0e-1
+  # 加载预训练权重，从头训练设为null
+  ckpt: "data/llama_raw_ckpt/7B/extended.pth"
+  train_num_workers: 16
+  gradient_accumulation_steps: 12
+  prefetch_factor: 100
+# global step
+log_interval: 5
+eval_interval: 500
+save_interval: 1000
+work_dir: "data/saved_ckpt/7B"
+project_name: "Llama Pretrain"
