@@ -43,7 +43,7 @@ This update mainly includes the following aspects, increasing the effective trai
 1. Use HuggingFace's datasets library for data reading, with the process as follows:
    1. Use the transform function to unify data formats from different datasets to {'text': 'xxx'}
    2. Tokenize using Tokenizer
-   3. Sample long sequences; currently, three modes are provided: truncation, sampling (refer to the Gopher paper), and splitting
+   3. Sample long sequences; currently, three modes are provided: truncation, sampling (refer to the [Gopher paper](https://arxiv.org/abs/2112.11446)), and splitting
    4. Optional: concatenate texts from different docs, reducing padding in the data and accelerating training. In the v1 version, padding accounted for 30%; after concatenation, padding is reduced to 5%.
 2. Add Trainer, which can be reused for both pre-training and instruction fine-tuning, see solver/trainer.py
 3. Unify the pre-training and instruction fine-tuning training entry to train_lm.py
