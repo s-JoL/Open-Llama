@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-28 19:49:24
+ * @LastEditTime: 2023-04-28 19:53:01
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -38,15 +38,15 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 
 ## **Updates**
 
-[2023.4.28] Release v2.0
+**[2023.4.28] Release v2.0**
 
-This update mainly includes the following aspects, increasing the effective training speed by 50% compared to the v1 version, reducing padding from 30% to 5%, and improving training speed from 3200 tokens/s to 3600 tokens/s. 0.95 * 3600 / (0.7 * 3200) = 1.527
+This update mainly includes the following aspects, increasing the effective training speed by **50%** compared to the v1 version, reducing padding from **30%** to **5%**, and improving training speed from **3200 tokens/s** to **3600 tokens/s**. 0.95 * 3600 / (0.7 * 3200) = 1.527
 
 1. Use HuggingFace's datasets library for data reading, with the process as follows:
    1. Use the transform function to unify data formats from different datasets to {'text': 'xxx'}
    2. Tokenize using Tokenizer
    3. Sample long sequences; currently, three modes are provided: truncation, sampling (refer to the [Gopher paper](https://arxiv.org/abs/2112.11446)), and splitting
-   4. Optional: concatenate texts from different docs, reducing padding in the data and accelerating training. In the v1 version, padding accounted for 30%; after concatenation, padding is reduced to 5%.
+   4. Optional: concatenate texts from different docs, reducing padding in the data and accelerating training. In the v1 version, padding accounted for **30%**; after concatenation, padding is reduced to **5%**.
 2. Add Trainer, which can be reused for both pre-training and instruction fine-tuning, see solver/trainer.py
 3. Unify the pre-training and instruction fine-tuning training entry to train_lm.py
 4. Provide more convenient configuration, see configs/pretrain_config.yaml
