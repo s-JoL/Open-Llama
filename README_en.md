@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-28 22:44:27
+ * @LastEditTime: 2023-04-29 11:41:20
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -24,7 +24,7 @@ Open-Llama is an open-source project that offers a complete training pipeline fo
 
 The CheckPoint after Instruct-tuning is open-source on [HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1). To use the CheckPoint, first, install the latest version of Transformers with the following command:
 ``` python
-pip install git+https://github.com/s-JoL/transformers.git@dev
+pip install git+https://github.com/huggingface/transformers.git
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -190,7 +190,7 @@ python3 dataset/dataset.py
 
 ### Model Structure
 
-We modified according to the section 2.4 Efficient implementation of the [Llama](https://github.com/facebookresearch/llama) paper in the Transformers library, and also referenced other papers to introduce some optimizations. Specifically, we used the memory_efficient_attention operation from the [xformers library](https://github.com/facebookresearch/xformers) open-sourced by META for Self Attention computation, which has a significant performance improvement of approximately 30%. Further details can be found in [modeling_llama.py](https://github.com/s-JoL/transformers/blob/dev/src/transformers/models/open_llama/modeling_open_llama.py#L230).
+We modified according to the section 2.4 Efficient implementation of the [Llama](https://github.com/facebookresearch/llama) paper in the Transformers library, and also referenced other papers to introduce some optimizations. Specifically, we used the memory_efficient_attention operation from the [xformers library](https://github.com/facebookresearch/xformers) open-sourced by META for Self Attention computation, which has a significant performance improvement of approximately 30%. Further details can be found in [modeling_llama.py](https://github.com/huggingface/transformers/blob/main/src/transformers/models/open_llama/modeling_open_llama.py#L229).
 
 Additionally, we referred to [Bloom](https://huggingface.co/bigscience/bloom) and introduced Stable Embedding for Token Embedding to better stabilize training.
 

@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-28 22:44:21
+ * @LastEditTime: 2023-04-29 11:41:10
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -24,7 +24,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 经过Instruct-tuning的CheckPoint已开源在[HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1)。使用ckpt需要先用下面命令安装最新版本Transformers
 ``` python
-pip install git+https://github.com/s-JoL/transformers.git@dev
+pip install git+https://github.com/huggingface/transformers.git
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -181,7 +181,7 @@ python3 dataset/dataset.py
 我们基于Transformers库中的[Llama](https://github.com/facebookresearch/llama)参考论文原文中的2.4 Efficient implementation一节进行了修改，
 同时还参考了一些其他论文引入了一些优化。具体来说，我们引入了由META开源的[xformers库](https://github.com/facebookresearch/xformers)中的memory_efficient_attention操作来进行
 Self Attention的计算，这对于性能有明显的提升，提升大约30%。
-具体可以参见[modeling_llama.py](https://github.com/s-JoL/transformers/blob/dev/src/transformers/models/open_llama/modeling_open_llama.py#L230)
+具体可以参见[modeling_llama.py](https://github.com/huggingface/transformers/blob/main/src/transformers/models/open_llama/modeling_open_llama.py#L229)
 
 同时我们还参考了[Bloom](https://huggingface.co/bigscience/bloom)，对于Token Embedding引入了Stable Embedding以更好的稳定训练。
 
