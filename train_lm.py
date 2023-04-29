@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-12 19:12:42
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-27 23:08:47
+LastEditTime: 2023-04-29 19:38:47
 FilePath: /Open-Llama/train_lm.py
 Description: 
 
@@ -10,6 +10,7 @@ Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved.
 """
 import yaml
 import torch
+import logging
 from absl import app
 from absl import flags
 from accelerate import Accelerator
@@ -72,7 +73,7 @@ def main(argv):
     if config["train"]["ckpt"] is not None:
         ckpt = torch.load(config["train"]["ckpt"])
         raw_model.load_state_dict(ckpt)
-        print('Loaded ckpt from: {}'.format(config["train"]["ckpt"]))
+        logging.warn("Loaded ckpt from: {}".format(config["train"]["ckpt"]))
     trainer = Trainer(config, raw_model, train_loader, tokenizer, accelerator)
     trainer.train()
 

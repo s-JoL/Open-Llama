@@ -2,13 +2,14 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-06 22:30:10
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-27 20:34:58
+LastEditTime: 2023-04-29 19:38:54
 FilePath: /Open-Llama/chat_server.py
 Description: 
 
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
 import torch
+import logging
 import gradio as gr
 from transformers import OpenLlamaForCausalLM, OpenLlamaConfig, LlamaTokenizer
 
@@ -39,7 +40,7 @@ ckpt = torch.load(
 raw_model.load_state_dict(ckpt)
 raw_model.eval()
 model = raw_model.cuda()
-print("ready")
+logging.warn("ready")
 
 
 def parse_codeblock(text):
@@ -70,7 +71,7 @@ with gr.Blocks() as demo:
     clear = gr.Button("Clear")
 
     def user(user_message, history):
-        print(user_message)
+        logging.warn(user_message)
         return "", history + [[user_message, None]]
 
     def bot(history):
@@ -103,7 +104,7 @@ with gr.Blocks() as demo:
         pred = model.generate(input_ids=context, max_new_tokens=512, do_sample=True)
         pred = pred[:, inputs_len:]
         pred = tokenizer.decode(pred.cpu()[0], skip_special_tokens=True)
-        print(pred)
+        logging.warn(pred)
         bot_message = parse_codeblock(pred)
         history[-1][1] = bot_message
         return history
