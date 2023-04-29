@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-29 12:06:24
+ * @LastEditTime: 2023-04-29 12:30:47
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -327,7 +327,7 @@ accelerate launch --config_file configs/default_config.yaml train_lm.py --config
 | GPU Hour            |            | 82,432   | 135,168 | 1,022,362 | 809,472 | 1,082,990          | 43776 | 175680   | 47040   | 3072      |
 | speed token/s/gpu   | 3637       | 3370     | 2055    | 380       | 61.8    | 93.9               | 105.7 | 635.6    | 1181    | 1257      |
 | 相关依赖             | xformers   | xformers |         |           | measeq  | Megatron-DeepSpeed |       |          | BMtrain | MindSpore |
-| speed token/s/gpu/B | 25728      | 22579    | 26715   | 24700     | 10815   | 16432              | 13741 | 12712    | 11810   | 16341     |
+| speed token*params B/s/gpu | 25728      | 22579    | 26715   | 24700     | 10815   | 16432              | 13741 | 12712    | 11810   | 16341     |
 
 ## 后续计划
 
