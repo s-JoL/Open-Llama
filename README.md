@@ -2,27 +2,37 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-29 11:41:10
+ * @LastEditTime: 2023-04-29 12:06:24
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
  * Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 -->
+[**中文**](./README.md) | [**English**](./README_en.md)
+
 # Open-Llama
 
-[English README](https://github.com/Bayes-Song/Open-Llama/blob/main/README_en.md)
+<p align="center">
+    <img alt="GitHub" src="https://img.shields.io/github/license/s-JoL/Open-Llama.svg?color=blue&style=flat-square">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/s-JoL/Open-Llama">
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/s-JoL/Open-Llama">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/s-JoL/Open-Llama">
+</p>
 
 Open-Llama是一个开源项目，提供了一整套用于构建大型语言模型的训练流程，从数据集准备到分词、预训练、指令调优，以及强化学习技术 RLHF。
 
 **可从[Demo](http://home.ustc.edu.cn/~sl9292/)直接试用本模型。**
 
-## **效果**
+## **主要内容**
 
-**采用FastChat项目相同方法测评Open-Llama的效果和GPT3.5的效果对比，经过测试在中文问题上可以达到GPT3.5 84%的水平。**
+- **支持Transformers/HuggingFace直接调用。** 经过Instruct-tuning的CheckPoint已开源在[HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1)。
 
-**训练速度达到3620 token/s，快于Llama原文中的3370 token/s，达到目前sota的水平。**
+- **采用FastChat项目相同方法测评Open-Llama的效果和GPT3.5的效果对比，经过测试在中文问题上可以达到GPT3.5 84%的水平。**
 
-经过Instruct-tuning的CheckPoint已开源在[HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1)。使用ckpt需要先用下面命令安装最新版本Transformers
+- **训练速度达到3620 token/s，快于Llama原文中的3370 token/s，达到目前sota的水平。**
+
+
+使用ckpt需要先用下面命令安装最新版本Transformers：
 ``` python
 pip install git+https://github.com/huggingface/transformers.git
 

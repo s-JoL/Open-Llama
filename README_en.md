@@ -2,27 +2,36 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-29 11:41:20
+ * @LastEditTime: 2023-04-29 12:06:05
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
  * Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 -->
+[**中文**](./README.md) | [**English**](./README_en.md)
+
 # Open-Llama
 
-[English README](https://github.com/Bayes-Song/Open-Llama/blob/main/README_en.md)
+<p align="center">
+    <img alt="GitHub" src="https://img.shields.io/github/license/s-JoL/Open-Llama.svg?color=blue&style=flat-square">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/s-JoL/Open-Llama">
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/s-JoL/Open-Llama">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/s-JoL/Open-Llama">
+</p>
 
 Open-Llama is an open-source project that offers a complete training pipeline for building large language models, ranging from dataset preparation to tokenization, pre-training, prompt tuning, and the reinforcement learning technique RLHF.
 
 **You can try this model directly from the [Demo](http://home.ustc.edu.cn/~sl9292/).**
 
-## **Performance**
+## **Main contents**
 
-**By adopting the same evaluation method as the FastChat project, Open-Llama's performance is compared to GPT3.5’s. After testing, it can reach 84% of GPT3.5's performance on Chinese questions.**
+- **Support Transformers/HuggingFace.** The CheckPoint after Instruct-tuning is open-source on [HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1).
 
-**The training speed reaches 3620 tokens/s, faster than the 3370 tokens/s reported in the original Llama paper, reaching the current state-of-the-art level.**
+- **By adopting the same evaluation method as the FastChat project, Open-Llama's performance is compared to GPT3.5’s. After testing, it can reach 84% of GPT3.5's performance on Chinese questions.**
 
-The CheckPoint after Instruct-tuning is open-source on [HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1). To use the CheckPoint, first, install the latest version of Transformers with the following command:
+- **The training speed reaches 3620 tokens/s, faster than the 3370 tokens/s reported in the original Llama paper, reaching the current state-of-the-art level.**
+
+ To use the CheckPoint, first, install the latest version of Transformers with the following command:
 ``` python
 pip install git+https://github.com/huggingface/transformers.git
 
