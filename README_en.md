@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-29 12:31:00
+ * @LastEditTime: 2023-04-29 20:30:12
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -72,6 +72,7 @@ This update mainly includes the following aspects, increasing the effective trai
 3. Unify the pre-training and instruction fine-tuning training entry to train_lm.py
 4. Provide more convenient configuration, see configs/pretrain_config.yaml
 5. Provide functionality to continue pre-training based on other pre-trained models and supplementing vocabulary
+6. Resuming training from a checkpoint is supported, including loading optimizer parameters/learning rate and skipping duplicate data
 
 [2023.4.16] Release v1.0
 

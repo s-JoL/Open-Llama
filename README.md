@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-29 12:30:47
+ * @LastEditTime: 2023-04-29 20:29:31
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -72,6 +72,7 @@ print(tokenizer.decode(pred.cpu()[0]).strip())
 3. 统一预训练和指令微调训练入口为train_lm.py
 4. 提供更方便的配置，可见configs/pretrain_config.yaml
 5. 提供基于其他预训练模型补充词表，继续预训练功能
+6. 支持从中断点继续训练，包括加载优化器参数/学习率和跳过重复数据
 
 [2023.4.16] Release v1.0
 
