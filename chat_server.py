@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-06 22:30:10
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-29 19:38:54
+LastEditTime: 2023-04-29 20:40:13
 FilePath: /Open-Llama/chat_server.py
 Description: 
 
@@ -37,6 +37,8 @@ ckpt = torch.load(
     "data/saved_ckpt/instruction_tuning_math_code_multiturn/36001.pt",
     map_location="cpu",
 )
+if 'module' in ckpt:
+    ckpt = ckpt['module']
 raw_model.load_state_dict(ckpt)
 raw_model.eval()
 model = raw_model.cuda()
