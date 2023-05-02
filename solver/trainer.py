@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-24 20:05:21
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-29 20:26:34
+LastEditTime: 2023-04-29 21:59:51
 FilePath: /Open-Llama/solver/trainer.py
 Description: 
 
@@ -112,6 +112,7 @@ class Trainer:
             self.train_loader = self.accelerator.skip_first_batches(
                 self.train_loader, num_batches=skip_steps
             )
+        self.accelerator.wait_for_everyone()
 
     def train_step(self, batch):
         out = self.model(**batch)

@@ -16,8 +16,8 @@ model:
   shared_input_output_embedding: False
 train:
   train_batch_size: 2
-  num_training_steps: 1000000
-  num_warmup_steps: 2000
+  num_training_steps: 40000
+  num_warmup_steps: 500
   initializer_range: 1.0e-2
   lr: 2.0e-4
   weight_decay: 1.0e-1

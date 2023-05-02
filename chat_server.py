@@ -37,8 +37,8 @@ ckpt = torch.load(
     "data/saved_ckpt/instruction_tuning_math_code_multiturn/36001.pt",
     map_location="cpu",
 )
-if 'module' in ckpt:
-    ckpt = ckpt['module']
+if "module" in ckpt:
+    ckpt = ckpt["module"]
 raw_model.load_state_dict(ckpt)
 raw_model.eval()
 model = raw_model.cuda()

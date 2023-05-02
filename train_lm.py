@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-12 19:12:42
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-29 20:37:52
+LastEditTime: 2023-05-02 18:26:50
 FilePath: /Open-Llama/train_lm.py
 Description: 
 
@@ -71,9 +71,9 @@ def main(argv):
         )
     )
     if config["train"]["ckpt"] is not None:
-        ckpt = torch.load(config["train"]["ckpt"])
-        if 'module' in ckpt:
-            ckpt = ckpt['module']
+        ckpt = torch.load(config["train"]["ckpt"], map_location="cpu")
+        if "module" in ckpt:
+            ckpt = ckpt["module"]
         raw_model.load_state_dict(ckpt)
         logging.warn("Loaded ckpt from: {}".format(config["train"]["ckpt"]))
     trainer = Trainer(config, raw_model, train_loader, tokenizer, accelerator)
