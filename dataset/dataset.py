@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-24 20:05:21
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-27 22:19:37
+LastEditTime: 2023-05-03 10:23:41
 FilePath: /Open-Llama/dataset/dataset.py
 Description: 
 
@@ -162,7 +162,7 @@ def construct_dataset(dataset_config, tokenizer, return_raw_text=False):
         "json", data_files=all_data_files, split="train", streaming=True
     )
     # shuffle
-    dataset = dataset.shuffle()
+    dataset = dataset.shuffle(seed=42)
     # 文本预处理转换为统一格式
     if dataset_config["mode"] == "pretrain":
         dataset = dataset.map(pretrain_transform, batched=True, batch_size=1)
@@ -244,7 +244,7 @@ def construct_dataset(dataset_config, tokenizer, return_raw_text=False):
     full_dataset = full_dataset.map(get_labels_gen(tokenizer.pad_token_id))
 
     # shuffle
-    full_dataset = full_dataset.shuffle()
+    full_dataset = full_dataset.shuffle(seed=42)
     return full_dataset
 
 
