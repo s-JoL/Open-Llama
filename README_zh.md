@@ -2,13 +2,13 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-04 20:23:09
- * @FilePath: /Open-Llama/README.md
+ * @LastEditTime: 2023-05-04 22:55:32
+ * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
  * Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 -->
-[**中文**](./README.md) | [**English**](./README_en.md)
+[**中文**](./README_zh.md) | [**English**](./README.md)
 
 # Open-Llama
 
