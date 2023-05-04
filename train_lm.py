@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-12 19:12:42
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-02 18:26:50
+LastEditTime: 2023-05-04 09:19:15
 FilePath: /Open-Llama/train_lm.py
 Description: 
 
@@ -41,7 +41,12 @@ def main(argv):
         add_eos_token=True,
     )
     data_config = config["data"]
-    train_dataset = construct_dataset(data_config, tokenizer)
+    if data_config.get("split_by_shard", False):
+        train_dataset = construct_dataset(
+            data_config, tokenizer, world_size=accelerator.num_processes
+        )
+    else:
+        train_dataset = construct_dataset(data_config, tokenizer)
     train_dataset = split_dataset_by_node(
         train_dataset,
         rank=accelerator.process_index,

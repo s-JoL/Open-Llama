@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-24 20:05:21
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-04 08:42:58
+LastEditTime: 2023-05-04 09:17:21
 FilePath: /Open-Llama/dataset/dataset.py
 Description: 
 
@@ -16,6 +16,8 @@ from datasets import load_dataset
 
 
 random.seed(42)
+
+
 def pretrain_transform(batch):
     # wudao preprocess
     if "title" in batch and "content" in batch:
@@ -153,12 +155,18 @@ def get_labels_gen(pad_token_id):
     return get_labels
 
 
-def construct_dataset(dataset_config, tokenizer, return_raw_text=False):
+def construct_dataset(
+    dataset_config, tokenizer, return_raw_text=False, world_size=None
+):
     all_data_files = []
     for name, pattern in dataset_config["data"].items():
         data_files = glob(pattern)
         assert len(data_files) > 0
         all_data_files.extend(data_files)
+    random.shuffle(all_data_files)
+    if world_size is not None:
+        num_shards = len(all_data_files)
+        all_data_files = all_data_files[num_shards // world_size * world_size]
     dataset = load_dataset(
         "json", data_files=all_data_files, split="train", streaming=True
     )
