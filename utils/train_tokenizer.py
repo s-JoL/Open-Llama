@@ -25,15 +25,18 @@ random.shuffle(pile_paths)
 
 paths = wudao_paths[:5] + pile_paths[:10]
 
-dataset = load_dataset('json', data_files=paths,  split="train", streaming=True)
+dataset = load_dataset("json", data_files=paths, split="train", streaming=True)
 dataset = dataset.shuffle(seed=42)
+
 
 def transform(dataset):
     for line in dataset:
-        if 'title' in line and 'content' in line:
+        if "title" in line and "content" in line:
             yield line["title"] + "\n" + line["content"]
         else:
             yield line["text"]
+
+
 data_iter = transform(dataset)
 
 import io

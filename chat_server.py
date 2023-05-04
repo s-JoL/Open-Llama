@@ -45,20 +45,6 @@ model = raw_model.cuda()
 logging.warn("ready")
 
 
-def parse_codeblock(text):
-    lines = text.split("\n")
-    for i, line in enumerate(lines):
-        if "```" in line:
-            if line != "```":
-                lines[i] = f'<pre><code class="{lines[i][3:]}">'
-            else:
-                lines[i] = "</code></pre>"
-        else:
-            if i > 0:
-                lines[i] = "<br/>" + line.replace("<", "&lt;").replace(">", "&gt;")
-    return "".join(lines)
-
-
 with gr.Blocks() as demo:
     gr.Markdown(
         """
@@ -107,7 +93,7 @@ with gr.Blocks() as demo:
         pred = pred[:, inputs_len:]
         pred = tokenizer.decode(pred.cpu()[0], skip_special_tokens=True)
         logging.warn(pred)
-        bot_message = parse_codeblock(pred)
+        bot_message = pred
         history[-1][1] = bot_message
         return history
 
