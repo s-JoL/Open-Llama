@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-24 20:05:21
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-03 10:23:41
+LastEditTime: 2023-05-04 08:42:58
 FilePath: /Open-Llama/dataset/dataset.py
 Description: 
 
@@ -12,9 +12,10 @@ import math
 import torch
 import random
 from glob import glob
-from datasets import load_dataset, interleave_datasets
+from datasets import load_dataset
 
 
+random.seed(42)
 def pretrain_transform(batch):
     # wudao preprocess
     if "title" in batch and "content" in batch:

@@ -2,14 +2,17 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-24 20:49:03
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-05 22:40:29
-FilePath: /Open-Llama/dataset/train_tokenizer.py
+LastEditTime: 2023-05-04 08:42:21
+FilePath: /Open-Llama/utils/train_tokenizer.py
 Description: 
 
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
 import random
 from dataset.data_iter import DataIter, create_shard_kwargs
+
+
+random.seed(42)
 
 wudao_patterns = [
     "data/pretrain_data/part-wudao-*.jsonl.zst",

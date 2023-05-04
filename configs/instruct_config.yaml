@@ -16,7 +16,8 @@ model:
   shared_input_output_embedding: False
 train:
   train_batch_size: 2
-  num_training_steps: 40000
+  # 1B token for 1 epoch, 5epoch
+  num_training_steps: 20000
   num_warmup_steps: 500
   initializer_range: 1.0e-2
   lr: 2.0e-4
@@ -29,5 +30,5 @@ train:
 log_interval: 50
 eval_interval: 500
 save_interval: 1000
-work_dir: "data/saved_ckpt/7B"
+work_dir: "data/saved_ckpt/7B_instruction"
 project_name: "Llama Instruction"

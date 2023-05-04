@@ -2,13 +2,12 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-24 20:05:21
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-02 23:55:37
+LastEditTime: 2023-05-04 08:41:37
 FilePath: /Open-Llama/solver/trainer.py
 Description: 
 
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
-import os
 import time
 import wandb
 import torch
