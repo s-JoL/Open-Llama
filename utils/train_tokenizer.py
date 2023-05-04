@@ -9,28 +9,32 @@ Description:
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
 import random
-from dataset.data_iter import DataIter, create_shard_kwargs
+from glob import glob
+from datasets import load_dataset
 
 
 random.seed(42)
 
-wudao_patterns = [
-    "data/pretrain_data/part-wudao-*.jsonl.zst",
-]
-wudao_paths = create_shard_kwargs(wudao_patterns)
+wudao_pattern = "data/pretrain_data/part-wudao-*.jsonl.zst"
+wudao_paths = glob(wudao_pattern)
 random.shuffle(wudao_paths)
 
-pile_patterns = [
-    "data/pretrain_data/part-pile-*.jsonl.zst",
-]
-pile_paths = create_shard_kwargs(pile_patterns)
+pile_pattern = "data/pretrain_data/part-pile-*.jsonl.zst"
+pile_paths = glob(pile_pattern)
 random.shuffle(pile_paths)
+
 paths = wudao_paths[:5] + pile_paths[:10]
-transform_dict = {
-    "wudao": lambda line: line["title"] + "\n" + line["content"],
-    "pile": lambda line: line["text"],
-}
-data_iter = iter(DataIter(paths, transform_dict))
+
+dataset = load_dataset('json', data_files=paths,  split="train", streaming=True)
+dataset = dataset.shuffle(seed=42)
+
+def transform(dataset):
+    for line in dataset:
+        if 'title' in line and 'content' in line:
+            yield line["title"] + "\n" + line["content"]
+        else:
+            yield line["text"]
+data_iter = transform(dataset)
 
 import io
 import sentencepiece as spm
@@ -55,6 +59,7 @@ spm.SentencePieceTrainer.train(
     # reserve whitespace and \n and \t etc. for code generation
     allow_whitespace_only_pieces=True,
     remove_extra_whitespaces=False,
+    # Llama use identity instead of nfkc
     normalization_rule_name="nfkc",
 )
 
