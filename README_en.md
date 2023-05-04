@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-04 08:33:45
+ * @LastEditTime: 2023-05-04 20:23:14
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -44,7 +44,7 @@ inputs = tokenizer('user:implement quick sort in python\nsystem:', return_tensor
 for k, v in inputs.items():
    inputs[k] = v.cuda()
 pred = model.generate(**inputs, max_new_tokens=512, do_sample=True)
-print(tokenizer.decode(pred.cpu()[0]).strip())
+print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 ```
 The CheckPoint after pre-training only is also uploaded to [s-JoL/Open-Llama-V1-pretrain](https://huggingface.co/s-JoL/Open-Llama-V1-pretrain).
