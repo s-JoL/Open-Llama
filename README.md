@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-29 20:29:31
+ * @LastEditTime: 2023-05-04 08:33:26
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -252,10 +252,10 @@ Total mult-adds (G): 7.04
 - [BelleGroup/train_1M_CN](https://huggingface.co/datasets/BelleGroup/train_1M_CN)
 - [BelleGroup/multiturn_chat_0.8M](https://huggingface.co/datasets/BelleGroup/multiturn_chat_0.8M)
 - [BelleGroup/school_math_0.25M](https://huggingface.co/datasets/BelleGroup/school_math_0.25M)
-- [RyokoAI/ShareGPT52K](https://huggingface.co/datasets/RyokoAI/ShareGPT52K)
+- [anon8231489123/ShareGPT_Vicuna_unfiltered](https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered)
 - [Graverman/Instruct-to-Code](https://huggingface.co/datasets/Graverman/Instruct-to-Code)
 
-其中ShareGPT52K数据在datastes的处理有些问题，我们直接下载原数据重新进行了处理。
+其中ShareGPT_Vicuna_unfiltered数据在datastes的处理有些问题，我们直接下载原数据重新进行了处理。
 我们对原始数据进行了一些预处理，格式如下
 ```
 user: {prompt}\nsystem: {completion}</s>

@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-30 20:52:10
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-04-05 23:51:16
+LastEditTime: 2023-05-04 08:32:04
 FilePath: /Open-Llama/data/preprocess_instruction.py
 Description: 
 
@@ -145,9 +145,9 @@ write_path = root_dir + "/instruction_data/part-sharegpt_90K-{}.jsonl.zst"
 total_num = 0
 file_num = 1
 wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-with open("data/sg_90k_part1.json", "r") as fp:
+with open("{}/sg_90k_part1_html_cleaned.json".format(root_dir), "r") as fp:
     data1 = json.load(fp)
-with open("data/sg_90k_part2.json", "r") as fp:
+with open("{}/sg_90k_part2_html_cleaned.json".format(root_dir), "r") as fp:
     data2 = json.load(fp)
 data = data1 + data2
 for line in data:
@@ -161,7 +161,7 @@ for line in data:
     total_num += 1
 wfp.close()
 print(
-    "RyokoAI/ShareGPT52K preprocess done. Total line: {}, Total file: {}".format(
+    "anon8231489123/ShareGPT_Vicuna_unfiltered preprocess done. Total line: {}, Total file: {}".format(
         total_num, file_num
     )
 )

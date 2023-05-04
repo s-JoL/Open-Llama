@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-04-29 20:30:12
+ * @LastEditTime: 2023-05-04 08:33:45
  * @FilePath: /Open-Llama/README_en.md
  * @Description: 
  * 
@@ -266,10 +266,10 @@ We use the currently available seven datasets for Instruction-tuning, and more t
 - [BelleGroup/train_1M_CN](https://huggingface.co/datasets/BelleGroup/train_1M_CN)
 - [BelleGroup/multiturn_chat_0.8M](https://huggingface.co/datasets/BelleGroup/multiturn_chat_0.8M)
 - [BelleGroup/school_math_0.25M](https://huggingface.co/datasets/BelleGroup/school_math_0.25M)
-- [RyokoAI/ShareGPT52K](https://huggingface.co/datasets/RyokoAI/ShareGPT52K)
+- [anon8231489123/ShareGPT_Vicuna_unfiltered](https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered)
 - [Graverman/Instruct-to-Code](https://huggingface.co/datasets/Graverman/Instruct-to-Code)
 
-The ShareGPT52K dataset has some issues in the datastes processing, so we directly downloaded the original data and reprocessed it.
+The ShareGPT_Vicuna_unfiltered dataset has some issues in the datastes processing, so we directly downloaded the original data and reprocessed it.
 We performed some preprocessing on the original data, with the format as follows:
 
 ```
