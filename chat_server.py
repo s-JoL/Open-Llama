@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-06 22:30:10
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-04 22:32:05
+LastEditTime: 2023-05-04 22:44:58
 FilePath: /Open-Llama/chat_server.py
 Description: 
 
@@ -106,6 +106,7 @@ with gr.Blocks() as demo:
     当前体验服务生成的所有内容都是由人工智能模型生成，我们对其生成内容的准确性、完整性和功能性不做任何保证，并且其生成的内容不代表我们的态度或观点。
 
     联系方式: sl12160010@gmail.com  对于该项目有任何意见和建议都欢迎联系我.
+    
     Contact information: sl12160010@gmail.com. Any opinions or suggestions regarding the project are welcome to be addressed to me through this email.
     """
     )
