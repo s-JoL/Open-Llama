@@ -15,221 +15,54 @@ from datasets import load_dataset
 
 
 root_dir = "data"
+write_path = "data/instruction_data/part-{}-{}.jsonl.zst"
+dataset_map = {
+    "yizhongw/self_instruct": "self_instruct",
+    "BelleGroup/train_0.5M_CN": "belle_0.5M",
+    "BelleGroup/train_1M_CN": "belle_1M",
+    "BelleGroup/train_2M_CN": "belle_2M",
+    "BelleGroup/school_math_0.25M": "belle_school_math_0.25M",
+    "BelleGroup/multiturn_chat_0.8M": "belle_multiturn_chat_0.8M",
+    "Graverman/Instruct-to-Code": "instruct_to_code",
+    ("bigscience/xP3mt", "code"): "xP3mt_code",
+    ("bigscience/xP3mt", "zh"): "xP3mt_zh",
+}
 
-dataset = load_dataset("yizhongw/self_instruct")
-write_path = root_dir + "/instruction_data/part-self_instruct-{}.jsonl.zst"
-total_num = 0
-file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-for line in tqdm(dataset["train"]):
-    line = json.dumps(line)
-    if total_num % 1024 == 0 and total_num > 0:
-        file_num += 1
-        wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-    wfp.write(line.encode("utf-8"))
-    wfp.write(b"\n")
-    total_num += 1
-wfp.close()
-print(
-    "yizhongw/self_instruct preprocess done. Total line: {}, Total file: {}".format(
-        total_num, file_num
+
+def process_hf_dataset(name, local_name):
+    if isinstance(name, str):
+        dataset = load_dataset(name)
+    else:
+        dataset = load_dataset(*name)
+    total_num = 0
+    file_num = 1
+    wfp = zstd.open(write_path.format(local_name, file_num), "wb", encoding="utf-8")
+    for line in tqdm(dataset["train"]):
+        line = json.dumps(line)
+        if total_num % 1024 == 0 and total_num > 0:
+            file_num += 1
+            wfp.close()
+            wfp = zstd.open(
+                write_path.format(local_name, file_num), "wb", encoding="utf-8"
+            )
+        wfp.write(line.encode("utf-8"))
+        wfp.write(b"\n")
+        total_num += 1
+    wfp.close()
+    print(
+        "{} preprocess done. Total line: {}, Total file: {}".format(
+            name, total_num, file_num
+        )
     )
-)
 
-dataset = load_dataset("BelleGroup/train_0.5M_CN")
-write_path = root_dir + "/instruction_data/part-belle_0.5M-{}.jsonl.zst"
+
+for k, v in dataset_map.items():
+    process_hf_dataset(k, v)
+
+local_name = "sharegpt_90K"
 total_num = 0
 file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-for line in tqdm(dataset["train"]):
-    line = json.dumps(line)
-    if total_num % 1024 == 0 and total_num > 0:
-        file_num += 1
-        wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-    wfp.write(line.encode("utf-8"))
-    wfp.write(b"\n")
-    total_num += 1
-wfp.close()
-print(
-    "BelleGroup/train_0.5M_CN preprocess done. Total line: {}, Total file: {}".format(
-        total_num, file_num
-    )
-)
-
-dataset = load_dataset("BelleGroup/train_1M_CN")
-write_path = root_dir + "/instruction_data/part-belle_1M-{}.jsonl.zst"
-total_num = 0
-file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-for line in tqdm(dataset["train"]):
-    line = json.dumps(line)
-    if total_num % 1024 == 0 and total_num > 0:
-        file_num += 1
-        wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-    wfp.write(line.encode("utf-8"))
-    wfp.write(b"\n")
-    total_num += 1
-wfp.close()
-print(
-    "BelleGroup/train_1M_CN preprocess done. Total line: {}, Total file: {}".format(
-        total_num, file_num
-    )
-)
-
-dataset = load_dataset("BelleGroup/train_2M_CN")
-write_path = root_dir + "/instruction_data/part-belle_2M-{}.jsonl.zst"
-total_num = 0
-file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-for line in tqdm(dataset["train"]):
-    line = json.dumps(line)
-    if total_num % 1024 == 0 and total_num > 0:
-        file_num += 1
-        wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-    wfp.write(line.encode("utf-8"))
-    wfp.write(b"\n")
-    total_num += 1
-wfp.close()
-print(
-    "BelleGroup/train_2M_CN preprocess done. Total line: {}, Total file: {}".format(
-        total_num, file_num
-    )
-)
-
-dataset = load_dataset("BelleGroup/school_math_0.25M")
-write_path = root_dir + "/instruction_data/part-belle_school_math_0.25M-{}.jsonl.zst"
-total_num = 0
-file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-for line in tqdm(dataset["train"]):
-    line = json.dumps(line)
-    if total_num % 1024 == 0 and total_num > 0:
-        file_num += 1
-        wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-    wfp.write(line.encode("utf-8"))
-    wfp.write(b"\n")
-    total_num += 1
-wfp.close()
-print(
-    "BelleGroup/school_math_0.25M preprocess done. Total line: {}, Total file: {}".format(
-        total_num, file_num
-    )
-)
-
-dataset = load_dataset("BelleGroup/multiturn_chat_0.8M")
-write_path = root_dir + "/instruction_data/part-belle_multiturn_chat_0.8M-{}.jsonl.zst"
-total_num = 0
-file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-for line in tqdm(dataset["train"]):
-    line = json.dumps(line)
-    if total_num % 1024 == 0 and total_num > 0:
-        file_num += 1
-        wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-    wfp.write(line.encode("utf-8"))
-    wfp.write(b"\n")
-    total_num += 1
-wfp.close()
-print(
-    "BelleGroup/multiturn_chat_0.8M preprocess done. Total line: {}, Total file: {}".format(
-        total_num, file_num
-    )
-)
-
-dataset = load_dataset("Graverman/Instruct-to-Code")
-write_path = root_dir + "/instruction_data/part-instruct_to_code-{}.jsonl.zst"
-total_num = 0
-file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-for line in tqdm(dataset["train"]):
-    line = json.dumps(line)
-    if total_num % 1024 == 0 and total_num > 0:
-        file_num += 1
-        wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-    wfp.write(line.encode("utf-8"))
-    wfp.write(b"\n")
-    total_num += 1
-wfp.close()
-print(
-    "Graverman/Instruct-to-Code preprocess done. Total line: {}, Total file: {}".format(
-        total_num, file_num
-    )
-)
-
-# dataset = load_dataset("bigscience/xP3mt", "en")
-# write_path = root_dir + "/instruction_data/part-bigscience/xP3mt_en-{}.jsonl.zst"
-# total_num = 0
-# file_num = 1
-# wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-# for line in tqdm(dataset["train"]):
-#     line = json.dumps(line)
-#     if total_num % 1024 == 0 and total_num > 0:
-#         file_num += 1
-#         wfp.close()
-#         wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-#     wfp.write(line.encode("utf-8"))
-#     wfp.write(b"\n")
-#     total_num += 1
-# wfp.close()
-# print(
-#     "bigscience/xP3mt_en preprocess done. Total line: {}, Total file: {}".format(
-#         total_num, file_num
-#     )
-# )
-
-dataset = load_dataset("bigscience/xP3mt", "code")
-write_path = root_dir + "/instruction_data/part-xP3mt_code-{}.jsonl.zst"
-total_num = 0
-file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-for line in tqdm(dataset["train"]):
-    line = json.dumps(line)
-    if total_num % 1024 == 0 and total_num > 0:
-        file_num += 1
-        wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-    wfp.write(line.encode("utf-8"))
-    wfp.write(b"\n")
-    total_num += 1
-wfp.close()
-print(
-    "bigscience/xP3mt_code preprocess done. Total line: {}, Total file: {}".format(
-        total_num, file_num
-    )
-)
-
-dataset = load_dataset("bigscience/xP3mt", "zh")
-write_path = root_dir + "/instruction_data/part-xP3mt_zh-{}.jsonl.zst"
-total_num = 0
-file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-for line in tqdm(dataset["train"]):
-    line = json.dumps(line)
-    if total_num % 1024 == 0 and total_num > 0:
-        file_num += 1
-        wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
-    wfp.write(line.encode("utf-8"))
-    wfp.write(b"\n")
-    total_num += 1
-wfp.close()
-print(
-    "bigscience/xP3mt_zh preprocess done. Total line: {}, Total file: {}".format(
-        total_num, file_num
-    )
-)
-
-write_path = root_dir + "/instruction_data/part-sharegpt_90K-{}.jsonl.zst"
-total_num = 0
-file_num = 1
-wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
+wfp = zstd.open(write_path.format(local_name, file_num), "wb", encoding="utf-8")
 with open("{}/sg_90k_part1_html_cleaned.json".format(root_dir), "r") as fp:
     data1 = json.load(fp)
 with open("{}/sg_90k_part2_html_cleaned.json".format(root_dir), "r") as fp:
@@ -240,7 +73,7 @@ for line in tqdm(data):
     if total_num % 1024 == 0 and total_num > 0:
         file_num += 1
         wfp.close()
-        wfp = zstd.open(write_path.format(file_num), "wb", encoding="utf-8")
+        wfp = zstd.open(write_path.format(local_name, file_num), "wb", encoding="utf-8")
     wfp.write(line.encode("utf-8"))
     wfp.write(b"\n")
     total_num += 1
