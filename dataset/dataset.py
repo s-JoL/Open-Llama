@@ -99,6 +99,18 @@ def instruct_transform(batch):
         targets = batch["targets"][0]
         text = "user:{}\nsystem:{}".format(inputs.strip(), targets.strip())
         texts = [text]
+    # camel-ai preprocess
+    elif "message_1" in batch and "message_2" in batch:
+        inputs = batch["message_1"][0]
+        targets = batch["message_2"][0]
+        text = "user:{}\nsystem:{}".format(inputs.strip(), targets.strip())
+        texts = [text]
+     # grade-school-math-instructions preprocess
+    elif "INSTRUCTION" in batch and "RESPONSE" in batch:
+        inputs = batch["INSTRUCTION"][0]
+        targets = batch["RESPONSE"][0]
+        text = "user:{}\nsystem:{}".format(inputs.strip(), targets.strip())
+        texts = [text]
     else:
         raise Exception("Unrecognized instruct dataset format.")
     return {"text": texts}
