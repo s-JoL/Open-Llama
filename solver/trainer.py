@@ -26,6 +26,7 @@ class Trainer:
         self.train_loader = train_loader
         self.tokenizer = tokenizer
         self.accelerator = accelerator
+        self.train_and_eval = config.get("train_and_eval", False)
         self.gradient_accumulation_steps = config["train"].get(
             "gradient_accumulation_steps", 1
         )
@@ -164,6 +165,7 @@ class Trainer:
                 if (
                     self.data_step % self.eval_interval == 0
                     and self.accelerator.is_main_process
+                    and self.train_and_eval
                 ):
                     self.eval()
                 # save state
@@ -189,8 +191,10 @@ class Trainer:
             wandb.log({"Training/Loss Scale": self.optim.scaler.get_scale()})
         wandb.log({"Training/Data Step": self.data_step})
         wandb.log({"Training/Global Step": self.global_step})
+        wandb.log({"Training/Epoch": self.epoch})
         self.accelerator.print(
-            "Global Step: {}, Data Step: {}, Loss: {}, Token per second per gpu: {}".format(
+            "Epoch: {}, Global Step: {}, Data Step: {}, Loss: {}, Token per second per gpu: {}".format(
+                self.epoch,
                 self.global_step,
                 self.data_step,
                 losses["total_loss"],

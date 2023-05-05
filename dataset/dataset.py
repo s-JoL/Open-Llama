@@ -93,6 +93,12 @@ def instruct_transform(batch):
             chat = "user:{}\nsystem:{}".format(prompt, completion)
             texts.append(chat)
         texts = ["[multiturn_sep]".join(texts)]
+    # xP3 preprocess
+    elif "inputs" in batch and "targets" in batch:
+        inputs = batch["inputs"][0]
+        targets = batch["targets"][0]
+        text = "user:{}\nsystem:{}".format(inputs.strip(), targets.strip())
+        texts = [text]
     else:
         raise Exception("Unrecognized instruct dataset format.")
     return {"text": texts}
