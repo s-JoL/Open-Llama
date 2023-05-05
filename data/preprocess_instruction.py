@@ -24,6 +24,11 @@ dataset_map = {
     "BelleGroup/school_math_0.25M": "belle_school_math_0.25M",
     "BelleGroup/multiturn_chat_0.8M": "belle_multiturn_chat_0.8M",
     "Graverman/Instruct-to-Code": "instruct_to_code",
+    "qwedsacf/grade-school-math-instructions": "grade_school_math",
+    "camel-ai/math": "camel_ai_math",
+    "camel-ai/physics": "camel_ai_physics",
+    "camel-ai/chemistry": "camel_ai_chemistry",
+    "camel-ai/biology": "camel_ai_biology",
     ("bigscience/xP3mt", "code"): "xP3mt_code",
     ("bigscience/xP3mt", "zh"): "xP3mt_zh",
 }
