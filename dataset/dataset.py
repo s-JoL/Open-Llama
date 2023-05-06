@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-24 20:05:21
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-04 09:17:21
+LastEditTime: 2023-05-06 23:30:37
 FilePath: /Open-Llama/dataset/dataset.py
 Description: 
 
@@ -105,7 +105,7 @@ def instruct_transform(batch):
         targets = batch["message_2"][0]
         text = "user:{}\nsystem:{}".format(inputs.strip(), targets.strip())
         texts = [text]
-     # grade-school-math-instructions preprocess
+    # grade-school-math-instructions preprocess
     elif "INSTRUCTION" in batch and "RESPONSE" in batch:
         inputs = batch["INSTRUCTION"][0]
         targets = batch["RESPONSE"][0]
@@ -291,7 +291,7 @@ if __name__ == "__main__":
         "seq_length": 2048,
     }
     tokenizer = LlamaTokenizer(
-        "configs/llama_tokenizer_extended.model",
+        "configs/tokenizer_models/llama_tokenizer_extended.model",
         pad_token="<pad>",
         add_bos_token=False,
         add_eos_token=True,

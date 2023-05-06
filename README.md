@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-04 22:55:25
+ * @LastEditTime: 2023-05-06 23:33:11
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -211,7 +211,7 @@ Finally, we referenced [PALM](https://arxiv.org/abs/2204.02311) and employed Sha
 We use multi-GPU parallel training based on the Accelerate library, with the following start command:
 
 ```bash
-accelerate launch --config_file configs/default_config.yaml train_lm.py --config configs/pretrain_config.yaml
+accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --config configs/pretrain_config.yaml
 ```
 In some cases, you may need to specify the following parameters:
 
@@ -225,7 +225,7 @@ In some cases, you may need to specify the following parameters:
 
 We use [Wandb](https://wandb.ai/) for visualizing training. You need to modify the WANDB_API_KEY environment variable yourself.
 
-Among them, we use DeepSpeed stage1 to reduce memory usage. For Accelerate-related configurations, see configs/default_config.yaml.
+Among them, we use DeepSpeed stage1 to reduce memory usage. For Accelerate-related configurations, see configs/accelerate_configs.
 
 Training related hyperparameters can be found in configs/pretrain_config.yaml.
 
@@ -279,7 +279,7 @@ user: {prompt}\nsystem: {completion}</s>
 The startup command is basically the same as pre-training:
 
 ```bash
-accelerate launch --config_file configs/default_config.yaml train_lm.py --config configs/instruct_config.yaml
+accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --config configs/instruct_config.yaml
 ```
 
 In some cases, you may need to specify the following parameters:

@@ -1,9 +1,19 @@
+"""
+Author: LiangSong(sl12160010@gmail.com)
+Date: 2023-04-28 19:55:13
+LastEditors: LiangSong(sl12160010@gmail.com)
+LastEditTime: 2023-05-06 23:30:29
+FilePath: /Open-Llama/utils/convert_ckpt.py
+Description: 
+
+Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+"""
 import torch
 import sentencepiece as spm
 
 
 sp_model = spm.SentencePieceProcessor(
-    model_file="configs/llama_tokenizer_extended.model"
+    model_file="configs/tokenizer_models/llama_tokenizer_extended.model"
 )
 merged_vocab_size = sp_model.vocab_size()
 ckpt = torch.load("data/llama_raw_ckpt/7B/consolidated.00.pth")

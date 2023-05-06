@@ -9,13 +9,8 @@ data:
   concat_multiple_sequence: True
   num_sequences: 10
   seq_length: 2048
-  tokenizer_model_path: "configs/llama_tokenizer_extended.model"
-model:
-  initializer_range: 1.0e-2
-  hidden_dropout_prob: 0.1
-  attention_dropout_prob: 0.1
-  use_stable_embedding: False
-  shared_input_output_embedding: False
+  tokenizer_model_path: "configs/tokenizer_models/llama_tokenizer_extended.model"
+  split_by_shard: False
 train:
   train_batch_size: 2
   num_training_steps: 500000
@@ -28,7 +23,8 @@ train:
   train_num_workers: 16
   gradient_accumulation_steps: 12
   prefetch_factor: 100
-  train_and_eval: True
+  train_and_eval: False
+  gradient_checkpointing_enable: True
 # global step
 log_interval: 5
 eval_interval: 500

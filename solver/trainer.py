@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-24 20:05:21
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-06 09:45:30
+LastEditTime: 2023-05-06 23:04:14
 FilePath: /Open-Llama/solver/trainer.py
 Description: 
 
@@ -26,7 +26,7 @@ class Trainer:
         self.train_loader = train_loader
         self.tokenizer = tokenizer
         self.accelerator = accelerator
-        self.train_and_eval = config.get("train_and_eval", False)
+        self.train_and_eval = config["train"].get("train_and_eval", False)
         self.gradient_accumulation_steps = config["train"].get(
             "gradient_accumulation_steps", 1
         )
@@ -43,7 +43,7 @@ class Trainer:
             self.config["save_interval"] * accelerator.gradient_accumulation_steps
         )
         self.work_dir = self.config["work_dir"]
-        self.get_model_info()
+        # self.get_model_info()
         if accelerator.is_main_process:
             wandb.init(project=self.config["project_name"])
 
@@ -104,12 +104,12 @@ class Trainer:
             self.accelerator.load_state(self.work_dir)
             self.global_step = self.scheduler.scheduler._step_count - 1
             self.global_step = self.global_step // self.accelerator.num_processes
-            logging.warn("Restored ckpt from {}".format(self.work_dir))
+            logging.warning("Restored ckpt from {}".format(self.work_dir))
         except:
-            logging.warn("No ckpt found in {}".format(self.work_dir))
+            logging.warning("No ckpt found in {}".format(self.work_dir))
         if self.global_step > 0:
             skip_steps = self.global_step * self.gradient_accumulation_steps
-            logging.warn("Skiped {} steps.".format(skip_steps))
+            logging.warning("Skiped {} steps.".format(skip_steps))
             self.train_loader_skiped = self.accelerator.skip_first_batches(
                 self.train_loader, num_batches=skip_steps
             )

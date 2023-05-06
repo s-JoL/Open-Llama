@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-04 22:55:32
+ * @LastEditTime: 2023-05-06 23:32:31
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -201,7 +201,7 @@ Self Attention的计算，这对于性能有明显的提升，提升大约30%。
 ### 预训练
 我们基于Accelerate库进行多GPU并行训练，启动命令如下
 ```bash
-accelerate launch --config_file configs/default_config.yaml train_lm.py --config configs/pretrain_config.yaml
+accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --config configs/pretrain_config.yaml
 ```
 某些情况下可能需要指定下列参数
 ```
@@ -213,7 +213,7 @@ accelerate launch --config_file configs/default_config.yaml train_lm.py --config
 ```
 我们使用[Wandb](https://wandb.ai/)进行训练的可视化，需要自行修改环境变量 WANDB_API_KEY 。
 
-其中我们使用了DeepSpeed stage1以减少显存占用。accelerate相关配置可见configs/default_config.yaml。
+其中我们使用了DeepSpeed stage1以减少显存占用。accelerate相关配置可见configs/accelerate_configs。
 
 训练相关超参数可见configs/pretrain_config.yaml
 
@@ -263,7 +263,7 @@ user: {prompt}\nsystem: {completion}</s>
 
 启动命令和预训练基本一致
 ```bash
-accelerate launch --config_file configs/default_config.yaml train_lm.py --config configs/instruct_config.yaml
+accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --config configs/instruct_config.yaml
 ```
 某些情况下可能需要指定下列参数
 ```

@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-12 19:12:42
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-04 09:19:15
+LastEditTime: 2023-05-06 23:08:42
 FilePath: /Open-Llama/train_lm.py
 Description: 
 
@@ -16,17 +16,20 @@ from absl import flags
 from accelerate import Accelerator
 from torch.utils.data import DataLoader
 from datasets.distributed import split_dataset_by_node
-from transformers import OpenLlamaForCausalLM, OpenLlamaConfig, LlamaTokenizer
+from transformers import AutoConfig, AutoModelForCausalLM, LlamaTokenizer
 
 from dataset.dataset import construct_dataset
 from solver.trainer import Trainer
 
 FLAGS = flags.FLAGS
-flags.DEFINE_string("config", None, "Training config path")
+flags.DEFINE_string("train_config", None, "Training config path")
+flags.DEFINE_string(
+    "model_config", "configs/model_configs/7B.json", "Model config path"
+)
 
 
 def main(argv):
-    with open(FLAGS.config, "r", encoding="utf-8") as fp:
+    with open(FLAGS.train_config, "r", encoding="utf-8") as fp:
         config = yaml.load(fp, Loader=yaml.FullLoader)
 
     accelerator = Accelerator(
@@ -61,26 +64,18 @@ def main(argv):
     )
     # smaller initializer_range make training more stable
     # add stabel embedding to token embedding
-    raw_model = OpenLlamaForCausalLM(
-        OpenLlamaConfig(
-            vocab_size=tokenizer.vocab_size,
-            initializer_range=config["model"]["initializer_range"],
-            pad_token_id=tokenizer.pad_token_id,
-            rms_norm_eps=1e-5,
-            hidden_dropout_prob=config["model"]["hidden_dropout_prob"],
-            attention_dropout_prob=config["model"]["attention_dropout_prob"],
-            use_stable_embedding=config["model"]["use_stable_embedding"],
-            shared_input_output_embedding=config["model"][
-                "shared_input_output_embedding"
-            ],
-        )
-    )
+    model_config = AutoConfig.from_pretrained(FLAGS.model_config)
+    model_config.vocab_size = tokenizer.vocab_size
+    model_config.pad_token_id = tokenizer.pad_token_id
     if config["train"]["ckpt"] is not None:
-        ckpt = torch.load(config["train"]["ckpt"], map_location="cpu")
-        if "module" in ckpt:
-            ckpt = ckpt["module"]
-        raw_model.load_state_dict(ckpt)
-        logging.warn("Loaded ckpt from: {}".format(config["train"]["ckpt"]))
+        raw_model = AutoModelForCausalLM.from_pretrained(
+            config["train"]["ckpt"], config=model_config
+        )
+        logging.warning("Loaded ckpt from: {}".format(config["train"]["ckpt"]))
+    else:
+        raw_model = AutoModelForCausalLM.from_config(model_config)
+    if config["train"].get("gradient_checkpointing_enable", False):
+        raw_model.gradient_checkpointing_enable()
     trainer = Trainer(config, raw_model, train_loader, tokenizer, accelerator)
     trainer.train()
 

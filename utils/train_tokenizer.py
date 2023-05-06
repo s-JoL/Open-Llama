@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-03-24 20:49:03
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-04 08:42:21
+LastEditTime: 2023-05-06 23:34:14
 FilePath: /Open-Llama/utils/train_tokenizer.py
 Description: 
 
@@ -67,7 +67,7 @@ spm.SentencePieceTrainer.train(
 )
 
 # Serialize the model as file.
-with open("configs/10w_vocab_wudao5_pile10.model", "wb") as f:
+with open("configs/tokenizer_models/10w_vocab_wudao5_pile10.model", "wb") as f:
     f.write(model.getvalue())
 
 # Directly load the model from serialized model.

@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-06 22:30:10
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-04 22:44:58
+LastEditTime: 2023-05-06 23:30:57
 FilePath: /Open-Llama/chat_server.py
 Description: 
 
@@ -15,7 +15,7 @@ from transformers import OpenLlamaForCausalLM, OpenLlamaConfig, LlamaTokenizer
 
 
 tokenizer = LlamaTokenizer(
-    "configs/10w_vocab_wudao5_pile10.model",
+    "configs/tokenizer_models/10w_vocab_wudao5_pile10.model",
     pad_token="<pad>",
     add_bos_token=False,
     add_eos_token=True,
@@ -42,7 +42,7 @@ if "module" in ckpt:
 raw_model.load_state_dict(ckpt)
 raw_model.eval()
 model = raw_model.half().cuda()
-logging.warn("ready")
+logging.warning("ready")
 
 
 with gr.Blocks() as demo:
@@ -59,7 +59,7 @@ with gr.Blocks() as demo:
     clear = gr.Button("Clear")
 
     def user(user_message, history):
-        logging.warn(user_message)
+        logging.warning(user_message)
         return "", history + [[user_message, None]]
 
     def bot(history):
@@ -92,7 +92,7 @@ with gr.Blocks() as demo:
         pred = model.generate(input_ids=context, max_new_tokens=1024, do_sample=True)
         pred = pred[:, inputs_len:]
         pred = tokenizer.decode(pred.cpu()[0], skip_special_tokens=True)
-        logging.warn(pred)
+        logging.warning(pred)
         bot_message = pred
         history[-1][1] = bot_message
         return history
