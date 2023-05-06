@@ -2,7 +2,7 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-24 20:05:21
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-04 08:41:37
+LastEditTime: 2023-05-06 09:45:30
 FilePath: /Open-Llama/solver/trainer.py
 Description: 
 
@@ -172,6 +172,7 @@ class Trainer:
                 if self.data_step % self.save_interval == 0 and self.data_step > 0:
                     self.accelerator.save_state(self.work_dir)
                 self.data_step += 1
+            self.epoch += 1
         wandb.finish()
 
     def log(self, losses):
