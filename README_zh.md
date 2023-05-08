@@ -60,9 +60,24 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 ## **更新**
 
+**[2023.5.8] Release v2.1**
+
+本次更新加入对更大模型训练的支持，使用DeepSpeed stage3 + offload + activation checkpoint可以在**单机8卡A100-80G训练65B模型**。
+下表对比了Open-Llama和Llama原文的训练速度，Llama性能数据引自Llama原文。
+|                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
+|----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
+| Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          | 94G        |
+| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1616              | 24         | 100G       |
+| Open-Llama 33B | 3               | False   | True                  | -           | -         | 708               | 12         | 100G        |
+| Open-Llama 65B | 3               | True    | True                  | -           | -         | 369               | 12         | 440G       |
+| Llama 7B       | -               | -       | -                     | 1T          | 82432     | 3370              | -          | -          |
+| Llama 13B      | -               | -       | -                     | 1T          | 135168    | 2055              | -          | -          |
+| Llama 33B      | -               | -       | -                     | 1.4T        | 530432    | 733               | -          | -          |
+| Llama 65B      | -               | -       | -                     | 1.4T        | 1022362   | 380               | -          | -          |
+
 **[2023.4.28] Release v2.0**
 
-本次更新主要包含以下几个方面，相对于v1版本提升有效训练速度**50%**，其中pad从**30%**减少至**5%**，训练速度从**3200token/s**提升至**3600token/s**。0.95 * 3600/(0.7 * 3200)=1.527
+本次更新主要包含以下几个方面，相对于v1版本提升有效训练速度**50%**，其中pad从**30%**减少至**5%**，训练速度从**3200token/s**提升至**3587token/s**。0.95 * 3600/(0.7 * 3200)=1.521
 1. 使用HuggingFace的datasets库进行数据读取，具体流程如下
    1. 使用transform函数将不同数据集的数据统一格式为{'text': 'xxx'}
    2. 使用Tokenizer进行分词

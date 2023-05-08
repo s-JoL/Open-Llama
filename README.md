@@ -59,9 +59,24 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 
 ## **Updates**
 
+**[2023.5.8] Release v2.1**
+
+This update adds support for larger model training. Using DeepSpeed stage3 + offload + activation checkpoint, you can train a 65B model on a **single machine with 8 A100-80G**.
+The following table compares the training speed of Open-Llama and the original Llama, and the performance data of Llama is quoted from the original Llama paper.
+|                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
+|----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
+| Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          | 94G        |
+| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1616              | 24         | 100G       |
+| Open-Llama 33B | 3               | False   | True                  | -           | -         | 708               | 12         | 100G        |
+| Open-Llama 65B | 3               | True    | True                  | -           | -         | 369               | 12         | 440G       |
+| Llama 7B       | -               | -       | -                     | 1T          | 82432     | 3370              | -          | -          |
+| Llama 13B      | -               | -       | -                     | 1T          | 135168    | 2055              | -          | -          |
+| Llama 33B      | -               | -       | -                     | 1.4T        | 530432    | 733               | -          | -          |
+| Llama 65B      | -               | -       | -                     | 1.4T        | 1022362   | 380               | -          | -          |
+
 **[2023.4.28] Release v2.0**
 
-This update mainly includes the following aspects, increasing the effective training speed by **50%** compared to the v1 version, reducing padding from **30%** to **5%**, and improving training speed from **3200 tokens/s** to **3600 tokens/s**. 0.95 * 3600 / (0.7 * 3200) = 1.527
+This update mainly includes the following aspects, increasing the effective training speed by **50%** compared to the v1 version, reducing padding from **30%** to **5%**, and improving training speed from **3200 tokens/s** to **3587 tokens/s**. 0.95 * 3587 / (0.7 * 3200) = 1.521
 
 1. Use HuggingFace's datasets library for data reading, with the process as follows:
    1. Use the transform function to unify data formats from different datasets to {'text': 'xxx'}
