@@ -66,6 +66,8 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 - The peft library is introduced to **support training such as lora**.
 
 - The following table compares the training speed of Open-Llama and the original Llama, and the performance data of Llama is quoted from the original Llama paper.
+
+
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
 | Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          | 94G        |
