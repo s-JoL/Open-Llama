@@ -61,7 +61,7 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 
 **[2023.5.8] Release v2.1**
 
-This update adds support for larger model training. Using DeepSpeed stage3 + offload + activation checkpoint, you can train a 65B model on a **single machine with 8 A100-80G**.
+This update adds support for larger model training. Using DeepSpeed stage3 + offload + activation checkpoint, you can **train a 65B model on a single machine with 8 A100-80G**.
 The following table compares the training speed of Open-Llama and the original Llama, and the performance data of Llama is quoted from the original Llama paper.
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
