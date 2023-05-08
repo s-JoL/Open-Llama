@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-08 22:25:57
+ * @LastEditTime: 2023-05-08 22:28:51
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -61,9 +61,11 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 
 **[2023.5.8] Release v2.1**
 
-This update adds support for larger model training. Using DeepSpeed stage3 + offload + activation checkpoint, you can **train a 65B model on a single machine with 8 A100-80G**. 
-At the same time, the peft library is introduced to **support training such as lora**.
-The following table compares the training speed of Open-Llama and the original Llama, and the performance data of Llama is quoted from the original Llama paper.
+- This update adds support for larger model training. Using DeepSpeed stage3 + offload + activation checkpoint, you can **train a 65B model on a single machine with 8 A100-80G**. 
+
+- The peft library is introduced to **support training such as lora**.
+
+- The following table compares the training speed of Open-Llama and the original Llama, and the performance data of Llama is quoted from the original Llama paper.
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
 | Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          | 94G        |

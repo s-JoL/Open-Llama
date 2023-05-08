@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-08 22:25:28
+ * @LastEditTime: 2023-05-08 22:28:40
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -62,8 +62,11 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 **[2023.5.8] Release v2.1**
 
-本次更新加入对更大模型训练的支持，使用DeepSpeed stage3 + offload + activation checkpoint可以在**单机8卡A100-80G训练65B模型**。同时引入peft库**支持lora**等训练。
-下表对比了Open-Llama和Llama原文的训练速度，Llama性能数据引自Llama原文。
+- 本次更新加入对更大模型训练的支持，使用DeepSpeed stage3 + offload + activation checkpoint可以在**单机8卡A100-80G训练65B模型**。
+
+- 引入peft库**支持lora**等训练。
+
+- 下表对比了Open-Llama和Llama原文的训练速度，Llama性能数据引自Llama原文。
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
 | Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          | 94G        |
