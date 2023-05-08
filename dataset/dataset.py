@@ -184,7 +184,7 @@ def construct_dataset(
     random.shuffle(all_data_files)
     if world_size is not None:
         num_shards = len(all_data_files)
-        all_data_files = all_data_files[num_shards // world_size * world_size]
+        all_data_files = all_data_files[:num_shards // world_size * world_size]
     dataset = load_dataset(
         "json", data_files=all_data_files, split="train", streaming=True
     )
