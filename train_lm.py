@@ -2,19 +2,19 @@
 Author: LiangSong(sl12160010@gmail.com)
 Date: 2023-04-12 19:12:42
 LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-06 23:08:42
+LastEditTime: 2023-05-08 22:23:52
 FilePath: /Open-Llama/train_lm.py
 Description: 
 
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
 import yaml
-import torch
 import logging
 from absl import app
 from absl import flags
 from accelerate import Accelerator
 from torch.utils.data import DataLoader
+from peft import LoraConfig, TaskType, get_peft_model
 from datasets.distributed import split_dataset_by_node
 from transformers import AutoConfig, AutoModelForCausalLM, LlamaTokenizer
 
@@ -74,6 +74,18 @@ def main(argv):
         logging.warning("Loaded ckpt from: {}".format(config["train"]["ckpt"]))
     else:
         raw_model = AutoModelForCausalLM.from_config(model_config)
+    # lora
+    if config["train"].get("use_lora", False):
+        peft_config = LoraConfig(
+            task_type=TaskType.CAUSAL_LM,
+            target_modules=["q_proj", "v_proj"],
+            inference_mode=False,
+            r=1,
+            lora_alpha=32,
+            lora_dropout=0.1,
+        )
+        raw_model = get_peft_model(raw_model, peft_config)
+        raw_model.print_trainable_parameters()
     if config["train"].get("gradient_checkpointing_enable", False):
         raw_model.gradient_checkpointing_enable()
     trainer = Trainer(config, raw_model, train_loader, tokenizer, accelerator)

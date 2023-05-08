@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-06 23:32:31
+ * @LastEditTime: 2023-05-08 22:25:28
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -19,7 +19,7 @@
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/s-JoL/Open-Llama">
 </p>
 
-Open-Llama是一个开源项目，提供了一整套用于构建大型语言模型的训练流程，从数据集准备到分词、预训练、指令调优，以及强化学习技术 RLHF。
+Open-Llama是一个开源项目，提供了一整套用于构建大型语言模型的训练流程，从数据集准备到分词、预训练、指令调优，lora, 以及强化学习技术 RLHF。
 
 **可从[Demo](http://home.ustc.edu.cn/~sl9292/)直接试用本模型。**
 
@@ -62,7 +62,7 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 **[2023.5.8] Release v2.1**
 
-本次更新加入对更大模型训练的支持，使用DeepSpeed stage3 + offload + activation checkpoint可以在**单机8卡A100-80G训练65B模型**。
+本次更新加入对更大模型训练的支持，使用DeepSpeed stage3 + offload + activation checkpoint可以在**单机8卡A100-80G训练65B模型**。同时引入peft库**支持lora**等训练。
 下表对比了Open-Llama和Llama原文的训练速度，Llama性能数据引自Llama原文。
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|

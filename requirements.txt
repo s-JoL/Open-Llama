@@ -17,4 +17,5 @@ triton
 functorch==1.13.1
 xformers
 gradio
+peft
 git+https://github.com/huggingface/transformers.git

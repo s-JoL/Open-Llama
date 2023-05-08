@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-06 23:33:11
+ * @LastEditTime: 2023-05-08 22:25:57
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -19,7 +19,7 @@
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/s-JoL/Open-Llama">
 </p>
 
-Open-Llama is an open-source project that offers a complete training pipeline for building large language models, ranging from dataset preparation to tokenization, pre-training, prompt tuning, and the reinforcement learning technique RLHF.
+Open-Llama is an open-source project that offers a complete training pipeline for building large language models, ranging from dataset preparation to tokenization, pre-training, prompt tuning, lora, and the reinforcement learning technique RLHF.
 
 **You can try this model directly from the [Demo](http://home.ustc.edu.cn/~sl9292/).**
 
@@ -61,7 +61,8 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 
 **[2023.5.8] Release v2.1**
 
-This update adds support for larger model training. Using DeepSpeed stage3 + offload + activation checkpoint, you can **train a 65B model on a single machine with 8 A100-80G**.
+This update adds support for larger model training. Using DeepSpeed stage3 + offload + activation checkpoint, you can **train a 65B model on a single machine with 8 A100-80G**. 
+At the same time, the peft library is introduced to **support training such as lora**.
 The following table compares the training speed of Open-Llama and the original Llama, and the performance data of Llama is quoted from the original Llama paper.
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
