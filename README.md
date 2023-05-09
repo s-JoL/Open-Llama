@@ -233,7 +233,7 @@ Finally, we referenced [PALM](https://arxiv.org/abs/2204.02311) and employed Sha
 We use multi-GPU parallel training based on the Accelerate library, with the following start command:
 
 ```bash
-accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --config configs/pretrain_config.yaml
+accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --train_config configs/pretrain_config.yaml --model_config configs/model_configs/7B.json 
 ```
 In some cases, you may need to specify the following parameters:
 
@@ -301,7 +301,7 @@ user: {prompt}\nsystem: {completion}</s>
 The startup command is basically the same as pre-training:
 
 ```bash
-accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --config configs/instruct_config.yaml
+accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --train_config configs/instruct_config.yaml --model_config configs/model_configs/7B.json 
 ```
 
 In some cases, you may need to specify the following parameters:

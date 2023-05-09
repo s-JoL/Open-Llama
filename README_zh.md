@@ -223,7 +223,7 @@ Self Attention的计算，这对于性能有明显的提升，提升大约30%。
 ### 预训练
 我们基于Accelerate库进行多GPU并行训练，启动命令如下
 ```bash
-accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --config configs/pretrain_config.yaml
+accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --train_config configs/pretrain_config.yaml --model_config configs/model_configs/7B.json 
 ```
 某些情况下可能需要指定下列参数
 ```
@@ -285,7 +285,7 @@ user: {prompt}\nsystem: {completion}</s>
 
 启动命令和预训练基本一致
 ```bash
-accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --config configs/instruct_config.yaml
+accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_lm.py --train_config configs/instruct_config.yaml --model_config configs/model_configs/7B.json 
 ```
 某些情况下可能需要指定下列参数
 ```
