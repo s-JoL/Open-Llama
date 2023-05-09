@@ -182,6 +182,8 @@ def construct_dataset(
         assert len(data_files) > 0
         all_data_files.extend(data_files)
     random.shuffle(all_data_files)
+    # 当shard可以被world_size整除时 split_dataset_by_node 会直接按shard进行划分，否则会读所有数据然后跳过一部分，可能会慢一点
+    # https://huggingface.co/docs/datasets/package_reference/main_classes#datasets.distributed.split_dataset_by_node
     if world_size is not None:
         num_shards = len(all_data_files)
         all_data_files = all_data_files[: num_shards // world_size * world_size]

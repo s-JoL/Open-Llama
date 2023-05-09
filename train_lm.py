@@ -67,6 +67,8 @@ def main(argv):
     model_config = AutoConfig.from_pretrained(FLAGS.model_config)
     model_config.vocab_size = tokenizer.vocab_size
     model_config.pad_token_id = tokenizer.pad_token_id
+    # 使用AutoModel可以在Deepspeed.zero.Init()下正确的生效，而直接使用如OpenLlamaModel不能正确生效，导致浪费大量内存空间
+    # https://github.com/huggingface/accelerate/pull/932
     if config["train"]["ckpt"] is not None:
         raw_model = AutoModelForCausalLM.from_pretrained(
             config["train"]["ckpt"], config=model_config
