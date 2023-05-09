@@ -154,7 +154,7 @@ pip install -r requirements.txt
 Currently provided are the Wudao dataset open-sourced by Zhiyuan and the Pile dataset open-sourced by EleutherAI. Dataset download and processing scripts are located in the data directory.
 Due to the required agreement for downloading the Wudao dataset, you may need to modify the link in download_wudao. [Wudao](https://data.baai.ac.cn/details/WuDaoCorporaText).
 
-Thanks to @skepsun 's suggestion, using scidb to download the wudao dataset does not require login, and the download is more stable. https://github.com/s-JoL/Open-Llama/issues/42. 
+Thanks to [@skepsun](https://github.com/skepsun)'s suggestion, using scidb to download the wudao dataset does not require login, and the download is more stable. https://github.com/s-JoL/Open-Llama/issues/42. 
 
 **Note that data download may fail. It is recommended to divide the download and processing in the script into two parts for multiple attempts, which will automatically resume downloads from breakpoints.**
 
