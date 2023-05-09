@@ -24,7 +24,8 @@ train:
   gradient_accumulation_steps: 12
   prefetch_factor: 100
   train_and_eval: False
-  gradient_checkpointing_enable: True
+  gradient_checkpointing_enable: False
+  use_lora: False
 # global step
 log_interval: 5
 eval_interval: 500

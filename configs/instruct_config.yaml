@@ -23,6 +23,7 @@ train:
   prefetch_factor: 100
   train_and_eval: False
   gradient_checkpointing_enable: False
+  use_lora: False
 # global step
 log_interval: 50
 eval_interval: 500
