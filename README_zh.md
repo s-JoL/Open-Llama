@@ -72,7 +72,7 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
 | Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          | 94G        |
-| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1616              | 24         | 100G       |
+| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1616              | 12         | 100G       |
 | Open-Llama 33B | 3               | False   | True                  | -           | -         | 708               | 12         | 100G        |
 | Open-Llama 65B | 3               | True    | True                  | -           | -         | 369               | 12         | 440G       |
 | Llama 7B       | -               | -       | -                     | 1T          | 82432     | 3370              | -          | -          |
