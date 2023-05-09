@@ -80,9 +80,13 @@ def main(argv):
         if hasattr(raw_model, "enable_input_require_grads"):
             raw_model.enable_input_require_grads()
         else:
+
             def make_inputs_require_grad(module, input, output):
                 output.requires_grad_(True)
-            raw_model.get_input_embeddings().register_forward_hook(make_inputs_require_grad)
+
+            raw_model.get_input_embeddings().register_forward_hook(
+                make_inputs_require_grad
+            )
         peft_config = LoraConfig(
             task_type=TaskType.CAUSAL_LM,
             target_modules=["q_proj", "v_proj"],

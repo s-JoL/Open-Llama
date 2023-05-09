@@ -72,7 +72,7 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
 | Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          | 94G        |
-| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1616              | 12         | 100G       |
+| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1856              | 24         | 100G       |
 | Open-Llama 33B | 3               | False   | True                  | -           | -         | 708               | 12         | 100G        |
 | Open-Llama 65B | 3               | True    | True                  | -           | -         | 369               | 12         | 440G       |
 | Llama 7B       | -               | -       | -                     | 1T          | 82432     | 3370              | -          | -          |
@@ -152,6 +152,8 @@ pip install -r requirements.txt
 
 目前给出了智源开源的悟道数据集和EleutherAI开源的the pile数据集。数据集下载和处理代码在data目录下。
 其中悟道数据集由于需要同意一些协议才能下载因此可能需要修改一下download_wudao中的链接，[悟道](https://data.baai.ac.cn/details/WuDaoCorporaText)。
+
+感谢@skepsun 的建议，使用scidb下载wudao数据集不需要登陆，并且下载更稳定一些。https://github.com/s-JoL/Open-Llama/issues/42
 
 **注意数据下载可能出现失败，建议将script中的下载和处理分成两部分来运行，可以将下载多运行机会，会自动断点续传。**
 

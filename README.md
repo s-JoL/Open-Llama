@@ -71,7 +71,7 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
 | Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          | 94G        |
-| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1616              | 12         | 100G       |
+| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1856              | 24         | 100G       |
 | Open-Llama 33B | 3               | False   | True                  | -           | -         | 708               | 12         | 100G        |
 | Open-Llama 65B | 3               | True    | True                  | -           | -         | 369               | 12         | 440G       |
 | Llama 7B       | -               | -       | -                     | 1T          | 82432     | 3370              | -          | -          |
@@ -153,6 +153,8 @@ pip install -r requirements.txt
 
 Currently provided are the Wudao dataset open-sourced by Zhiyuan and the Pile dataset open-sourced by EleutherAI. Dataset download and processing scripts are located in the data directory.
 Due to the required agreement for downloading the Wudao dataset, you may need to modify the link in download_wudao. [Wudao](https://data.baai.ac.cn/details/WuDaoCorporaText).
+
+Thanks to @skepsun 's suggestion, using scidb to download the wudao dataset does not require login, and the download is more stable. https://github.com/s-JoL/Open-Llama/issues/42. 
 
 **Note that data download may fail. It is recommended to divide the download and processing in the script into two parts for multiple attempts, which will automatically resume downloads from breakpoints.**
 

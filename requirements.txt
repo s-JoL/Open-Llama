@@ -15,7 +15,7 @@ seaborn
 sentencepiece
 triton
 functorch==1.13.1
-xformers
+xformers==0.0.16
 gradio
 peft
 git+https://github.com/huggingface/transformers.git
