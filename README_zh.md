@@ -51,7 +51,7 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 只经过预训练的CheckPoint也上传至[s-JoL/Open-Llama-V1-pretrain](https://huggingface.co/s-JoL/Open-Llama-V1-pretrain)。
 模型已提交[PR](https://github.com/huggingface/transformers/pull/22795)合并至Transformers main分支。
 
-我们完成了300B token的预训练，总共训练80 K step，Global Batch Size和Llama中一致为4M。
+我们完成了330B token的预训练，总共训练80 K step，Global Batch Size和Llama中一致为4M。
 使用总共7部分数据构成Instruction-tuning数据，模型具有一定的编程能力、数学能力和多轮对话能力，具体数据见Instruction-Tuning部分。
 
 如下是一个关于代码的多轮对话能力的展示

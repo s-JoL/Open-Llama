@@ -50,7 +50,7 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 The CheckPoint after pre-training only is also uploaded to [s-JoL/Open-Llama-V1-pretrain](https://huggingface.co/s-JoL/Open-Llama-V1-pretrain).
 The model [PR](https://github.com/huggingface/transformers/pull/22795) has been submitted for merging into the Transformers main branch.
 
-We have completed 300B token pre-training, training a total of 80 K steps. The Global Batch Size is consistent with Llama at 4M.
+We have completed 330B token pre-training, training a total of 80 K steps. The Global Batch Size is consistent with Llama at 4M.
 Using a total of 7 parts of data to constitute the Instruction-tuning data, the model has certain programming abilities, mathematical abilities, and multi-turn dialogue abilities. Specific data can be found in the Instruction-Tuning section.
 
 Below is a display of the model's multi-turn dialogue ability regarding code:
