@@ -366,7 +366,7 @@ accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_
   title={Open-Llama},
   author={Liang Song},
   year={2023},
-  howpublished={\url{https://github.com/Bayes-Song/Open-Llama}},
+  howpublished={\url{https://github.com/s-JoL/Open-Llama}},
 }
 ```
 

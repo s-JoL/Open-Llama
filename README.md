@@ -384,13 +384,13 @@ The following table summarizes the performance of currently available open-sourc
 3. Add code for building pre-training datasets based on Common Crawl and open related datasets.
 4. Add code for multimodal training.
 
-## References
+## Citation
 
 ```
 @misc{openllama,
   title={Open-Llama},
   author={Liang Song},
   year={2023},
-  howpublished={\url{https://github.com/Bayes-Song/Open-Llama}},
+  howpublished={\url{https://github.com/s-JoL/Open-Llama}},
 }
 ```
