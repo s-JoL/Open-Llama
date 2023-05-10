@@ -394,3 +394,9 @@ The following table summarizes the performance of currently available open-sourc
   howpublished={\url{https://github.com/s-JoL/Open-Llama}},
 }
 ```
+
+<p align="center">
+  <a href="https://star-history.com/#s-JoL/Open-Llama&Date">
+    <img src="https://api.star-history.com/svg?repos=s-JoL/Open-Llama&type=Date" alt="Star History Chart">
+  </a>
+</p>

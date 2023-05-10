@@ -370,6 +370,12 @@ accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_
 }
 ```
 
+<p align="center">
+  <a href="https://star-history.com/#s-JoL/Open-Llama&Date">
+    <img src="https://api.star-history.com/svg?repos=s-JoL/Open-Llama&type=Date" alt="Star History Chart">
+  </a>
+</p>
+
 <!-- 一些之前没注意到的部分
 
 1. [GPT3](https://arxiv.org/pdf/2005.14165.pdf), Details of Model Training
