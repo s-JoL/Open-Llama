@@ -9,6 +9,7 @@ Description:
 Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
 """
 import yaml
+import math
 import logging
 from absl import app
 from absl import flags
@@ -65,7 +66,14 @@ def main(argv):
     # smaller initializer_range make training more stable
     # add stabel embedding to token embedding
     model_config = AutoConfig.from_pretrained(FLAGS.model_config)
-    model_config.vocab_size = tokenizer.vocab_size
+    # Make the vocab size divisible by 16
+    # https://huggingface.co/docs/transformers/main_classes/deepspeed#how-to-choose-which-zero-stage-and-offloads-to-use-for-best-performance
+    # https://developer.nvidia.com/blog/optimizing-gpu-performance-tensor-cores/
+    vocab_size = math.ceil(tokenizer.vocab_size / 16) * 16
+    model_config.vocab_size = vocab_size
+    logging.warning(
+        "Round vocab_size from {} to {}.".format(tokenizer.vocab_size, vocab_size)
+    )
     model_config.pad_token_id = tokenizer.pad_token_id
     # 使用AutoModel可以在Deepspeed.zero.Init()下正确的生效，而直接使用如OpenLlamaModel不能正确生效，导致浪费大量内存空间
     # https://github.com/huggingface/accelerate/pull/932
