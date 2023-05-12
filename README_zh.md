@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-08 22:29:53
+ * @LastEditTime: 2023-05-12 11:31:51
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -25,7 +25,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 ## **主要内容**
 
-- **支持Transformers/HuggingFace直接调用。** 经过Instruct-tuning的CheckPoint已开源在[HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1)。
+- **支持Transformers/HuggingFace直接调用。** 经过Instruct-tuning的CheckPoint已开源在[HuggingFace: s-JoL/Open-Llama-V2](https://huggingface.co/s-JoL/Open-Llama-V2)。
 
 - **采用FastChat项目相同方法测评Open-Llama的效果和GPT3.5的效果对比，经过测试在中文问题上可以达到GPT3.5 84%的水平。**
 
@@ -38,17 +38,17 @@ pip install git+https://github.com/huggingface/transformers.git
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("s-JoL/Open-Llama-V1", use_fast=False)
-model = AutoModelForCausalLM.from_pretrained("s-JoL/Open-Llama-V1").cuda()
+tokenizer = AutoTokenizer.from_pretrained("s-JoL/Open-Llama-V2", use_fast=False)
+model = AutoModelForCausalLM.from_pretrained("s-JoL/Open-Llama-V2", device_map="auto")
 
-inputs = tokenizer('user:implement quick sort in python\nsystem:', return_tensors='pt', return_attention_mask=False)
+inputs = tokenizer('user:implement quick sort in python\nsystem:', return_tensors='pt', return_attention_mask=False, add_special_tokens=False)
 for k, v in inputs.items():
    inputs[k] = v.cuda()
 pred = model.generate(**inputs, max_new_tokens=512, do_sample=True)
 print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 ```
-只经过预训练的CheckPoint也上传至[s-JoL/Open-Llama-V1-pretrain](https://huggingface.co/s-JoL/Open-Llama-V1-pretrain)。
+只经过预训练的CheckPoint也上传至[s-JoL/Open-Llama-V2-pretrain](https://huggingface.co/s-JoL/Open-Llama-V2-pretrain)。
 模型已提交[PR](https://github.com/huggingface/transformers/pull/22795)合并至Transformers main分支。
 
 我们完成了330B token的预训练，总共训练80 K step，Global Batch Size和Llama中一致为4M。
@@ -134,7 +134,7 @@ v1版代码可见https://github.com/s-JoL/Open-Llama/tree/v1.0
 
 - Python 3.7 或更高版本
 - PyTorch 1.13
-- 特殊版本的[Transformers库](https://github.com/Bayes-Song/transformers)
+- [Transformers库](https://github.com/huggingface/transformers)
 - [Accelerate库](https://huggingface.co/docs/accelerate/index)
 - CUDA 11.6 或更高版本（用于 GPU 加速）
 - 硬件配置：目前使用(64 CPU, 1000G Memory, 8xA100-80G) x N，有个比较神奇的现象当使用更多cpu时反而会慢一点，猜测这和dataloader的多进程有一定关系。

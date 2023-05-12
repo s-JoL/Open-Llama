@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-08 22:28:51
+ * @LastEditTime: 2023-05-12 11:32:28
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -25,7 +25,7 @@ Open-Llama is an open-source project that offers a complete training pipeline fo
 
 ## **Main contents**
 
-- **Support Transformers/HuggingFace.** The CheckPoint after Instruct-tuning is open-source on [HuggingFace: s-JoL/Open-Llama-V1](https://huggingface.co/s-JoL/Open-Llama-V1).
+- **Support Transformers/HuggingFace.** The CheckPoint after Instruct-tuning is open-source on [HuggingFace: s-JoL/Open-Llama-V2](https://huggingface.co/s-JoL/Open-Llama-V2).
 
 - **By adopting the same evaluation method as the FastChat project, Open-Llama's performance is compared to GPT3.5’s. After testing, it can reach 84% of GPT3.5's performance on Chinese questions.**
 
@@ -37,17 +37,17 @@ pip install git+https://github.com/huggingface/transformers.git
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("s-JoL/Open-Llama-V1", use_fast=False)
-model = AutoModelForCausalLM.from_pretrained("s-JoL/Open-Llama-V1").cuda()
+tokenizer = AutoTokenizer.from_pretrained("s-JoL/Open-Llama-V2", use_fast=False)
+model = AutoModelForCausalLM.from_pretrained("s-JoL/Open-Llama-V2", device_map="auto")
 
-inputs = tokenizer('user:implement quick sort in python\nsystem:', return_tensors='pt', return_attention_mask=False)
+inputs = tokenizer('user:implement quick sort in python\nsystem:', return_tensors='pt', return_attention_mask=False, add_special_tokens=False)
 for k, v in inputs.items():
    inputs[k] = v.cuda()
 pred = model.generate(**inputs, max_new_tokens=512, do_sample=True)
 print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 ```
-The CheckPoint after pre-training only is also uploaded to [s-JoL/Open-Llama-V1-pretrain](https://huggingface.co/s-JoL/Open-Llama-V1-pretrain).
+The CheckPoint after pre-training only is also uploaded to [s-JoL/Open-Llama-V2-pretrain](https://huggingface.co/s-JoL/Open-Llama-V2-pretrain).
 The model [PR](https://github.com/huggingface/transformers/pull/22795) has been submitted for merging into the Transformers main branch.
 
 We have completed 330B token pre-training, training a total of 80 K steps. The Global Batch Size is consistent with Llama at 4M.
@@ -135,7 +135,7 @@ When training language models, our goal is to build a versatile model that can h
 
 - Python 3.7 or higher
 - PyTorch 1.13
-- Special version of [Transformers library](https://github.com/Bayes-Song/transformers)
+- [Transformers library](https://github.com/huggingface/transformers)
 - [Accelerate library](https://huggingface.co/docs/accelerate/index)
 - CUDA 11.6 or higher (for GPU acceleration)
 - Hardware configuration: currently using (64 CPU, 1000G Memory, 8xA100-80G) x N. There is a rather curious phenomenon that when more CPUs are used, the system runs slightly slower. I speculate this may have something to do with the multi-processing of dataloader.
