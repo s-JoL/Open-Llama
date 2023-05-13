@@ -2,7 +2,6 @@ data:
   mode: "pretrain"
   data: 
     wudao: "data/pretrain_data/part-wudao*.jsonl.zst"
-    # 由于加载了Llama模型的ckpt所以只使用少量英文数据
     the_pile: "data/pretrain_data/part-pile-1*.jsonl.zst"
   pad_to_max: False
   sequence_sample_mode: "none"
@@ -18,8 +17,7 @@ train:
   initializer_range: 1.0e-2
   lr: 2.0e-4
   weight_decay: 1.0e-1
-  # 加载预训练权重，从头训练设为null
-  ckpt: "data/llama_raw_ckpt/7B/extended.pth"
+  ckpt: null
   train_num_workers: 16
   gradient_accumulation_steps: 12
   prefetch_factor: 100

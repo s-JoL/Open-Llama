@@ -17,7 +17,7 @@ train:
   initializer_range: 1.0e-2
   lr: 2.0e-4
   weight_decay: 1.0e-1
-  ckpt: "data/llama_raw_ckpt/7B/extended.pth"
+  ckpt: "data/saved_model/ckpt.pth"
   train_num_workers: 16
   gradient_accumulation_steps: 1
   prefetch_factor: 100
