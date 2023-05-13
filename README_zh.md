@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-12 11:31:51
+ * @LastEditTime: 2023-05-14 01:05:25
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -69,16 +69,16 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 - 下表对比了Open-Llama和Llama原文的训练速度，Llama性能数据引自Llama原文。
 
 
-|                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size | CPU Memory |
-|----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|------------|
-| Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          | 94G        |
-| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1856              | 24         | 100G       |
-| Open-Llama 33B | 3               | False   | True                  | -           | -         | 708               | 12         | 100G        |
-| Open-Llama 65B | 3               | True    | True                  | -           | -         | 369               | 12         | 440G       |
-| Llama 7B       | -               | -       | -                     | 1T          | 82432     | 3370              | -          | -          |
-| Llama 13B      | -               | -       | -                     | 1T          | 135168    | 2055              | -          | -          |
-| Llama 33B      | -               | -       | -                     | 1.4T        | 530432    | 733               | -          | -          |
-| Llama 65B      | -               | -       | -                     | 1.4T        | 1022362   | 380               | -          | -          |
+|                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size |
+|----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|
+| Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          |
+| Open-Llama 13B | 3               | False   | True                  | -           | -         | 1856              | 24         |
+| Open-Llama 33B | 3               | False   | True                  | -           | -         | 708               | 12         |
+| Open-Llama 65B | 3               | True    | True                  | -           | -         | 369               | 12         |
+| Llama 7B       | -               | -       | -                     | 1T          | 82432     | 3370              | -          |
+| Llama 13B      | -               | -       | -                     | 1T          | 135168    | 2055              | -          |
+| Llama 33B      | -               | -       | -                     | 1.4T        | 530432    | 733               | -          |
+| Llama 65B      | -               | -       | -                     | 1.4T        | 1022362   | 380               | -          |
 
 **[2023.4.28] Release v2.0**
 
