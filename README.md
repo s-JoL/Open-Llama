@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-14 10:52:36
+ * @LastEditTime: 2023-05-15 00:21:01
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -57,13 +57,13 @@ Using a total of 7 parts of data to constitute the Instruction-tuning data, the 
 
 Below is a display of the model's multi-turn dialogue ability regarding code:
 
-![image4](assets/multiturn_chat_en.jpeg)
+![image4](assets/multiturn_chat_en.jpg)
 
 ## **Updates**
 
 **[2023.5.8] Release v2.1**
 
-- This update adds support for larger model training. Using DeepSpeed stage3 + offload + activation checkpoint, you can **train a 65B model on a single machine with 8 A100-80G**. 
+- This update adds support for larger model training. Using DeepSpeed stage3 + offload + activation checkpoint, you can **train a 65B model with A100-80G**. 
 
 - The peft library is introduced to **support training such as lora**.
 

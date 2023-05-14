@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-14 10:52:08
+ * @LastEditTime: 2023-05-15 00:02:05
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -64,7 +64,7 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 **[2023.5.8] Release v2.1**
 
-- 本次更新加入对更大模型训练的支持，使用DeepSpeed stage3 + offload + activation checkpoint可以在**单机8卡A100-80G训练65B模型**。
+- 本次更新加入对更大模型训练的支持，使用DeepSpeed stage3 + offload + activation checkpoint可以在**A100-80G训练65B模型**。
 
 - 引入peft库**支持lora**等训练。
 
