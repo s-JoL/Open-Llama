@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-14 01:05:25
+ * @LastEditTime: 2023-05-14 10:48:43
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -27,7 +27,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 - **支持Transformers/HuggingFace直接调用。** 经过Instruct-tuning的CheckPoint已开源在[HuggingFace: s-JoL/Open-Llama-V2](https://huggingface.co/s-JoL/Open-Llama-V2)。
 
-- **采用FastChat项目相同方法测评Open-Llama的效果和GPT3.5的效果对比，经过测试在中文问题上可以达到GPT3.5 84%的水平。**
+- **采用FastChat项目相同方法测评Open-Llama的效果和GPT3.5的效果对比，经过测试在中文问题上可以达到GPT3.5 89%的水平。**
 
 - **训练速度达到3620 token/s，快于Llama原文中的3370 token/s，达到目前sota的水平。**
 

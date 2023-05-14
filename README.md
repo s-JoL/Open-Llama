@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-14 01:05:56
+ * @LastEditTime: 2023-05-14 10:48:34
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -27,7 +27,7 @@ Open-Llama is an open-source project that offers a complete training pipeline fo
 
 - **Support Transformers/HuggingFace.** The CheckPoint after Instruct-tuning is open-source on [HuggingFace: s-JoL/Open-Llama-V2](https://huggingface.co/s-JoL/Open-Llama-V2).
 
-- **By adopting the same evaluation method as the FastChat project, Open-Llama's performance is compared to GPT3.5’s. After testing, it can reach 84% of GPT3.5's performance on Chinese questions.**
+- **By adopting the same evaluation method as the FastChat project, Open-Llama's performance is compared to GPT3.5’s. After testing, it can reach 89% of GPT3.5's performance on Chinese questions.**
 
 - **The training speed reaches 3620 tokens/s, faster than the 3370 tokens/s reported in the original Llama paper, reaching the current state-of-the-art level.**
 
