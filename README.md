@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-15 00:21:01
+ * @LastEditTime: 2023-05-15 23:00:11
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -24,6 +24,8 @@
 Open-Llama is an open-source project that offers a complete training pipeline for building large language models, ranging from dataset preparation to tokenization, pre-training, prompt tuning, lora, and the reinforcement learning technique RLHF.
 
 **You can try this model directly from the [Demo](http://home.ustc.edu.cn/~sl9292/).**
+
+Join [discord](https://discord.gg/TrKxrTpnab) to discuss the development of large language models.
 
 ## **Main contents**
 

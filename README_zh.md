@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-15 00:02:05
+ * @LastEditTime: 2023-05-15 22:59:30
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -24,6 +24,8 @@
 Open-Llama是一个开源项目，提供了一整套用于构建大型语言模型的训练流程，从数据集准备到分词、预训练、指令调优，lora, 以及强化学习技术 RLHF。
 
 **可从[Demo](http://home.ustc.edu.cn/~sl9292/)直接试用本模型。**
+
+加入[discord](https://discord.gg/TrKxrTpnab)一起讨论大语言模型的发展。
 
 ## **主要内容**
 
