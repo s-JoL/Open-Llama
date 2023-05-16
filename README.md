@@ -29,7 +29,7 @@ Join [discord](https://discord.gg/TrKxrTpnab) to discuss the development of larg
 
 ## **Main contents**
 
-- **Support Transformers/HuggingFace.** The CheckPoint after Instruct-tuning is open-source on [HuggingFace: s-JoL/Open-Llama-V2](https://huggingface.co/s-JoL/Open-Llama-V2).
+- **Support Transformers/HuggingFace.** The CheckPoint after Instruct-tuning is open-source on [Hugging Face: s-JoL/Open-Llama-V2](https://huggingface.co/s-JoL/Open-Llama-V2).
 
 - **By adopting the same evaluation method as the FastChat project, Open-Llama's performance is compared to GPT3.5’s. After testing, it can reach 89% of GPT3.5's performance on Chinese questions.**
 
@@ -87,7 +87,7 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 
 This update mainly includes the following aspects, increasing the effective training speed by **50%** compared to the v1 version, reducing padding from **30%** to **5%**, and improving training speed from **3200 tokens/s** to **3587 tokens/s**. 0.95 * 3587 / (0.7 * 3200) = 1.521
 
-1. Use HuggingFace's datasets library for data reading, with the process as follows:
+1. Use Hugging Face's datasets library for data reading, with the process as follows:
    1. Use the transform function to unify data formats from different datasets to {'text': 'xxx'}
    2. Tokenize using Tokenizer
    3. Sample long sequences; currently, three modes are provided: truncation, sampling (refer to the [Gopher paper](https://arxiv.org/abs/2112.11446)), and splitting
@@ -100,7 +100,7 @@ This update mainly includes the following aspects, increasing the effective trai
 
 [2023.4.16] Release v1.0
 
-Basic pre-training and instruction fine-tuning codes are provided, with a training speed comparable to that of the original Llama. The pre-trained and fine-tuned models are already open-sourced on HuggingFace.
+Basic pre-training and instruction fine-tuning codes are provided, with a training speed comparable to that of the original Llama. The pre-trained and fine-tuned models are already open-sourced on Hugging Face.
 
 v1 version code can be seen at https://github.com/s-JoL/Open-Llama/tree/v1.0
 
@@ -336,7 +336,7 @@ Developed based on Gradio.
 
 ### Training Framework
 
-In terms of training frameworks, we tested HuggingFace's open-source Accelerate library, PyTorch Lightning, and HPC-AI's open-source ColossalAI. We found that their performance differences are relatively small when fully utilizing GPUs. Therefore, we chose the relatively simple-to-implement Accelerate library as the training framework.
+In terms of training frameworks, we tested Hugging Face's open-source Accelerate library, PyTorch Lightning, and HPC-AI's open-source ColossalAI. We found that their performance differences are relatively small when fully utilizing GPUs. Therefore, we chose the relatively simple-to-implement Accelerate library as the training framework.
 
 The test code can be found in utils/speed_test.py.
 
@@ -346,7 +346,7 @@ The model structure used during the testing process is:
 | GPT2  | 2     | 6       | heads   | 4096        | 250100     | 1024       |
 
 The test results are shown below, indicating that when the GPUs are fully utilized, the differences in speed and memory consumption are not significant.
-|                 | HuggingFace                       | HuggingFace                        | ColossalAI                                             | ColossalAI                                             | ColossalAI                         |
+|                 | Hugging Face                       | Hugging Face                        | ColossalAI                                             | ColossalAI                                             | ColossalAI                         |
 |-----------------|-----------------------------------|------------------------------------|--------------------------------------------------------|--------------------------------------------------------|------------------------------------|
 | config          | without activation ckpt, bs2      | without activation ckpt, max_bs=12 | with activation ckpt, bs2                              | without activation ckpt, bs2                           | without activation ckpt, max_bs=10 |
 | second pre step | 0.336, fw=0.033, bw=0.3, opt=5e-6 | 1.25                               | 0.347                                                  | 0.308, fw=0.067, bw=0.152, opt=0.088                   | 1.055                              |
