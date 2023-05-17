@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-15 22:59:30
+ * @LastEditTime: 2023-05-17 21:17:41
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -29,7 +29,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 
 ## **主要内容**
 
-- **支持Transformers/HuggingFace直接调用。** 经过Instruct-tuning的CheckPoint已开源在[HuggingFace: s-JoL/Open-Llama-V2](https://huggingface.co/s-JoL/Open-Llama-V2)。
+- **支持Transformers/Hugging Face直接调用。** 经过Instruct-tuning的CheckPoint已开源在[Hugging Face: s-JoL/Open-Llama-V2](https://huggingface.co/s-JoL/Open-Llama-V2)。
 
 - **采用FastChat项目相同方法测评Open-Llama的效果和GPT3.5的效果对比，经过测试在中文问题上可以达到GPT3.5 89%的水平。**
 
@@ -53,7 +53,6 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 ```
 只经过预训练的CheckPoint也上传至[s-JoL/Open-Llama-V2-pretrain](https://huggingface.co/s-JoL/Open-Llama-V2-pretrain)。
-模型已提交[PR](https://github.com/huggingface/transformers/pull/22795)合并至Transformers main分支。
 
 我们完成了330B token的预训练，总共训练80 K step，Global Batch Size和Llama中一致为4M。
 使用总共7部分数据构成Instruction-tuning数据，模型具有一定的编程能力、数学能力和多轮对话能力，具体数据见Instruction-Tuning部分。
@@ -75,7 +74,7 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|
-| Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          |
+| Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3620              | 2          |
 | Open-Llama 13B | 3               | False   | True                  | -           | -         | 1856              | 24         |
 | Open-Llama 33B | 3               | False   | True                  | -           | -         | 708               | 12         |
 | Open-Llama 65B | 3               | True    | True                  | -           | -         | 369               | 12         |
@@ -86,8 +85,8 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 **[2023.4.28] Release v2.0**
 
-本次更新主要包含以下几个方面，相对于v1版本提升有效训练速度**50%**，其中pad从**30%**减少至**5%**，训练速度从**3200token/s**提升至**3587token/s**。0.95 * 3600/(0.7 * 3200)=1.521
-1. 使用HuggingFace的datasets库进行数据读取，具体流程如下
+本次更新主要包含以下几个方面，相对于v1版本提升有效训练速度**50%**，其中pad从**30%**减少至**5%**，训练速度从**3200token/s**提升至**3620token/s**。0.95 * 3620/(0.7 * 3200)=1.521
+1. 使用Hugging Face的datasets库进行数据读取，具体流程如下
    1. 使用transform函数将不同数据集的数据统一格式为{'text': 'xxx'}
    2. 使用Tokenizer进行分词
    3. 对长序列进行采样，目前提供三种模式，分别是：截断/采样（参考[Gopher论文](https://arxiv.org/abs/2112.11446)）/切分
@@ -100,7 +99,7 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 [2023.4.16] Release v1.0
 
-提供基础的预训练和指令微调代码，训练速度达到Llama原文速度。预训练和指令微调后的模型已经开源在HuggingFace。
+提供基础的预训练和指令微调代码，训练速度达到Llama原文速度。预训练和指令微调后的模型已经开源在Hugging Face。
 
 v1版代码可见https://github.com/s-JoL/Open-Llama/tree/v1.0
 
@@ -312,7 +311,7 @@ accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_
 ## 性能对比
 
 ### 训练框架
-在训练框架方面我们测试了HuggingFace开源的Accelerate库pytorch-lightning和HPC-AI开源的ColossalAI，我们测试在打满显卡时性能差异较小。因此最终选择了实现相对简单的Accelerate库作为训练框架
+在训练框架方面我们测试了Hugging Face开源的Accelerate库pytorch-lightning和HPC-AI开源的ColossalAI，我们测试在打满显卡时性能差异较小。因此最终选择了实现相对简单的Accelerate库作为训练框架
 
 测试代码可见utils/speed_test.py
 
@@ -322,7 +321,7 @@ accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_
 | GPT2  | 2     | 6       | heads   | 4096        | 250100     | 1024       |
 
 测试结果如下，可以看到当打满时速度和显存相差不大
-|                 | HuggingFace                       | HuggingFace                        | ColossalAI                                             | ColossalAI                                             | ColossalAI                         |
+|                 | Hugging Face                       | Hugging Face                        | ColossalAI                                             | ColossalAI                                             | ColossalAI                         |
 |-----------------|-----------------------------------|------------------------------------|--------------------------------------------------------|--------------------------------------------------------|------------------------------------|
 | config          | without activation ckpt, bs2      | without activation ckpt, max_bs=12 | with activation ckpt, bs2                              | without activation ckpt, bs2                           | without activation ckpt, max_bs=10 |
 | second pre step | 0.336, fw=0.033, bw=0.3, opt=5e-6 | 1.25                               | 0.347                                                  | 0.308, fw=0.067, bw=0.152, opt=0.088                   | 1.055                              |

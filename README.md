@@ -2,7 +2,7 @@
  * @Author: LiangSong(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-15 23:00:11
+ * @LastEditTime: 2023-05-17 21:16:42
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -52,7 +52,6 @@ print(tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 
 ```
 The CheckPoint after pre-training only is also uploaded to [s-JoL/Open-Llama-V2-pretrain](https://huggingface.co/s-JoL/Open-Llama-V2-pretrain).
-The model [PR](https://github.com/huggingface/transformers/pull/22795) has been submitted for merging into the Transformers main branch.
 
 We have completed 330B token pre-training, training a total of 80 K steps. The Global Batch Size is consistent with Llama at 4M.
 Using a total of 7 parts of data to constitute the Instruction-tuning data, the model has certain programming abilities, mathematical abilities, and multi-turn dialogue abilities. Specific data can be found in the Instruction-Tuning section.
@@ -74,7 +73,7 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 
 |                | DeepSpeed Stage | Offload | Activation Checkpoint | Total Token | GPU hours | Speed token/s/gpu | Batch Size |
 |----------------|-----------------|---------|-----------------------|-------------|-----------|-------------------|------------|
-| Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3587              | 2          |
+| Open-Llama 7B  | 1               | False   | False                 | 173.7B      | 13412     | 3620              | 2          |
 | Open-Llama 13B | 3               | False   | True                  | -           | -         | 1856              | 24         |
 | Open-Llama 33B | 3               | False   | True                  | -           | -         | 708               | 12         |
 | Open-Llama 65B | 3               | True    | True                  | -           | -         | 369               | 12         |
@@ -85,7 +84,7 @@ Below is a display of the model's multi-turn dialogue ability regarding code:
 
 **[2023.4.28] Release v2.0**
 
-This update mainly includes the following aspects, increasing the effective training speed by **50%** compared to the v1 version, reducing padding from **30%** to **5%**, and improving training speed from **3200 tokens/s** to **3587 tokens/s**. 0.95 * 3587 / (0.7 * 3200) = 1.521
+This update mainly includes the following aspects, increasing the effective training speed by **50%** compared to the v1 version, reducing padding from **30%** to **5%**, and improving training speed from **3200 tokens/s** to **3620 tokens/s**. 0.95 * 3620 / (0.7 * 3200) = 1.521
 
 1. Use Hugging Face's datasets library for data reading, with the process as follows:
    1. Use the transform function to unify data formats from different datasets to {'text': 'xxx'}
