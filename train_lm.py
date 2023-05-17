@@ -1,12 +1,12 @@
 """
-Author: LiangSong(sl12160010@gmail.com)
+Author: s-JoL(sl12160010@gmail.com)
 Date: 2023-04-12 19:12:42
-LastEditors: LiangSong(sl12160010@gmail.com)
-LastEditTime: 2023-05-08 23:39:35
+LastEditors: s-JoL(sl12160010@gmail.com)
+LastEditTime: 2023-05-17 22:20:32
 FilePath: /Open-Llama/train_lm.py
 Description: 
 
-Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+Copyright (c) 2023 by s-JoL(sl12160010@gmail.com), All Rights Reserved. 
 """
 import yaml
 import math

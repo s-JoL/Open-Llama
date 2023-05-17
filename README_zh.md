@@ -1,12 +1,12 @@
 <!--
- * @Author: LiangSong(sl12160010@gmail.com)
+ * @Author: s-JoL(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
- * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-17 21:17:41
+ * @LastEditors: s-JoL(sl12160010@gmail.com)
+ * @LastEditTime: 2023-05-17 22:20:48
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
- * Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+ * Copyright (c) 2023 by s-JoL(sl12160010@gmail.com), All Rights Reserved. 
 -->
 [**中文**](./README_zh.md) | [**English**](./README.md)
 
@@ -124,7 +124,7 @@ v1版代码可见https://github.com/s-JoL/Open-Llama/tree/v1.0
 如果使用500B token进行预训练，需要训练38300 GPU时。按照Google Cloud上A100-80G Spot的价格计算，8卡每小时价格为12.6美元，则总价格为60300美元。
 当使用未加速版本训练时，价格为158744美元。最终降低训练成本9.8万美元。
 
-更多测试可见[和其他开源模型性能对比](https://github.com/Bayes-Song/Open-Llama#%E5%92%8C%E5%85%B6%E4%BB%96%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94)。
+更多测试可见[和其他开源模型性能对比](https://github.com/s-JoL/Open-Llama#%E5%92%8C%E5%85%B6%E4%BB%96%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94)。
 ### 通用性
 
 在训练语言模型时，我们希望能够构建一个通用的模型，可以适用于不同的语言和不同的领域。为了实现这一点，我们采用了以下策略：
@@ -367,7 +367,7 @@ accelerate launch --config_file configs/accelerate_configs/ds_stage1.yaml train_
 ```
 @misc{openllama,
   title={Open-Llama},
-  author={Liang Song},
+  author={s-JoL},
   year={2023},
   howpublished={\url{https://github.com/s-JoL/Open-Llama}},
 }

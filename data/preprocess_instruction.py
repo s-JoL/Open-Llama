@@ -1,12 +1,12 @@
 """
-Author: LiangSong(sl12160010@gmail.com)
+Author: s-JoL(sl12160010@gmail.com)
 Date: 2023-03-30 20:52:10
-LastEditors: LiangSong(sl12160010@gmail.com)
+LastEditors: s-JoL(sl12160010@gmail.com)
 LastEditTime: 2023-05-04 08:32:04
 FilePath: /Open-Llama/data/preprocess_instruction.py
 Description: 
 
-Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+Copyright (c) 2023 by s-JoL(sl12160010@gmail.com), All Rights Reserved. 
 """
 import json
 from tqdm import tqdm

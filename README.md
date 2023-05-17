@@ -1,12 +1,12 @@
 <!--
- * @Author: LiangSong(sl12160010@gmail.com)
+ * @Author: s-JoL(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
- * @LastEditors: LiangSong(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-17 21:16:42
+ * @LastEditors: s-JoL(sl12160010@gmail.com)
+ * @LastEditTime: 2023-05-17 22:21:07
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
- * Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+ * Copyright (c) 2023 by s-JoL(sl12160010@gmail.com), All Rights Reserved. 
 -->
 [**中文**](./README_zh.md) | [**English**](./README.md)
 
@@ -124,7 +124,7 @@ For a 7B model, the training speed with the native PyTorch Llama model in Transf
 If pre-training with 500B tokens, 38300 GPU hours are required. According to the hourly price for 8 A100-80G Spot GPUs on Google Cloud, which is 12.6 US dollars, the total cost is 60,300 US dollars.
 When using the unaccelerated version for training, the cost is 158,744 US dollars. The final training cost is reduced by 98,000 US dollars.
 
-For more testing, see [performance comparison with other open-source models](https://github.com/Bayes-Song/Open-Llama#%E5%92%8C%E5%85%B6%E4%BB%96%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94).
+For more testing, see [performance comparison with other open-source models](https://github.com/s-JoL/Open-Llama#%E5%92%8C%E5%85%B6%E4%BB%96%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94).
 
 ### Versatility
 
@@ -392,7 +392,7 @@ The following table summarizes the performance of currently available open-sourc
 ```
 @misc{openllama,
   title={Open-Llama},
-  author={Liang Song},
+  author={s-JoL},
   year={2023},
   howpublished={\url{https://github.com/s-JoL/Open-Llama}},
 }

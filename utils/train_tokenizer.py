@@ -1,12 +1,12 @@
 """
-Author: LiangSong(sl12160010@gmail.com)
+Author: s-JoL(sl12160010@gmail.com)
 Date: 2023-03-24 20:49:03
-LastEditors: LiangSong(sl12160010@gmail.com)
+LastEditors: s-JoL(sl12160010@gmail.com)
 LastEditTime: 2023-05-06 23:34:14
 FilePath: /Open-Llama/utils/train_tokenizer.py
 Description: 
 
-Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+Copyright (c) 2023 by s-JoL(sl12160010@gmail.com), All Rights Reserved. 
 """
 import random
 from glob import glob

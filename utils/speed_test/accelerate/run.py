@@ -1,12 +1,12 @@
 """
-Author: LiangSong(sl12160010@gmail.com)
+Author: s-JoL(sl12160010@gmail.com)
 Date: 2023-04-08 22:44:44
-LastEditors: LiangSong(sl12160010@gmail.com)
+LastEditors: s-JoL(sl12160010@gmail.com)
 LastEditTime: 2023-04-08 23:15:57
 FilePath: /Open-Llama/speed_test/accelerate/run.py
 Description: 
 
-Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+Copyright (c) 2023 by s-JoL(sl12160010@gmail.com), All Rights Reserved. 
 """
 import time
 import torch

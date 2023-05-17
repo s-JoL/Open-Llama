@@ -1,12 +1,12 @@
 """
-Author: LiangSong(sl12160010@gmail.com)
+Author: s-JoL(sl12160010@gmail.com)
 Date: 2023-03-18 00:06:41
-LastEditors: LiangSong(sl12160010@gmail.com)
+LastEditors: s-JoL(sl12160010@gmail.com)
 LastEditTime: 2023-03-27 01:09:20
 FilePath: /Open-Llama/dataset/validation.py
 Description: 
 
-Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+Copyright (c) 2023 by s-JoL(sl12160010@gmail.com), All Rights Reserved. 
 """
 val_set = [
     "白日依山尽，",

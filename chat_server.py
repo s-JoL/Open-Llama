@@ -1,12 +1,12 @@
 """
-Author: LiangSong(sl12160010@gmail.com)
+Author: s-JoL(sl12160010@gmail.com)
 Date: 2023-04-06 22:30:10
-LastEditors: LiangSong(sl12160010@gmail.com)
+LastEditors: s-JoL(sl12160010@gmail.com)
 LastEditTime: 2023-05-12 15:07:36
 FilePath: /Open-Llama/chat_server.py
 Description: 
 
-Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+Copyright (c) 2023 by s-JoL(sl12160010@gmail.com), All Rights Reserved. 
 """
 import torch
 import logging
@@ -15,14 +15,16 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 tokenizer = AutoTokenizer.from_pretrained("s-JoL/Open-Llama-V2", use_fast=False)
-model = AutoModelForCausalLM.from_pretrained("s-JoL/Open-Llama-V2", torch_dtype=torch.bfloat16, device_map="auto")
+model = AutoModelForCausalLM.from_pretrained(
+    "s-JoL/Open-Llama-V2", torch_dtype=torch.bfloat16, device_map="auto"
+)
 logging.warning("ready")
 
 
 with gr.Blocks() as demo:
     gr.Markdown(
         """
-    # [Open-Llama](https://github.com/Bayes-Song/Open-Llama)
+    # [Open-Llama](https://github.com/s-JoL/Open-Llama)
     完全使用Open-Llama项目从0开始训练的Instruct-GPT模型，当长时间无响应（如20s以上）可刷新重试。
 
     Instruct-GPT model is trained from scratch using the Open-Llama project without relying on any other pre-trained models. If there is no response for a long time (such as more than 20 seconds), please refresh and try again. 

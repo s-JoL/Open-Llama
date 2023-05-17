@@ -1,13 +1,13 @@
 #!/bin/bash
 ###
- # @Author: LiangSong(sl12160010@gmail.com)
+ # @Author: s-JoL(sl12160010@gmail.com)
  # @Date: 2023-03-16 21:21:56
- # @LastEditors: LiangSong(sl12160010@gmail.com)
+ # @LastEditors: s-JoL(sl12160010@gmail.com)
  # @LastEditTime: 2023-03-26 22:58:11
  # @FilePath: /Open-Llama/data/download_wudao.sh
  # @Description: 
  # download wudao dataset and preprocess
- # Copyright (c) 2023 by LiangSong(sl12160010@gmail.com), All Rights Reserved. 
+ # Copyright (c) 2023 by s-JoL(sl12160010@gmail.com), All Rights Reserved. 
 ### 
 apt install unrar
 
