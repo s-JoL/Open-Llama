@@ -2,7 +2,7 @@
  * @Author: s-JoL(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: s-JoL(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-17 22:21:07
+ * @LastEditTime: 2023-05-17 22:44:35
  * @FilePath: /Open-Llama/README.md
  * @Description: 
  * 
@@ -35,10 +35,7 @@ Join [discord](https://discord.gg/TrKxrTpnab) to discuss the development of larg
 
 - **The training speed reaches 3620 tokens/s, faster than the 3370 tokens/s reported in the original Llama paper, reaching the current state-of-the-art level.**
 
- To use the CheckPoint, first, install the latest version of Transformers with the following command:
 ``` python
-pip install git+https://github.com/huggingface/transformers.git
-
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 tokenizer = AutoTokenizer.from_pretrained("s-JoL/Open-Llama-V2", use_fast=False)

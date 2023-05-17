@@ -2,7 +2,7 @@
  * @Author: s-JoL(sl12160010@gmail.com)
  * @Date: 2023-03-10 21:18:35
  * @LastEditors: s-JoL(sl12160010@gmail.com)
- * @LastEditTime: 2023-05-17 22:20:48
+ * @LastEditTime: 2023-05-17 22:43:46
  * @FilePath: /Open-Llama/README_zh.md
  * @Description: 
  * 
@@ -36,10 +36,7 @@ Open-Llama是一个开源项目，提供了一整套用于构建大型语言模�
 - **训练速度达到3620 token/s，快于Llama原文中的3370 token/s，达到目前sota的水平。**
 
 
-使用ckpt需要先用下面命令安装最新版本Transformers：
 ``` python
-pip install git+https://github.com/huggingface/transformers.git
-
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 tokenizer = AutoTokenizer.from_pretrained("s-JoL/Open-Llama-V2", use_fast=False)
